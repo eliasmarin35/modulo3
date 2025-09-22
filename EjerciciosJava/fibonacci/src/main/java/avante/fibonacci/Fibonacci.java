@@ -5,8 +5,10 @@
 package avante.fibonacci;
 
 /**
- *
- * @author Usuario
+ * 
+ * @author Elias
+ * @version 1.1
+ * @param 
  */
 
 public class Fibonacci {
@@ -37,6 +39,7 @@ public class Fibonacci {
         int resultado = 0;
 
         // Empezamos desde 2 porque ya conocemos los casos 0 y 1
+        
         for (int i = 2; i <= n; i++) {
             resultado = a + b; // El siguiente número es la suma de los dos anteriores
             a = b;             // a toma el valor de b
