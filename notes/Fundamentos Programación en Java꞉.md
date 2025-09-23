@@ -15,19 +15,25 @@ modified: '2025-09-23T10:11:30.290Z'
 - `void`valor vacio
 
 ## 2. Estructuras de control :
+
 - __Bucles:__
 
-`while`
-`do while`
-`for(i=0;i<x;i++)`
+`while{...}`
+`do{..} while`
+`for(i=0;i<x;i++){..}`
+
 - __Condicionales:__
 
 `if`
 `ifelse`
 `elseif`
-- Excepciones:
-- `return`tambien es una estructura de control porque modifica el flujo del programa.
-- `break`, `continue`- rompe el bucle o lo continuan  y no sigue con la iteración por tanto es otra opcion para conotrolar el flujo.
+
+- **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
+`try` - aquí se pone el código "peligroso" que puede lanzar la excepción.
+`catch` - si se produce una excepción en el bloque `try` el programa saltará el bloque, aqui puedes definir como responder al error y puede haber varios bloques de `catch` para distintos tipos de excepciones.
+`finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
+- `return`también es una estructura de control porque modifica el flujo del programa.
+- `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
 
 ## 3.Template String:
 
@@ -49,7 +55,6 @@ StringBuilder: Más eficiente que la concatenación, pero muy verboso y aparatos
 ```
 
 ```
-
 
 StringBuilder sb = new StringBuilder();
 sb.append("Hola ");
@@ -124,7 +129,9 @@ Esta característica fue introducida como vista previa (preview) en Java 21 y Ja
 
  `public statitc void main (String[] args){...}`
 ## 7. Recursividad :
+
 Se trata de la capacidad de una función a ejecutarse a si misma por ejemplo :
+
 ```
 public class EjemploRecursividad {
 
@@ -228,4 +235,126 @@ pubic class veterinaria {
 
 > Las clases normalmente deben cerrarse tras ser usadas como por ejemplo la clase Scanner con el comando `close.Scanner();` en este caso la clase Perro porque no hemos creado un método `close()` y porque ya de por si Java tiene el método `finalice()` de la clase objetos.
 
+__Visibilidad  :__
 
+En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
+
+En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
+
+Existen cuatro niveles de visibilidad, del más abierto al más restrictivo:
+
+---
+
+## 1. `public` (Público) 🌍
+
+Es el nivel más permisivo. Un miembro `public` es accesible desde **cualquier lugar**: desde cualquier otra clase en cualquier otro paquete.
+
+- **Uso común**: Para métodos que forman la API principal de tu clase (como constructores, getters y setters) y para clases que deben ser usadas por todo el proyecto.
+    
+
+Java
+
+```
+public class Coche {
+    public String marca; // Cualquiera puede ver y modificar la marca
+
+    public void arrancar() { // Cualquiera puede arrancar el coche
+        // ...
+    }
+}
+```
+
+---
+
+## 2. `protected` (Protegido) 👨‍👩‍👧
+
+Un miembro `protected` es accesible para:
+
+1. Clases dentro del **mismo paquete**.
+    
+2. **Clases hijas (subclases)**, incluso si están en un paquete diferente.
+    
+
+- **Uso común**: Para atributos o métodos que no son públicos pero que necesitan ser accedidos o sobrescritos por clases que heredan de ella.
+    
+
+Java
+
+```
+public class Vehiculo {
+    protected int velocidad; // Accesible por Vehiculo y sus subclases
+}
+
+// En otro paquete
+public class Moto extends Vehiculo {
+    public void acelerar() {
+        velocidad += 10; // Correcto, Moto hereda de Vehiculo
+    }
+}
+```
+
+---
+
+## 3. `default` (o Package-Private) 🏠
+
+Si **no escribes ningún modificador**, se aplica la visibilidad por defecto. Un miembro `default` solo es accesible para clases que están en el **mismo paquete**. No es accesible desde subclases en paquetes diferentes.
+
+- **Uso común**: Para clases o métodos "ayudantes" que solo tienen sentido dentro del contexto de un paquete específico y no deben ser expuestos al resto de la aplicación.
+    
+
+Java
+
+```
+// En el paquete com.transporte
+class Motor { // Sin modificador, es 'default'
+    void encender() {
+        // ...
+    }
+}
+
+// En el mismo paquete com.transporte
+public class Coche {
+    private Motor miMotor = new Motor();
+    public void arrancar() {
+        miMotor.encender(); // Correcto, están en el mismo paquete
+    }
+}
+```
+
+---
+
+## 4. `private` (Privado) 🔒
+
+Es el nivel más restrictivo. Un miembro `private` solo es accesible **dentro de la misma clase** donde fue declarado. Ni las clases del mismo paquete ni las subclases pueden acceder a él.
+
+- **Uso común**: Es la opción preferida para los **atributos** para lograr una buena encapsulación. El acceso se gestiona a través de métodos públicos (`getters` y `setters`).
+    
+
+Java
+
+```
+public class Persona {
+    private String nombre; // Solo accesible dentro de la clase Persona
+
+    public String getNombre() { // Método público para leer el nombre
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) { // Método público para cambiar el nombre
+        this.nombre = nombre;
+    }
+}
+```
+
+---
+
+## Tabla Resumen
+
+Aquí tienes una tabla para verlo de forma más clara:
+
+| Modificador     | Misma Clase | Mismo Paquete | Subclase (Otro Paquete) | Cualquier Lugar |
+| --------------- | ----------- | ------------- | ----------------------- | --------------- |
+| **`public`**    | ✅           | ✅             | ✅                       | ✅               |
+| **`protected`** | ✅           | ✅             | ✅                       | ❌               |
+| **`default`**   | ✅           | ✅             | ❌                       | ❌               |
+| **`private`**   | ✅           | ❌             | ❌                       | ❌               |
