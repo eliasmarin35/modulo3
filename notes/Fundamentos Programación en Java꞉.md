@@ -373,7 +373,6 @@ Un método **getter** se utiliza para _obtener_ o _leer_ el valor de una variabl
 
 Por ejemplo, para una variable `private String nombre;`, el getter sería:
 
-Java
 
 ```
 public String getNombre() {
@@ -398,7 +397,6 @@ Un método **setter** se utiliza para _establecer_ o _modificar_ el valor de una
 
 Para la misma variable `private String nombre;`, el setter sería:
 
-Java
 
 ```
 public void setNombre(String nuevoNombre) {
@@ -408,7 +406,8 @@ public void setNombre(String nuevoNombre) {
 
 Dentro del setter se pueden añadir **validaciones** para asegurar que el nuevo valor sea correcto antes de asignarlo.
 
----
+> __encapsulación__ En programación, esto significa que los datos importantes de un objeto se mantienen "privados" y solo se pueden modificar o leer usando los métodos que el programador ha creado para ello. Esto evita que otras partes del código los manipulen por error y causen problemas.
+
 
 ### ¿Por qué usarlos?
 
@@ -423,7 +422,6 @@ La idea principal es tener un control total sobre cómo se accede y se modifica 
 
 En resumen, en lugar de hacer esto (que es una mala práctica):
 
-Java
 
 ```
 // Acceso directo (no recomendado)
@@ -433,7 +431,6 @@ System.out.println(coche.velocidad);
 
 Se utiliza esto:
 
-Java
 
 ```
 // Acceso controlado mediante métodos
