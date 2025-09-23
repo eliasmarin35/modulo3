@@ -13,7 +13,7 @@ modified: '2025-09-23T10:11:30.290Z'
 - decimales o flotantes `float`
 - caracteres `char`
 - `void`valor vacio
-
+---
 ## 2. Estructuras de control :
 
 - __Bucles:__
@@ -34,7 +34,7 @@ modified: '2025-09-23T10:11:30.290Z'
 `finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
 - `return`también es una estructura de control porque modifica el flujo del programa.
 - `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
-
+---
 ## 3.Template String:
 
 Los **String Templates** (o plantillas de cadena) son una característica moderna de Java diseñada para hacer que la creación de cadenas de texto sea mucho más fácil, legible y segura.
@@ -116,18 +116,24 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 
 Disponibilidad
 Esta característica fue introducida como vista previa (preview) en Java 21 y Java 22, y es una característica estándar y definitiva a partir de Java 23. Ya no necesitas activar ningún flag de preview para usarla si estás en Java 23 o una versión superior.
+
+---
 ## 4. Libre y clases de utilidades :
 
 - libreria a declarar `javautils.Scanner`
 - `new Scanner(...)`
 - `sc.close()`
-
+---
 ## 5. Argumentos de un programa :
 
-`String[] args` este es el argumento que recibe
+`String[] args` este es el argumento que recibe el método principal.
+
+---
 ## 6. Punto de entrada de la ejecución :
 
  `public statitc void main (String[] args){...}`
+
+---
 ## 7. Recursividad :
 
 Se trata de la capacidad de una función a ejecutarse a si misma por ejemplo :
@@ -162,6 +168,7 @@ public class EjemploRecursividad {
 }
 ```
 
+---
 ## 8. Clases :
 
 La programación orientada a objetos o POO, aqui movemos la responsabilidad de ejecución a cada clase no como en la programación estructuradas que una ejecución de arriba a abajo y dependiendo íntegramente de los controles de flujo esta ejecución estructurada.
@@ -235,24 +242,24 @@ pubic class veterinaria {
 
 > Las clases normalmente deben cerrarse tras ser usadas como por ejemplo la clase Scanner con el comando `close.Scanner();` en este caso la clase Perro porque no hemos creado un método `close()` y porque ya de por si Java tiene el método `finalice()` de la clase objetos.
 
-__Visibilidad  :__
-
-En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
-
-En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
-
-Existen cuatro niveles de visibilidad, del más abierto al más restrictivo:
-
 ---
 
-## 1. `public` (Público) 🌍
+## __9. Visibilidad  :__
+
+En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
+
+En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
+
+> En los ejemplos de clase recuerda mirar los de la clase Perro y sus modificaciones.
+
+
+Existen cuatro niveles de visibilidad, del más abierto al más restrictivo:
+### 1. `public` (Público) 🌍
 
 Es el nivel más permisivo. Un miembro `public` es accesible desde **cualquier lugar**: desde cualquier otra clase en cualquier otro paquete.
 
 - **Uso común**: Para métodos que forman la API principal de tu clase (como constructores, getters y setters) y para clases que deben ser usadas por todo el proyecto.
     
-
-Java
 
 ```
 public class Coche {
@@ -264,9 +271,7 @@ public class Coche {
 }
 ```
 
----
-
-## 2. `protected` (Protegido) 👨‍👩‍👧
+### 2. `protected` (Protegido) 👨‍👩‍👧
 
 Un miembro `protected` es accesible para:
 
@@ -277,8 +282,6 @@ Un miembro `protected` es accesible para:
 
 - **Uso común**: Para atributos o métodos que no son públicos pero que necesitan ser accedidos o sobrescritos por clases que heredan de ella.
     
-
-Java
 
 ```
 public class Vehiculo {
@@ -293,16 +296,12 @@ public class Moto extends Vehiculo {
 }
 ```
 
----
-
-## 3. `default` (o Package-Private) 🏠
+### 3. `default` (o Package-Private) 🏠
 
 Si **no escribes ningún modificador**, se aplica la visibilidad por defecto. Un miembro `default` solo es accesible para clases que están en el **mismo paquete**. No es accesible desde subclases en paquetes diferentes.
 
 - **Uso común**: Para clases o métodos "ayudantes" que solo tienen sentido dentro del contexto de un paquete específico y no deben ser expuestos al resto de la aplicación.
     
-
-Java
 
 ```
 // En el paquete com.transporte
@@ -321,16 +320,12 @@ public class Coche {
 }
 ```
 
----
-
-## 4. `private` (Privado) 🔒
+### 4. `private` (Privado) 🔒
 
 Es el nivel más restrictivo. Un miembro `private` solo es accesible **dentro de la misma clase** donde fue declarado. Ni las clases del mismo paquete ni las subclases pueden acceder a él.
 
 - **Uso común**: Es la opción preferida para los **atributos** para lograr una buena encapsulación. El acceso se gestiona a través de métodos públicos (`getters` y `setters`).
     
-
-Java
 
 ```
 public class Persona {
@@ -346,9 +341,7 @@ public class Persona {
 }
 ```
 
----
-
-## Tabla Resumen
+### Tabla Resumen
 
 Aquí tienes una tabla para verlo de forma más clara:
 
@@ -358,3 +351,92 @@ Aquí tienes una tabla para verlo de forma más clara:
 | **`protected`** | ✅           | ✅             | ✅                       | ❌               |
 | **`default`**   | ✅           | ✅             | ❌                       | ❌               |
 | **`private`**   | ✅           | ❌             | ❌                       | ❌               |
+
+
+---
+## 10. Getter y Setter :
+
+Llos métodos **getter** y **setter** son dos tipos de métodos públicos que se utilizan para acceder y modificar, respectivamente, el valor de las variables de instancia privadas de una clase. Su uso es una parte fundamental del principio de **encapsulamiento**, que consiste en ocultar el estado interno de un objeto y exponer solo lo necesario a través de una interfaz pública.
+
+### Getters (Métodos de acceso)
+
+Un método **getter** se utiliza para _obtener_ o _leer_ el valor de una variable privada. Por convención, su nombre comienza con `get` seguido del nombre de la variable (en formato camelCase).
+
+**Características:**
+
+- Es **público**.
+    
+- Devuelve el tipo de dato de la variable que lee.
+    
+- No recibe ningún parámetro.
+    
+
+Por ejemplo, para una variable `private String nombre;`, el getter sería:
+
+Java
+
+```
+public String getNombre() {
+    return nombre;
+}
+```
+
+---
+
+### Setters (Métodos de modificación)
+
+Un método **setter** se utiliza para _establecer_ o _modificar_ el valor de una variable privada. Por convención, su nombre comienza con `set` seguido del nombre de la variable (en formato camelCase).
+
+**Características:**
+
+- Es **público**.
+    
+- Generalmente, no devuelve ningún valor (`void`).
+    
+- Recibe un parámetro del mismo tipo que la variable que va a modificar.
+    
+
+Para la misma variable `private String nombre;`, el setter sería:
+
+Java
+
+```
+public void setNombre(String nuevoNombre) {
+    this.nombre = nuevoNombre;
+}
+```
+
+Dentro del setter se pueden añadir **validaciones** para asegurar que el nuevo valor sea correcto antes de asignarlo.
+
+---
+
+### ¿Por qué usarlos?
+
+La idea principal es tener un control total sobre cómo se accede y se modifica el estado de un objeto.
+
+- **Seguridad:** Impiden que el valor de una variable sea modificado directamente con un dato inválido. Por ejemplo, un `setEdad` podría impedir que se asigne un número negativo.
+    
+- **Flexibilidad:** Permiten cambiar la implementación interna de la clase sin que afecte al código que la utiliza.
+    
+- **Encapsulamiento:** Cumplen con uno de los pilares de la programación orientada a objetos, ocultando los detalles internos y exponiendo solo una interfaz segura.
+    
+
+En resumen, en lugar de hacer esto (que es una mala práctica):
+
+Java
+
+```
+// Acceso directo (no recomendado)
+coche.velocidad = 200;
+System.out.println(coche.velocidad);
+```
+
+Se utiliza esto:
+
+Java
+
+```
+// Acceso controlado mediante métodos
+coche.setVelocidad(200);
+System.out.println(coche.getVelocidad());
+```
