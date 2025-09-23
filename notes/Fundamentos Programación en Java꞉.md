@@ -437,3 +437,22 @@ Se utiliza esto:
 coche.setVelocidad(200);
 System.out.println(coche.getVelocidad());
 ```
+
+---
+## 11. Herencia :
+
+Mediante la palabra reservada `extends` :
+
+```
+public class Animal {
+
+}
+
+private class Perro extends Animal {
+
+}
+
+// (Mejorar y rellenar mañana)
+```
+
+Todo clase hija hereda los atributos y métodos del padre, 
