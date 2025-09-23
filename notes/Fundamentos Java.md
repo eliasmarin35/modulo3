@@ -1,3 +1,9 @@
+---
+title: Fundamentos Java
+created: '2025-09-23T06:54:42.066Z'
+modified: '2025-09-23T08:39:22.890Z'
+---
+
 # 1. Fundamentos programación y programación orientada a objetos con Java:
 
 En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos Maven para la organización de carpetas de proyecto.
@@ -57,7 +63,7 @@ Son los datos más básicos y fundamentales. Representan valores simples y direc
 
 Java
 
-```
+
 public class TiposPrimitivos {
     public static void main(String[] args) {
         // Variable para almacenar la cantidad de vidas en un juego
