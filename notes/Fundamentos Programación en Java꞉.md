@@ -12,9 +12,11 @@ modified: '2025-09-23T10:11:30.290Z'
 - booleanos `bool`
 - decimales o flotantes `float`
 - caracteres `char`
-- `void`valor vacio
+- `void`valor vacío
 ---
 ## 2. Estructuras de control :
+
+Son las herramientas que tenemos para controlar el flujo de programa, iteraciones, controles de salida, etc, estos son los más usados :
 
 - __Bucles:__
 
@@ -114,15 +116,82 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 ```
 
 
-Disponibilidad
-Esta característica fue introducida como vista previa (preview) en Java 21 y Java 22, y es una característica estándar y definitiva a partir de Java 23. Ya no necesitas activar ningún flag de preview para usarla si estás en Java 23 o una versión superior.
+>**Disponibilidad :** Esta característica fue introducida como vista previa (preview) en Java 21 y Java 22, y es una característica estándar y definitiva a partir de Java 23. Ya no necesitas activar ningún flag de preview para usarla si estás en Java 23 o una versión superior.
 
 ---
-## 4. Libre y clases de utilidades :
+## 4. Librería y clases de utilidades :
 
-- libreria a declarar `javautils.Scanner`
-- `new Scanner(...)`
-- `sc.close()`
+El paquete `java.util` es una de las librerías fundamentales en el entorno de desarrollo de Java. Proporciona una amplia colección de clases e interfaces de utilidad que son de propósito general y esenciales para el día a día de la programación en Java. Este paquete incluye desde estructuras de datos complejas hasta herramientas para manejar fechas y expresiones regulares.
+
+A continuación, se describen algunas de las herramientas más utilizadas de este paquete.
+
+### **Framework de Colecciones (Collections Framework)**
+
+Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfaces y clases para representar y manipular grupos de objetos.
+
+- **`ArrayList`**: Es una implementación de una lista dinámica que permite almacenar elementos de cualquier tipo. A diferencia de los arrays tradicionales, un `ArrayList` puede crecer y decrecer en tamaño de forma automática. Es ideal cuando se necesita acceso rápido a los elementos a través de su índice.
+    
+    
+    ```
+    ArrayList<String> nombres = new ArrayList<>();
+    nombres.add("Juan");
+    nombres.add("María");
+    System.out.println(nombres.get(0)); // Imprime "Juan"
+    ```
+    
+- **`HashMap`**: Implementa la interfaz `Map` y se utiliza para almacenar pares de clave-valor. No mantiene un orden específico de los elementos y ofrece un rendimiento muy alto para la inserción, eliminación y búsqueda de elementos a través de su clave.
+    
+
+    
+    ```
+    HashMap<String, Integer> edades = new HashMap<>();
+    edades.put("Juan", 25);
+    edades.put("María", 30);
+    System.out.println(edades.get("Juan")); // Imprime 25
+    ```
+    
+- **`HashSet`**: Se utiliza para almacenar una colección de elementos únicos, es decir, no permite duplicados. No garantiza el orden de los elementos.
+    
+    
+    ```
+    HashSet<String> unicos = new HashSet<>();
+    unicos.add("Lunes");
+    unicos.add("Martes");
+    unicos.add("Lunes"); // Este elemento no se añadirá de nuevo
+    System.out.println(unicos.size()); // Imprime 2
+    ```
+    
+
+### **Utilidades de Entrada/Salida**
+
+- **`Scanner`**: Es una clase muy útil para leer datos de entrada desde diversas fuentes, como el teclado, ficheros o cadenas de texto. Proporciona métodos sencillos para leer diferentes tipos de datos como enteros, cadenas o booleanos.
+    
+    
+    ```
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Introduce tu nombre: ");
+    String nombre = scanner.nextLine();
+    System.out.println("Hola, " + nombre);
+    ```
+    
+
+
+### **Manejo de Fechas y Horas**
+
+- **`Date`**: Representa un instante específico en el tiempo, con una precisión de milisegundos. Aunque ha sido en gran parte reemplazada por la API `java.time` en versiones más recientes de Java, todavía se encuentra en código antiguo.
+    
+- **`Calendar`**: Es una clase abstracta que proporciona métodos para convertir entre un instante de tiempo y un conjunto de campos de calendario como año, mes, día, hora, etc. Permite realizar operaciones aritméticas con fechas.
+    
+
+### **Otras Utilidades Relevantes**
+
+- **`Random`**: Se utiliza para generar números pseudoaleatorios de diferentes tipos (enteros, dobles, etc.).
+    
+- **`Properties`**: Permite gestionar un conjunto de propiedades (pares clave-valor de tipo `String`) que pueden ser leídas o escritas desde un fichero, siendo muy útil para ficheros de configuración.
+    
+
+Estas herramientas son solo una pequeña muestra del poder y la flexibilidad que el paquete `java.util` ofrece a los desarrolladores de Java, simplificando una gran variedad de tareas de programación comunes.
+
 ---
 ## 5. Argumentos de un programa :
 
