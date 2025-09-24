@@ -6,6 +6,32 @@ modified: '2025-09-23T10:11:30.290Z'
 
 # Fundamentos Programación en Java:
 
+En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos Maven para la organización de carpetas de proyecto.
+
+En un vistazo rápido la organización de un proyecto con Maven será así :
+
+mi-proyecto-java/
+├── .gitignore
+├── pom.xml
+├── README.md
+└── src/
+    ├── main/
+    │   ├── java/
+    │   │   └── com/
+    │   │       └── miempresa/
+    │   │           └── app/
+    │   │               └── App.java
+    │   └── resources/
+    │       └── config.properties
+    └── test/
+        ├── java/
+        │   └── com/
+        │       └── miempresa/
+        │           └── app/
+        │               └── AppTest.java
+        └── resources/
+            └── test-data.csv
+
 ## 1. Tipos de datos :
 
 - Enteros `int`, `integer`
@@ -510,21 +536,6 @@ System.out.println(coche.getVelocidad());
 ---
 ## 10. Herencia :
 
-Mediante la palabra reservada `extends` :
-
-```
-public class Animal {
-
-}
-
-private class Perro extends Animal {
-
-}
-
-// (Mejorar y rellenar mañana)
-```
-
-Todo clase hija hereda los atributos y métodos del padre.
 
 La **herencia** es uno de los pilares de la Programación Orientada a Objetos (POO). Permite que una clase (llamada **subclase** o clase hija) adquiera los atributos y métodos de otra clase (llamada **superclase** o clase padre). La principal ventaja es la **reutilización de código** y la creación de una jerarquía lógica entre las clases. En Java, la herencia se implementa usando la palabra clave `extends`.
 
@@ -539,7 +550,6 @@ La **herencia** es uno de los pilares de la Programación Orientada a Objetos (P
     
 - **`super`:** Es una palabra clave que se usa dentro de una subclase para llamar a métodos o constructores de la superclase.
     
-
 ### **Ejemplo Práctico**
 
 Imaginemos que queremos modelar diferentes tipos de animales. Podemos crear una clase general `Animal` y luego clases más específicas como `Perro` y `Gato` que hereden de ella. 🐕🐈
@@ -548,7 +558,6 @@ Imaginemos que queremos modelar diferentes tipos de animales. Podemos crear una 
 
 Esta clase tiene propiedades y comportamientos que todos los animales comparten, como un nombre y el método de comer.
 
-Java
 
 ```
 // Clase Padre o Superclase
@@ -573,7 +582,6 @@ class Animal {
 
 La clase `Perro` **hereda** de `Animal`. Tendrá acceso a `nombre`, `comer()` y `dormir()`. Además, añadimos un método exclusivo para los perros: `ladrar()`.
 
-Java
 
 ```
 // Clase Hija o Subclase
@@ -595,8 +603,6 @@ class Perro extends Animal {
 
 La clase `Gato` también hereda de `Animal` y añade su propio método: `maullar()`.
 
-Java
-
 ```
 // Otra Clase Hija o Subclase
 class Gato extends Animal {
@@ -617,7 +623,6 @@ class Gato extends Animal {
 
 Ahora, podemos crear objetos de estas clases y ver cómo funciona la herencia.
 
-Java
 
 ```
 public class Zoologico {
@@ -650,3 +655,253 @@ Misi está comiendo.
 ```
 
 Como puedes ver, tanto `miPerro` como `miGato` pueden usar el método `comer()` porque lo heredaron de `Animal`, pero cada uno tiene su propio comportamiento específico (`ladrar()` y `maullar()`). Esto evita repetir el código de `comer()` y `dormir()` en cada clase.
+
+## 11. Interfaces :
+
+En Java, una **interfaz** es como un **contrato** o un plano que define un conjunto de métodos que una clase debe implementar. 📜 Establece _qué_ debe hacer una clase, pero no _cómo_ lo hace.
+
+Piensa en los botones de un control remoto de TV. Todos los controles remotos (sin importar la marca) tienen botones como "encender", "subir volumen" y "cambiar canal". La interfaz sería el conjunto de esos botones (las acciones que se pueden realizar). Cada fabricante (Sony, Samsung, etc.) decide cómo implementa internamente esa funcionalidad, pero todos cumplen con el contrato de ofrecer esos botones.
+
+---
+
+## **Características Clave**
+
+- **100% Métodos Abstractos (por defecto):** Tradicionalmente, todos los métodos de una interfaz son `abstract`, lo que significa que no tienen cuerpo (código). Solo se define su firma (nombre, parámetros y tipo de retorno). La clase que implementa la interfaz está obligada a proporcionar el código para estos métodos.
+    
+- **No se pueden crear objetos:** No puedes hacer `new` de una interfaz directamente. Solo se pueden crear objetos de las clases que la implementan.
+    
+- **Implementación Múltiple:** Una clase en Java solo puede heredar de una superclase (`extends`), pero puede implementar múltiples interfaces (`implements`). Esta es una de las principales razones de su existencia, ya que soluciona la falta de herencia múltiple.
+    
+- **`default` y `static` methods:** Versiones más modernas de Java permiten que las interfaces tengan métodos con implementación (`default` methods) para añadir nueva funcionalidad sin romper las clases que ya la implementan.
+    
+
+---
+
+## **Ejemplo Práctico**
+
+Imaginemos que queremos definir el comportamiento "volador" para diferentes entidades en un juego.
+
+- ** Definimos la Interfaz `Volador`**
+
+Este es nuestro contrato. Cualquier cosa que sea un "Volador" debe ser capaz de despegar, volar y aterrizar.
+
+
+```
+// La interfaz define QUÉ se debe hacer
+interface Volador {
+    void despegar();
+    void volar();
+    void aterrizar();
+}
+```
+
+- **Creamos Clases que Implementan la Interfaz**
+
+Ahora creamos clases que "firman" este contrato usando la palabra clave `implements`. Cada clase proporciona su propia implementación de los métodos.
+
+**Clase `Pajaro`** 🐦
+
+
+```
+class Pajaro implements Volador {
+
+    @Override
+    public void despegar() {
+        System.out.println("El pájaro bate sus alas para despegar.");
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("El pájaro planea en el cielo.");
+    }
+
+    @Override
+    public void aterrizar() {
+        System.out.println("El pájaro aterriza en una rama.");
+    }
+}
+```
+
+**Clase `Avion`** ✈️
+
+
+```
+class Avion implements Volador {
+
+    @Override
+    public void despegar() {
+        System.out.println("El avión acelera en la pista y despega.");
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("El avión surca los cielos a gran velocidad.");
+    }
+
+    @Override
+    public void aterrizar() {
+        System.out.println("El avión despliega el tren de aterrizaje y aterriza.");
+    }
+}
+```
+
+- **Uso en el Código Principal**
+
+Gracias a la interfaz, podemos tratar a un `Pajaro` y a un `Avion` de la misma manera: como algo que es `Volador`. Esto es un ejemplo de **polimorfismo**.
+
+
+
+```
+public class SimuladorVuelo {
+    public static void main(String[] args) {
+        Volador miPajaro = new Pajaro();
+        Volador miAvion = new Avion();
+
+        System.out.println("--- Acciones del Pájaro ---");
+        miPajaro.despegar();
+        miPajaro.volar();
+        miPajaro.aterrizar();
+
+        System.out.println("\n--- Acciones del Avión ---");
+        miAvion.despegar();
+        miAvion.volar();
+        miAvion.aterrizar();
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+--- Acciones del Pájaro ---
+El pájaro bate sus alas para despegar.
+El pájaro planea en el cielo.
+El pájaro aterriza en una rama.
+
+--- Acciones del Avión ---
+El avión acelera en la pista y despega.
+El avión surca los cielos a gran velocidad.
+El avión despliega el tren de aterrizaje y aterriza.
+```
+
+En resumen, las interfaces son un mecanismo fundamental en Java para lograr la **abstracción**, definir comportamientos comunes y habilitar el **polimorfismo**, permitiendo un código más flexible y desacoplado.
+
+## 12. Polimorfismo :
+
+El **polimorfismo** en Java es un principio de la programación orientada a objetos que permite que un objeto pueda tomar muchas formas. En términos prácticos, significa que puedes referirte a objetos de diferentes clases a través de una referencia de una clase común (una superclase o una interfaz). Esto permite que una misma acción (un método) se comporte de manera diferente según el objeto que la esté ejecutando.
+
+La palabra viene del griego "poli" (muchos) y "morfos" (formas). 🐾 Piensa en un animal: un objeto `Animal` podría ser en realidad un `Perro` o un `Gato`. Si le pides que haga un sonido, el perro ladrará y el gato maullará. La acción es la misma ("hacer sonido"), pero el resultado es diferente.
+
+## **Tipos de Polimorfismo**
+
+Existen dos tipos principales de polimorfismo en Java:
+
+### **1. Polimorfismo en Tiempo de Ejecución (Method Overriding)**
+
+Este es el concepto más común de polimorfismo. Ocurre cuando una subclase proporciona una implementación específica de un método que ya está definido en su superclase. La decisión de qué método ejecutar se toma en tiempo de ejecución.
+
+**Ejemplo Práctico:**
+
+Primero, creamos una superclase `Figura` con un método `dibujar()`.
+
+
+```
+// Superclase
+class Figura {
+    public void dibujar() {
+        System.out.println("Dibujando una figura genérica.");
+    }
+}
+```
+
+Ahora, creamos subclases que **sobrescriben** (`@Override`) este método para proporcionar su propio comportamiento.
+
+
+```
+// Subclase Círculo
+class Circulo extends Figura {
+    @Override
+    public void dibujar() {
+        System.out.println("Dibujando un círculo. ⚪");
+    }
+}
+
+// Subclase Cuadrado
+class Cuadrado extends Figura {
+    @Override
+    public void dibujar() {
+        System.out.println("Dibujando un cuadrado. ⬜");
+    }
+}
+```
+
+Finalmente, vemos el polimorfismo en acción. Usamos una referencia de tipo `Figura` para apuntar a objetos de sus subclases.
+
+
+```
+public class Lienzo {
+    public static void main(String[] args) {
+        Figura miFigura1 = new Circulo(); // Objeto Circulo, referencia Figura
+        Figura miFigura2 = new Cuadrado(); // Objeto Cuadrado, referencia Figura
+
+        miFigura1.dibujar(); // Llama al método de Circulo
+        miFigura2.dibujar(); // Llama al método de Cuadrado
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+Dibujando un círculo. ⚪
+Dibujando un cuadrado. ⬜
+```
+
+Aunque ambas variables son de tipo `Figura`, Java sabe en tiempo de ejecución qué método `dibujar()` específico debe llamar.
+
+### **2. Polimorfismo en Tiempo de Compilación (Method Overloading)**
+
+Esto ocurre cuando múltiples métodos en la misma clase tienen el mismo nombre pero **diferentes parámetros** (ya sea en número de parámetros o en el tipo de dato de los mismos). El compilador decide qué método llamar basándose en los argumentos que se le pasan.
+
+**Ejemplo Práctico:**
+
+
+```
+class Calculadora {
+
+    // Método sumar con dos enteros
+    public int sumar(int a, int b) {
+        return a + b;
+    }
+
+    // Método sumar con tres enteros (SOBRECARGA)
+    public int sumar(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Método sumar con dos dobles (SOBRECARGA)
+    public double sumar(double a, double b) {
+        return a + b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Calculadora calc = new Calculadora();
+        
+        System.out.println(calc.sumar(5, 10));         // Llama al primer método
+        System.out.println(calc.sumar(5, 10, 20));     // Llama al segundo método
+        System.out.println(calc.sumar(3.5, 2.5));      // Llama al tercer método
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+15
+35
+6.0
+```
+
+En resumen, el polimorfismo es una herramienta clave para escribir código flexible, reutilizable y fácil de mantener.
