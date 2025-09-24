@@ -125,7 +125,7 @@ El paquete `java.util` es una de las librerías fundamentales en el entorno de d
 
 A continuación, se describen algunas de las herramientas más utilizadas de este paquete.
 
-### **Framework de Colecciones (Collections Framework)**
+### **Colección de herramientas destacadas :**
 
 Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfaces y clases para representar y manipular grupos de objetos.
 
@@ -174,7 +174,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
     System.out.println("Hola, " + nombre);
     ```
     
-
+> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `Scanner.close()`
 
 ### **Manejo de Fechas y Horas**
 
@@ -192,18 +192,18 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 
 Estas herramientas son solo una pequeña muestra del poder y la flexibilidad que el paquete `java.util` ofrece a los desarrolladores de Java, simplificando una gran variedad de tareas de programación comunes.
 
----
-## 5. Argumentos de un programa :
-
-`String[] args` este es el argumento que recibe el método principal.
 
 ---
-## 6. Punto de entrada de la ejecución :
+## 5. Punto de entrada de la ejecución :
+
+El archivo del proyecto main es el punto de entrada en la ejecución del mismo, y es necesario en cualquier aplicación aunque luego haya otras clases o funciones que entren en acción en la ejecución :
 
  `public statitc void main (String[] args){...}`
 
+El argumento `String[] args` que recibe método principal o `main`, podemos usar estos argumentos mediante consola del sistema y accediendo a sus argumentos mediante `args[0]`, como si accediéramos a un array.
+
 ---
-## 7. Recursividad :
+## 6. Recursividad :
 
 Se trata de la capacidad de una función a ejecutarse a si misma por ejemplo :
 
@@ -238,7 +238,7 @@ public class EjemploRecursividad {
 ```
 
 ---
-## 8. Clases :
+## 7. Clases :
 
 La programación orientada a objetos o POO, aqui movemos la responsabilidad de ejecución a cada clase no como en la programación estructuradas que una ejecución de arriba a abajo y dependiendo íntegramente de los controles de flujo esta ejecución estructurada.
 
@@ -313,7 +313,7 @@ pubic class veterinaria {
 
 ---
 
-## __9. Visibilidad  :__
+## __8. Visibilidad  :__
 
 En Java, los **modificadores de visibilidad** (o de acceso) controlan qué partes de tu código pueden acceder a tus clases, atributos y métodos. Son esenciales para la **encapsulación**, que consiste en ocultar el funcionamiento interno de una clase y exponer solo lo necesario.
 
@@ -423,7 +423,7 @@ Aquí tienes una tabla para verlo de forma más clara:
 
 
 ---
-## 10. Getter y Setter :
+## 9. Getter y Setter :
 
 Llos métodos **getter** y **setter** son dos tipos de métodos públicos que se utilizan para acceder y modificar, respectivamente, el valor de las variables de instancia privadas de una clase. Su uso es una parte fundamental del principio de **encapsulamiento**, que consiste en ocultar el estado interno de un objeto y exponer solo lo necesario a través de una interfaz pública.
 
@@ -508,7 +508,7 @@ System.out.println(coche.getVelocidad());
 ```
 
 ---
-## 11. Herencia :
+## 10. Herencia :
 
 Mediante la palabra reservada `extends` :
 
@@ -524,4 +524,129 @@ private class Perro extends Animal {
 // (Mejorar y rellenar mañana)
 ```
 
-Todo clase hija hereda los atributos y métodos del padre, 
+Todo clase hija hereda los atributos y métodos del padre.
+
+La **herencia** es uno de los pilares de la Programación Orientada a Objetos (POO). Permite que una clase (llamada **subclase** o clase hija) adquiera los atributos y métodos de otra clase (llamada **superclase** o clase padre). La principal ventaja es la **reutilización de código** y la creación de una jerarquía lógica entre las clases. En Java, la herencia se implementa usando la palabra clave `extends`.
+
+
+### **Conceptos Clave**
+
+- **Superclase (Clase Padre):** Es la clase de la que se hereda. Contiene los atributos y métodos comunes.
+    
+- **Subclase (Clase Hija):** Es la clase que hereda de la superclase. Añade sus propios atributos y métodos específicos o modifica los heredados.
+    
+- **`extends`:** Es la palabra clave que se utiliza para que una clase herede de otra.
+    
+- **`super`:** Es una palabra clave que se usa dentro de una subclase para llamar a métodos o constructores de la superclase.
+    
+
+### **Ejemplo Práctico**
+
+Imaginemos que queremos modelar diferentes tipos de animales. Podemos crear una clase general `Animal` y luego clases más específicas como `Perro` y `Gato` que hereden de ella. 🐕🐈
+
+**1. Superclase: `Animal`**
+
+Esta clase tiene propiedades y comportamientos que todos los animales comparten, como un nombre y el método de comer.
+
+Java
+
+```
+// Clase Padre o Superclase
+class Animal {
+    String nombre;
+
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void comer() {
+        System.out.println(nombre + " está comiendo.");
+    }
+
+    public void dormir() {
+        System.out.println(nombre + " está durmiendo. Zzz...");
+    }
+}
+```
+
+**2. Subclase: `Perro`**
+
+La clase `Perro` **hereda** de `Animal`. Tendrá acceso a `nombre`, `comer()` y `dormir()`. Además, añadimos un método exclusivo para los perros: `ladrar()`.
+
+Java
+
+```
+// Clase Hija o Subclase
+class Perro extends Animal {
+
+    public Perro(String nombre) {
+        // Llama al constructor de la superclase (Animal)
+        super(nombre);
+    }
+
+    // Método específico de la clase Perro
+    public void ladrar() {
+        System.out.println("¡Guau! ¡Guau!");
+    }
+}
+```
+
+**3. Subclase: `Gato`**
+
+La clase `Gato` también hereda de `Animal` y añade su propio método: `maullar()`.
+
+Java
+
+```
+// Otra Clase Hija o Subclase
+class Gato extends Animal {
+
+    public Gato(String nombre) {
+        // Llama al constructor de la superclase (Animal)
+        super(nombre);
+    }
+
+    // Método específico de la clase Gato
+    public void maullar() {
+        System.out.println("¡Miau!");
+    }
+}
+```
+
+**4. Poniéndolo en práctica**
+
+Ahora, podemos crear objetos de estas clases y ver cómo funciona la herencia.
+
+Java
+
+```
+public class Zoologico {
+    public static void main(String[] args) {
+        // Creamos un objeto de la clase Perro
+        Perro miPerro = new Perro("Fido");
+        miPerro.comer();   // Método heredado de Animal
+        miPerro.dormir();  // Método heredado de Animal
+        miPerro.ladrar();  // Método propio de Perro
+
+        System.out.println("--------------------");
+
+        // Creamos un objeto de la clase Gato
+        Gato miGato = new Gato("Misi");
+        miGato.comer();    // Método heredado de Animal
+        miGato.maullar();  // Método propio de Gato
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+Fido está comiendo.
+Fido está durmiendo. Zzz...
+¡Guau! ¡Guau!
+--------------------
+Misi está comiendo.
+¡Miau!
+```
+
+Como puedes ver, tanto `miPerro` como `miGato` pueden usar el método `comer()` porque lo heredaron de `Animal`, pero cada uno tiene su propio comportamiento específico (`ladrar()` y `maullar()`). Esto evita repetir el código de `comer()` y `dormir()` en cada clase.
