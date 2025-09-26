@@ -10,6 +10,7 @@ En esta unidad formativa daremos lo básico de los fundamentos de la programaci�
 
 En un vistazo rápido la organización de un proyecto con Maven será así :
 
+```
 mi-proyecto-java/
 ├── .gitignore
 ├── pom.xml
@@ -25,21 +26,35 @@ mi-proyecto-java/
     │       └── config.properties
     └── test/
         ├── java/
-        │   └── com/
+        │   └── com/https://github.com/eliasmarin35/modulo3/blob/main/notes/Fundamentos%20Programaci%C3%B3n%20en%20Java%EA%9E%89.md
         │       └── miempresa/
         │           └── app/
         │               └── AppTest.java
         └── resources/
             └── test-data.csv
+```
 
-## 1. Tipos de datos :
+## 1. Tipos de datos básicos:
 
-- Enteros `int`, `integer`
-- booleanos `bool`
-- decimales o flotantes `float`
-- caracteres `char`
-- `void`valor vacío
+- Enteros con signo:
+  - Enteros: `int`, `integer` _4 bytes_
+  - Enteros cortos: `short` _2 bytes_
+  - Byte: `byte` _1 bytes_
+  - Enteros Largos: `long`  _8 bytes_
+- Decimales (de coma flotante) con signo:
+  - Decimal: `float` _4 bytes_
+  - Largos: `double` _8 bytes_
+- Texto
+  - Caracteres: `char` _2 bytes_
+  - Cadenas de texto: `String`
+    - _No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array)_
+- Booleanos o lógicos: `boolean` _1 byte_
+  - Valores posibles: _true_ o _false_
+- Valor vacío: `void`
+  - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
+
 ---
+
 ## 2. Estructuras de control :
 
 Son las herramientas que tenemos para controlar el flujo de programa, iteraciones, controles de salida, etc, estos son los más usados :
