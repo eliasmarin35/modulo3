@@ -26,7 +26,7 @@ mi-proyecto-java/
     │       └── config.properties
     └── test/
         ├── java/
-        │   └── com/https://github.com/eliasmarin35/modulo3/blob/main/notes/Fundamentos%20Programaci%C3%B3n%20en%20Java%EA%9E%89.md
+        │   └── com/
         │       └── miempresa/
         │           └── app/
         │               └── AppTest.java
