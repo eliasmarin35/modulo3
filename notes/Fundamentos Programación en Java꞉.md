@@ -241,6 +241,58 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 
 >**Disponibilidad :** Esta característica fue introducida como vista previa (preview) en Java 21 y Java 22, y es una característica estándar y definitiva a partir de Java 23. Ya no necesitas activar ningún flag de preview para usarla si estás en Java 23 o una versión superior.
 
+
+### Tabla de Placeholders para `printf`
+
+|Placeholder|Tipo de Dato|Descripción|
+|---|---|---|
+|**Números Enteros**|||
+|`%d`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base decimal.|
+|`%o`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base octal.|
+|`%x`, `%X`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base hexadecimal (minúsculas o mayúsculas).|
+|**Números Decimales**|||
+|`%f`|`float`, `double`|Formatea el número como un valor de punto flotante (decimal).|
+|`%e`, `%E`|`float`, `double`|Formatea el número en notación científica (minúsculas o mayúsculas).|
+|`%g`, `%G`|`float`, `double`|Usa `%f` o `%e` según cuál sea más corto.|
+|**Caracteres y Strings**|||
+|`%c`, `%C`|`char`|Formatea un único carácter (la versión mayúscula lo convierte a mayúscula).|
+|`%s`, `%S`|`String`|Formatea una cadena de texto (la versión mayúscula la convierte a mayúscula).|
+|**Booleanos**|||
+|`%b`, `%B`|`boolean`|Formatea como `"true"` o `"false"` (la versión mayúscula lo convierte a mayúscula).|
+|**Otros / Especiales**|||
+|`%n`|(ninguno)|Inserta un salto de línea específico para el sistema operativo.|
+|`%%`|(ninguno)|Inserta un símbolo de porcentaje literal (`%`).|
+
+
+### Ejemplo de Uso
+
+Un ejemplo práctico te ayudará a verlo en acción:
+
+Java
+
+```
+String nombre = "Alex";
+int edad = 28;
+double salario = 1950.758;
+
+// Usamos printf para formatear una salida limpia
+System.out.printf("Empleado: %s (%d años).%n", nombre, edad);
+System.out.printf("Su salario es de %.2f €.%n", salario);
+
+/*
+Salida en la consola:
+Empleado: Alex (28 años).
+Su salario es de 1950.76 €.
+*/
+```
+
+Como ves en el ejemplo, también puedes añadir **modificadores** para controlar la precisión y el ancho:
+
+- `%.2f`: Limita un número decimal a **2** cifras después de la coma (y lo redondea).
+    
+- `%10d`: Reserva **10** espacios para un número entero, alineándolo a la derecha.
+    
+- `%-10s`: Reserva **10** espacios para un String, alineándolo a la izquierda (por el guion `-`).
 ---
 ## 4. Librería y clases de utilidades :
 
