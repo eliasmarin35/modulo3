@@ -56,12 +56,20 @@ Son las herramientas que tenemos para controlar el flujo de programa, iteracione
 `ifelse`
 `elseif`
 
-- **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
+switch(valor){
+case 1 :
+	...
+case 2 :
+	
+}
+### **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
+
 `try` - aquí se pone el código "peligroso" que puede lanzar la excepción.
 `catch` - si se produce una excepción en el bloque `try` el programa saltará el bloque, aqui puedes definir como responder al error y puede haber varios bloques de `catch` para distintos tipos de excepciones.
 `finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
 - `return`también es una estructura de control porque modifica el flujo del programa.
 - `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
+
 ---
 ## 3.Template String:
 
@@ -905,3 +913,28 @@ public class Main {
 ```
 
 En resumen, el polimorfismo es una herramienta clave para escribir código flexible, reutilizable y fácil de mantener.
+
+## 13 . Clases abstractas :
+
+Una **clase abstracta** es como una plantilla o un esqueleto para otras clases. No puedes crear un objeto directamente a partir de ella, sino que la usas como base para crear otras clases más específicas (clases "hijas").
+
+Piensa en ella como el concepto "vehículo". Sabes que un vehículo debe tener ciertas características (como `color` o `velocidad`) y comportamientos (como `acelerar()` o `frenar()`), pero "vehículo" es una idea general, no algo concreto que puedas usar. No conduces un "vehículo", conduces un "coche", una "moto" o un "camión".
+
+---
+
+### Características Principales
+
+- **No se puede instanciar:** No puedes crear un objeto de una clase abstracta. Siguiendo el ejemplo, no puedes hacer `miVehiculo = new Vehiculo()`.
+    
+- **Contiene métodos abstractos:** Son métodos que se declaran pero no se implementan en la clase abstracta. Obligan a las clases hijas a que ellas mismas los definan. Por ejemplo, el método `tocarClaxon()` sería abstracto en "vehículo", porque un coche, una moto y un camión lo hacen de forma diferente.
+    
+- **Puede tener métodos normales:** También puede tener métodos con su lógica ya definida que las clases hijas simplemente heredan y usan tal cual, como `acelerar()`.
+    
+
+En resumen, una clase abstracta define un conjunto de reglas y comportamientos comunes que otras clases deben seguir y/o implementar, asegurando que todas tengan una estructura similar.
+
+## Constantes:
+
+## Static:
+
+## Arrays :
