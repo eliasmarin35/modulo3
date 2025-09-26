@@ -6,10 +6,13 @@ modified: '2025-09-23T10:11:30.290Z'
 
 # Fundamentos Programación en Java:
 
-En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos Maven para la organización de carpetas de proyecto.
+En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos MavSi no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+en para la organización de carpetas de proyecto.
 
 En un vistazo rápido la organización de un proyecto con Maven será así :
 
+```
 mi-proyecto-java/
 ├── .gitignore
 ├── pom.xml
@@ -31,24 +34,108 @@ mi-proyecto-java/
         │               └── AppTest.java
         └── resources/
             └── test-data.csv
+```
 
-## 1. Tipos de datos :
+## 1. Tipos de datos básicos:
 
-- Enteros `int`, `integer`
-- booleanos `bool`
-- decimales o flotantes `float`
-- caracteres `char`
-- `void`valor vacío
+- Enteros con signo:
+  - Enteros: `int`, `integer` _4 bytes_
+  - Enteros cortos: `short` _2 bytes_
+  - Byte: `byte` _1 bytes_
+  - Enteros Largos: `long`  _8 bytes_
+- Decimales (de coma flotante) con signo:
+  - Decimal: `float` _4 bytes_
+  - Largos: `double` _8 bytes_
+- Texto
+  - Caracteres: `char` _2 bytes_
+  - Cadenas de texto: `String`
+    - _No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array)_
+- Booleanos o lógicos: `boolean` _1 byte_Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
+  - Valores posibles: _true_ o _false_
+- Valor vacío: `void`
+  - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
+
 ---
-## 2. Estructuras de control :
+
+## 2. Estructuras de control:
 
 Son las herramientas que tenemos para controlar el flujo de programa, iteraciones, controles de salida, etc, estos son los más usados :
 
 - __Bucles:__
 
-`while{...}`
-`do{..} while`
-`for(i=0;i<x;i++){..}`
+```
+// WHILE: Bucle con condicion
+//   (puede no ejecutarse ni siquiera una vez si la condición no se cumple al principio)
+//   MUCHO OJO CON CREAR BUCLES INFINITOS (que siempre cumplan la condición, y por tanto no salgan)
+//
+while (condicion) {...}
+
+// DO WHILE: Bucle con condicion que se ejecuta al menos una vez siempre
+//   La condición se evalú al final de cada iteración, con lo cual siempre hará la primera
+//   MUCHO OJO CON CREAR BUCLES INFINITOS (que siempre cumplan la condición, y por tanto no salgan)
+//   PUNTO Y COMA AL FINAL !!!!!
+//
+do { ... } while ();
+
+// FOR: Es una abreviatura de un bucle WHILE. Tiene tres parámetros:
+//     1- INICIALIZACION: aqui ponemos lo que hay que inicializar
+//            en un WHILE sería lo que va ANTES de entrar en el bucle
+//            Lo común es darle un valor inical a una variable numerioca (contador)
+//                 que será la que evaluemos en la condición del bucle
+//
+//     2- CONDICION DEL BUCLE: aqui escribimos la condición tal y como lo haríamos en un WHILE
+//            Lo común es comprobar si nuestro contador ha llegado a cierta candtidad
+//            Dependiendo de sin contamos hacia arriba o hacia abajo podremos hacer cosas como:
+//                 contador > 0         contador >= 0
+//                 contador < maximo    contador <= 0Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
+//
+//     3- FINAL DE ITERACION: lo que se hace al final de una iteración, para entrar en la siguiente o salir.
+//            Lo común es incrementar o decrementar la variable contador, ya sea sumando/restando 1 u otro vale
+//            ej: incrementar uno
+//                 contador = contador + 1
+//                 contador += 1
+//                 contador++
+//
+//            ej: decrementar uno
+//                 contador = contador - 1
+//                 contador -= 1
+//                 contador--
+//
+//            ej: incrementar dos
+//                 contador = contador + 2
+//                 contador += 2
+//Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
+//            ej: decrementar dos
+//                 contador = contador - 2
+//                 contador -= 2
+
+for ( INICIALIZACION ; CONDICION ; FINAL IT) {...}
+
+ej:
+for (contador=0 ; contador < 100 ; contador ++) {...}
+
+// esto seria equivalente al siguiente bucle WHILE
+contador = 0;
+while ( contador < 100 ) {
+	...
+	contador++;
+}
+
+// Si la variable de iteración no existe, se puede declarar dentro del for
+//     PERO ENTONCES NO EXISTIRA FUERA DEL FOR
+
+for (int i=0; i < 100; i+=2 ) {...}
+
+// en este código la varible i se puede usar dentro del FOR pero no fuera, porque está declarada en el propio FOR
+
+```
+
 
 - __Condicionales:__
 
@@ -118,7 +205,9 @@ int unreadMessages = 12;
 // ¡Así de simple!
 String message = STR."Hola \{name}, tienes \{unreadMessages} mensajes sin leer.";
 
-System.out.println(message);
+System.out.println(message);Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
 // Salida: Hola Maria, tienes 12 mensajes sin leer.
 ```
 
@@ -227,7 +316,9 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 Estas herramientas son solo una pequeña muestra del poder y la flexibilidad que el paquete `java.util` ofrece a los desarrolladores de Java, simplificando una gran variedad de tareas de programación comunes.
 
 
----
+---Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
 ## 5. Punto de entrada de la ejecución :
 
 El archivo del proyecto main es el punto de entrada en la ejecución del mismo, y es necesario en cualquier aplicación aunque luego haya otras clases o funciones que entren en acción en la ejecución :
@@ -402,6 +493,8 @@ public class Moto extends Vehiculo {
 ### 3. `default` (o Package-Private) 🏠
 
 Si **no escribes ningún modificador**, se aplica la visibilidad por defecto. Un miembro `default` solo es accesible para clases que están en el **mismo paquete**. No es accesible desde subclases en paquetes diferentes.
+
+También se puede escribir literalmentela palabra clave `default` o `package`.
 
 - **Uso común**: Para clases o métodos "ayudantes" que solo tienen sentido dentro del contexto de un paquete específico y no deben ser expuestos al resto de la aplicación.
     
@@ -913,6 +1006,7 @@ public class Main {
 ```
 
 En resumen, el polimorfismo es una herramienta clave para escribir código flexible, reutilizable y fácil de mantener.
+<<<<<<< HEAD
 
 ## 13 . Clases abstractas :
 
@@ -938,3 +1032,5 @@ En resumen, una clase abstracta define un conjunto de reglas y comportamientos c
 ## Static:
 
 ## Arrays :
+=======
+>>>>>>> 5567231386cd3ea8e47d993a73faa6179718613e
