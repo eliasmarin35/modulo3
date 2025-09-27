@@ -347,9 +347,10 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
     System.out.print("Introduce tu nombre: ");
     String nombre = scanner.nextLine();
     System.out.println("Hola, " + nombre);
+    scanner.close();
     ```
     
-> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `Scanner.close()`
+> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `scanner.close()`
 
 ### **Manejo de Fechas y Horas**
 
