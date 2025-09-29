@@ -115,7 +115,7 @@ System.out.println(numDia); // Esto imprimira por pantalla 4
 
 ```
 
-### 1.3. Clases Objetos
+### 1.3. Clases y Objetos
 En Java se pueden definir clases con la palabra reservada `class`.
 Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java.
 
@@ -127,8 +127,15 @@ Para utilizar una clase tenemos dos opciones:
   * Son aquellos que se declaran con la palabra reservada `static`.
   * Se invocan con el nombre de la clase, punto y el nombre del método: `Clase.metodoEstatico()`.
   * Un método estático solo puede acceder a otros métodos estáticos y atributos estáticos de la clase.
+    * El método estático no puede usar la palabra reservada `this`, en su lugar podría usar el nombre de la clase. 
     * Pero podría crear un nuevo objeto de dicha clase y usarlo como si fuera código externo a la clase.
-  * Un método _normal_, si puede acceder a los métodos y atributos estáticos de la clase.  
+  * Un método _normal_, si puede acceder a los métodos y atributos estáticos de la clase.
+
+#### 1.3.1 Variables y atributos _final_
+
+Una variable (o un atributo de clase (estático) o de instancia (no estático)) puede ser declarado con la palabra reservada `final` al principio.
+Esto convierte a la variable en una _constante_, es decir, un dato que, una vez inicializado, no puede cambiar su valor.
+Si intentamos cambiar el valor de una variable _final_, obtendremos un error en tiempo de compilación o de ejecución.
 
 ## 2. Estructuras de control:
 
