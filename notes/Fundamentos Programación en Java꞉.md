@@ -1150,6 +1150,144 @@ Piensa en ella como el concepto "vehículo". Sabes que un vehículo debe tener c
 En resumen, una clase abstracta define un conjunto de reglas y comportamientos comunes que otras clases deben seguir y/o implementar, asegurando que todas tengan una estructura similar.
 ## Constantes:
 
-## Static:
+## La palabra reservada `static`:
+
+La palabra clave `static` significa que algo pertenece a la **clase misma** y no a una **instancia** (un objeto) de esa clase.
+
+Imagina una clase `Coche` 🚗.
+
+- Una variable normal (no estática) como `color` es única para cada coche que creas. Tienes un coche rojo, otro azul... cada uno tiene su propio color.
+    
+- Una variable `static` como `numeroDeCochesFabricados` sería **una sola variable compartida por todos los objetos** `Coche`. Si fabricas un coche nuevo, este contador aumenta para la clase entera, no solo para ese coche.
+    
+
+### ## Variables estáticas (o de clase)
+
+Son **compartidas** por todos los objetos de la clase. Solo existe una copia de esta variable, sin importar cuántos objetos crees.
+
+Java
+
+```
+class Coche {
+    public static int contadorDeCoches = 0; // Variable estática
+    public String color; // Variable de instancia
+
+    public Coche() {
+        contadorDeCoches++; // Se incrementa el contador de la CLASE
+    }
+}
+
+// En el main:
+System.out.println("Coches creados: " + Coche.contadorDeCoches); // Imprime 0
+Coche miCocheAzul = new Coche();
+Coche miCocheRojo = new Coche();
+System.out.println("Coches creados: " + Coche.contadorDeCoches); // Imprime 2
+```
+
+### ## Métodos estáticos
+
+Se pueden llamar **directamente desde la clase, sin necesidad de crear un objeto**. Son como herramientas o utilidades generales que no dependen de los datos de un objeto particular. 🔧
+
+El ejemplo perfecto son los métodos de la clase `Math`:
+
+
+```
+// No necesitas crear un objeto "Math" para usar sus métodos
+double raiz = Math.sqrt(25); // Llamada directamente desde la clase Math
+```
+
+**Regla clave:** Un método `static` no puede usar variables o métodos que no sean `static`, porque no está asociado a ningún objeto en concreto y no sabría de qué objeto tomar esos datos.
+
+El método `main` es el ejemplo más famoso, ya que Java necesita poder llamarlo para iniciar el programa antes de que se cree cualquier objeto.
+
+### ## En resumen
+
+✅ **Pertenece a la clase, no al objeto.** ✅ **Es compartido:** Para variables, hay una sola copia para todos los objetos. ✅ **No necesita un objeto:** Se accede usando el nombre de la clase (ej: `NombreClase.miMetodoEstatico()`).
+
+## Clases enumeradas :
+
+Los enumerados (o `enum`) son un tipo de dato especial que permite definir un **conjunto fijo de constantes con nombre**.
+
+Imagina que quieres representar los días de la semana. En lugar de usar números (`1` para lunes, `2` para martes) o strings (`"Lunes"`, `"Martes"`), que pueden llevar a errores, creas un enumerado. 🗓️
+
+
+### ## ¿Por qué usarlos?
+
+Principalmente por dos razones:
+
+1. **Seguridad de tipos:** Una variable de tipo `DiaDeLaSemana` solo puede valer `LUNES`, `MARTES`, etc. No puedes asignarle un `9` o un `"Juernes"`. Esto evita errores en tiempo de ejecución.
+    
+2. **Claridad y legibilidad:** El código es mucho más fácil de leer y entender. `if (dia == DiaDeLaSemana.LUNES)` es infinitamente más claro que `if (dia == 1)`.
+    
+### ## Ejemplo básico
+
+Así se declara y se usa un enumerado en un lenguaje como Java:
+
+
+```
+// 1. Declaramos el conjunto de constantes
+public enum DiaDeLaSemana {
+    LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO;
+}
+
+// 2. Lo usamos en nuestro código
+public class Calendario {
+    public static void main(String[] args) {
+        DiaDeLaSemana hoy = DiaDeLaSemana.LUNES;
+
+        if (hoy == DiaDeLaSemana.LUNES) {
+            System.out.println("¡Ánimo, empieza la semana!");
+        }
+
+        // También son muy útiles en estructuras de control como switch
+        switch (hoy) {
+            case SABADO:
+            case DOMINGO:
+                System.out.println("Es fin de semana.");
+                break;
+            default:
+                System.out.println("Es un día laboral.");
+                break;
+        }
+    }
+}
+```
+
+### ## Un poco más avanzados
+
+Los enumerados no son solo listas de nombres; pueden tener **atributos y métodos**, como una clase normal. Esto los hace increíblemente potentes. 🚦
+
+Por ejemplo, un semáforo donde cada color tiene una acción asociada:
+
+Java
+
+```
+public enum Semaforo {
+    ROJO("Detenerse"),
+    AMARILLO("Precaución"),
+    VERDE("Avanzar");
+
+    private final String accion; // Atributo
+
+    // Constructor privado
+    Semaforo(String accion) {
+        this.accion = accion;
+    }
+
+    // Método público
+    public String getAccion() {
+        return accion;
+    }
+}
+
+// Cómo se usaría:
+Semaforo miLuz = Semaforo.ROJO;
+System.out.println(miLuz); // Imprime ROJO
+System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acción a realizar: Detenerse"
+```
+
+### ## En resumen
+
+✅ Un **enumerado** es una lista de **constantes predefinidas**. ✅ Aportan **seguridad** al no permitir valores incorrectos. ✅ Hacen el código mucho más **legible** y fácil de mantener. ✅ Pueden ser tan **simples** o **complejos** (con métodos y atributos) como necesites.
 
 ## Arrays :
