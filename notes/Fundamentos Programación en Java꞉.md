@@ -813,8 +813,6 @@ En Java, una **interfaz** es como un **contrato** o un plano que define un conju
 
 Piensa en los botones de un control remoto de TV. Todos los controles remotos (sin importar la marca) tienen botones como "encender", "subir volumen" y "cambiar canal". La interfaz sería el conjunto de esos botones (las acciones que se pueden realizar). Cada fabricante (Sony, Samsung, etc.) decide cómo implementa internamente esa funcionalidad, pero todos cumplen con el contrato de ofrecer esos botones.
 
----
-
 ## **Características Clave**
 
 - **100% Métodos Abstractos (por defecto):** Tradicionalmente, todos los métodos de una interfaz son `abstract`, lo que significa que no tienen cuerpo (código). Solo se define su firma (nombre, parámetros y tipo de retorno). La clase que implementa la interfaz está obligada a proporcionar el código para estos métodos.
@@ -825,8 +823,6 @@ Piensa en los botones de un control remoto de TV. Todos los controles remotos (s
     
 - **`default` y `static` methods:** Versiones más modernas de Java permiten que las interfaces tengan métodos con implementación (`default` methods) para añadir nueva funcionalidad sin romper las clases que ya la implementan.
     
-
----
 
 ## **Ejemplo Práctico**
 
