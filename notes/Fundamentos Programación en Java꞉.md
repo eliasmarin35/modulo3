@@ -268,7 +268,6 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 
 Un ejemplo práctico te ayudará a verlo en acción:
 
-Java
 
 ```
 String nombre = "Alex";
@@ -350,7 +349,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
     scanner.close();
     ```
     
-> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `scanner.close()`
+> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `scanner.close()` para ahorrar recursos.
 
 ### **Manejo de Fechas y Horas**
 
@@ -680,7 +679,6 @@ System.out.println(coche.velocidad);
 
 Se utiliza esto:
 
-
 ```
 // Acceso controlado mediante métodos
 coche.setVelocidad(200);
@@ -689,7 +687,6 @@ System.out.println(coche.getVelocidad());
 
 ---
 ## 10. Herencia :
-
 
 La **herencia** es uno de los pilares de la Programación Orientada a Objetos (POO). Permite que una clase (llamada **subclase** o clase hija) adquiera los atributos y métodos de otra clase (llamada **superclase** o clase padre). La principal ventaja es la **reutilización de código** y la creación de una jerarquía lógica entre las clases. En Java, la herencia se implementa usando la palabra clave `extends`.
 
@@ -1067,8 +1064,6 @@ Una **clase abstracta** es como una plantilla o un esqueleto para otras clases. 
 
 Piensa en ella como el concepto "vehículo". Sabes que un vehículo debe tener ciertas características (como `color` o `velocidad`) y comportamientos (como `acelerar()` o `frenar()`), pero "vehículo" es una idea general, no algo concreto que puedas usar. No conduces un "vehículo", conduces un "coche", una "moto" o un "camión".
 
----
-
 ### Características Principales
 
 - **No se puede instanciar:** No puedes crear un objeto de una clase abstracta. Siguiendo el ejemplo, no puedes hacer `miVehiculo = new Vehiculo()`.
@@ -1079,11 +1074,8 @@ Piensa en ella como el concepto "vehículo". Sabes que un vehículo debe tener c
     
 
 En resumen, una clase abstracta define un conjunto de reglas y comportamientos comunes que otras clases deben seguir y/o implementar, asegurando que todas tengan una estructura similar.
-
 ## Constantes:
 
 ## Static:
 
 ## Arrays :
-=======
->>>>>>> 5567231386cd3ea8e47d993a73faa6179718613e
