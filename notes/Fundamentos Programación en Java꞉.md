@@ -57,6 +57,15 @@ mi-proyecto-java/
   - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
 ---
 
+Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y además nos proporciona métodos para trabajar con el tipo.
+
+| TIPO BASE | WRAPPER |
+-----------------------
+| int       | Integer |
+| long      | LongInteger |
+| char      | Character |
+| boolean   | Boolean |
+
 ### 1.2. Cadenas de Caracteres
 No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array).
 
@@ -107,7 +116,13 @@ System.out.println(numDia); // Esto imprimira por pantalla 4
 
 ### 1.3. Clases Objetos
 En Java se pueden definir clases con la palabra reservada `class`.
-Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java. 
+Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java.
+
+Para utilizar una clase tenemos dos opciones:
+* Instanciar un objeto de dicha clase
+  * Un objeto es la materialización de un _individuo_ de dicha clase: `String s = new String()`.
+  * Cada objeto tendrá sus propios valores en los atributos de la clase.
+* 
 
 ## 2. Estructuras de control:
 
