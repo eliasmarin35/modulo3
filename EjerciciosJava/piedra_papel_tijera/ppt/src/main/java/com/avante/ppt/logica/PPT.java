@@ -19,8 +19,9 @@ public class PPT {
     private int puntosJ2 = 0;
     
     private int numRonda  = 0;
-    private int maxRondas = 3;
-    private int ganaRonda = 2;
+    
+    private static final int MAX_RONDAS = 3;
+    private static final int GANA_RONDA = 2;
     
     
     /************ METODOS **************/
@@ -114,7 +115,6 @@ public class PPT {
         else {
             System.out.printf("Ha ganado el jugador %d.\n\n", ganador);
         }
-        
     }
     
     private void ronda () {
@@ -141,9 +141,9 @@ public class PPT {
         
         // Imprimo detalles del juego
         System.out.println("Vamos a jugra a Piedra Papel o Tijera\n");
-        System.out.printf("Ganará el mejor de %s rondas.\n", this.maxRondas);
-        System.out.printf("O lo que es lo mismo, el primero que llegue a %d puntos.\n\n", this.ganaRonda);
-        System.out.printf("Si hay un empate despues de las %d rondas, se seguirá jugando hasta que alguien gane.\n\n", this.maxRondas);
+        System.out.printf("Ganará el mejor de %s rondas.\n", this.MAX_RONDAS);
+        System.out.printf("O lo que es lo mismo, el primero que llegue a %d puntos.\n\n", this.GANA_RONDA);
+        System.out.printf("Si hay un empate despues de las %d rondas, se seguirá jugando hasta que alguien gane.\n\n", this.MAX_RONDAS);
         
         // inicio mi numero de ronda
         this.numRonda = 1;
@@ -156,12 +156,12 @@ public class PPT {
             this.infoRonda();
         
             // hay ganador ????
-            if ( this.numRonda < this.maxRondas ) {
+            if ( this.numRonda < this.MAX_RONDAS ) {
                 // Si estamos en la parte de "El mejor de X rondas"
-                if (this.puntosJ1 >= this.ganaRonda) {
+                if (this.puntosJ1 >= this.GANA_RONDA) {
                     ganador = 1;
                 }
-                else if (this.puntosJ2 >= this.ganaRonda) {
+                else if (this.puntosJ2 >= this.GANA_RONDA) {
                     ganador = 2;
                 }
             }
@@ -199,6 +199,6 @@ public class PPT {
         }
      
         // Cierro el scanner
-        this.scan.close();
+        //this.scan.close();
     }
 }
