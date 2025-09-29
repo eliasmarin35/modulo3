@@ -36,7 +36,9 @@ mi-proyecto-java/
             └── test-data.csv
 ```
 
-## 1. Tipos de datos básicos:
+
+## 1 Tipos de datos
+### 1.1 Tipos de datos básicos:
 
 - Enteros con signo:
   - Enteros: `int`, `integer` _4 bytes_
@@ -49,15 +51,84 @@ mi-proyecto-java/
 - Texto
   - Caracteres: `char` _2 bytes_
   - Cadenas de texto: `String`
-    - _No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array)_
 - Booleanos o lógicos: `boolean` _1 byte_Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
-
-
   - Valores posibles: _true_ o _false_
 - Valor vacío: `void`
   - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
-
 ---
+
+Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y además nos proporciona métodos para trabajar con el tipo.
+
+| TIPO BASE | WRAPPER |
+|-----------|----------|
+| int       | Integer |
+| long      | Long |
+| double    | Double |
+| char      | Character |
+| boolean   | Boolean |
+
+### 1.2. Cadenas de Caracteres
+No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array).
+
+Como es un objeto, al usar el operador `==` o `!=` lo que se compara es la referencia al objeto, y no el valor de las cadenas en sí.
+Para poder compararlas, debemos usar el método de la clase `Object` `public boolean equals(Object o2)`.
+```
+String s1 = new String("HOLA");
+String s2 = new String("HOLA");
+
+System.out.println((s1 == s2)); // DA FALSE porque compara las referencias en memoria de los objetos
+
+System.out.println(s1.equals(s2)); // DA TRUE porque el metodo equals en la clase String compara el valor de las cadenas.
+```
+
+Desde Java7 se permite hacer un switch con cadenas de texto de manera simplificada.
+
+```
+String diaSemana = "jueves";
+int numDia = 0;
+
+switch (diaSemana) {
+	case "lunes":
+		numDia=1;
+		break;
+	case "martes":
+		numDia=2;
+		break;
+	case "miercoles":
+		numDia=3;
+		break;
+	case "jueves":
+		numDia=4;
+		break;
+	case "viernes":
+		numDia=5;
+		break;
+	case "sabado":
+		numDia=6;
+		break;
+	case "domingo":
+		numDia=7;
+		break;
+}
+
+System.out.println(numDia); // Esto imprimira por pantalla 4
+
+```
+
+### 1.3. Clases Objetos
+En Java se pueden definir clases con la palabra reservada `class`.
+Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java.
+
+Para utilizar una clase tenemos dos opciones:
+* Instanciar un objeto de dicha clase
+  * Un objeto es la materialización de un _individuo_ de dicha clase: `String s = new String()`.
+  * Cada objeto tendrá sus propios valores en los atributos de la clase.
+* Utilizar sus métodos estáticos
+  * Son aquellos que se declaran con la palabra reservada `static`.
+  * Se invocan con el nombre de la clase, punto y el nombre del método: `Clase.metodoEstatico()`.
+  * Un método estático solo puede acceder a otros métodos estáticos y atributos estáticos de la clase.
+    * Pero podría crear un nuevo objeto de dicha clase y usarlo como si fuera código externo a la clase.
+  * Un método _normal_, si puede acceder a los métodos y atributos estáticos de la clase.  
 
 ## 2. Estructuras de control:
 
