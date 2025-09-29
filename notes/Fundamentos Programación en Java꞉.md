@@ -75,30 +75,30 @@ Desde Java7 se permite hacer un switch con cadenas de texto de manera simplifica
 
 ```
 String diaSemana = "jueves";
-int numDia;
+int numDia = 0;
 
 switch (diaSemana) {
 	case "lunes":
 		numDia=1;
-		breaK;
+		break;
 	case "martes":
 		numDia=2;
-		breaK;
+		break;
 	case "miercoles":
 		numDia=3;
-		breaK;
+		break;
 	case "jueves":
 		numDia=4;
-		breaK;
+		break;
 	case "viernes":
 		numDia=5;
-		breaK;
+		break;
 	case "sabado":
 		numDia=6;
-		breaK;
+		break;
 	case "domingo":
 		numDia=7;
-		breaK;
+		break;
 }
 
 System.out.println(numDia); // Esto imprimira por pantalla 4
