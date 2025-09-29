@@ -60,9 +60,10 @@ mi-proyecto-java/
 Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y además nos proporciona métodos para trabajar con el tipo.
 
 | TIPO BASE | WRAPPER |
------------------------
+|-----------|----------|
 | int       | Integer |
-| long      | LongInteger |
+| long      | Long |
+| double    | Double |
 | char      | Character |
 | boolean   | Boolean |
 
@@ -122,7 +123,12 @@ Para utilizar una clase tenemos dos opciones:
 * Instanciar un objeto de dicha clase
   * Un objeto es la materialización de un _individuo_ de dicha clase: `String s = new String()`.
   * Cada objeto tendrá sus propios valores en los atributos de la clase.
-* 
+* Utilizar sus métodos estáticos
+  * Son aquellos que se declaran con la palabra reservada `static`.
+  * Se invocan con el nombre de la clase, punto y el nombre del método: `Clase.metodoEstatico()`.
+  * Un método estático solo puede acceder a otros métodos estáticos y atributos estáticos de la clase.
+    * Pero podría crear un nuevo objeto de dicha clase y usarlo como si fuera código externo a la clase.
+  * Un método _normal_, si puede acceder a los métodos y atributos estáticos de la clase.  
 
 ## 2. Estructuras de control:
 
