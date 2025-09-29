@@ -1253,6 +1253,9 @@ public class Calendario {
 }
 ```
 
+### Comparaciones con enumerados :
+
+Una de sus principales utilidades de los enumerados . Puedes usar enumerados en cualquier estructura de control que requiera una comparación, como `if`, `else if`, `else` y `switch`.
 ### ## Un poco más avanzados
 
 Los enumerados no son solo listas de nombres; pueden tener **atributos y métodos**, como una clase normal. Esto los hace increíblemente potentes. 🚦
