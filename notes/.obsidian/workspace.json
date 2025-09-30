@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 238.5
   },
   "right": {
     "id": "da1bc9e139fdc12d",
@@ -171,10 +171,10 @@
   },
   "active": "f25bc780dd8d46a5",
   "lastOpenFiles": [
-    "Fundamentos Java.md",
-    "Fundamentos Programación en Java꞉.md",
-    "DEFINICIÓN Y MANIPULACIÓN DE DATOS (1).md",
     "PL SQL en POSTGRESSQL.md",
+    "Fundamentos Programación en Java꞉.md",
+    "Fundamentos Java.md",
+    "DEFINICIÓN Y MANIPULACIÓN DE DATOS (1).md",
     "PL SQL.md",
     "DEFINICIÓN Y MANIPULACIÓN DE DATOS.md"
   ]

@@ -6,10 +6,13 @@ modified: '2025-09-23T10:11:30.290Z'
 
 # Fundamentos Programación en Java:
 
-En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos Maven para la organización de carpetas de proyecto.
+En esta unidad formativa daremos lo básico de los fundamentos de la programación con Java y emperecemos a introducir el concepto del paradigma de programación orientada a objetos. Al principio en java debemos tener claro que usaremos MavSi no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+en para la organización de carpetas de proyecto.
 
 En un vistazo rápido la organización de un proyecto con Maven será así :
 
+```
 mi-proyecto-java/
 ├── .gitignore
 ├── pom.xml
@@ -31,24 +34,186 @@ mi-proyecto-java/
         │               └── AppTest.java
         └── resources/
             └── test-data.csv
+```
 
-## 1. Tipos de datos :
 
-- Enteros `int`, `integer`
-- booleanos `bool`
-- decimales o flotantes `float`
-- caracteres `char`
-- `void`valor vacío
+## 1 Tipos de datos
+### 1.1 Tipos de datos básicos:
+
+- Enteros con signo:
+  - Enteros: `int`, `integer` _4 bytes_
+  - Enteros cortos: `short` _2 bytes_
+  - Byte: `byte` _1 bytes_
+  - Enteros Largos: `long`  _8 bytes_
+- Decimales (de coma flotante) con signo:
+  - Decimal: `float` _4 bytes_
+  - Largos: `double` _8 bytes_
+- Texto
+  - Caracteres: `char` _2 bytes_
+  - Cadenas de texto: `String`
+- Booleanos o lógicos: `boolean` _1 byte_Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+  - Valores posibles: _true_ o _false_
+- Valor vacío: `void`
+  - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
 ---
-## 2. Estructuras de control :
+
+Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y además nos proporciona métodos para trabajar con el tipo.
+
+| TIPO BASE | WRAPPER |
+|-----------|----------|
+| int       | Integer |
+| long      | Long |
+| double    | Double |
+| char      | Character |
+| boolean   | Boolean |
+
+### 1.2. Cadenas de Caracteres
+No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array).
+
+Como es un objeto, al usar el operador `==` o `!=` lo que se compara es la referencia al objeto, y no el valor de las cadenas en sí.
+Para poder compararlas, debemos usar el método de la clase `Object` `public boolean equals(Object o2)`.
+```
+String s1 = new String("HOLA");
+String s2 = new String("HOLA");
+
+System.out.println((s1 == s2)); // DA FALSE porque compara las referencias en memoria de los objetos
+
+System.out.println(s1.equals(s2)); // DA TRUE porque el metodo equals en la clase String compara el valor de las cadenas.
+```
+
+Desde Java7 se permite hacer un switch con cadenas de texto de manera simplificada.
+
+```
+String diaSemana = "jueves";
+int numDia = 0;
+
+switch (diaSemana) {
+	case "lunes":
+		numDia=1;
+		break;
+	case "martes":
+		numDia=2;
+		break;
+	case "miercoles":
+		numDia=3;
+		break;
+	case "jueves":
+		numDia=4;
+		break;
+	case "viernes":
+		numDia=5;
+		break;
+	case "sabado":
+		numDia=6;
+		break;
+	case "domingo":
+		numDia=7;
+		break;
+}
+
+System.out.println(numDia); // Esto imprimira por pantalla 4
+
+```
+
+### 1.3. Clases y Objetos
+En Java se pueden definir clases con la palabra reservada `class`.
+Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java.
+
+Para utilizar una clase tenemos dos opciones:
+* Instanciar un objeto de dicha clase
+  * Un objeto es la materialización de un _individuo_ de dicha clase: `String s = new String()`.
+  * Cada objeto tendrá sus propios valores en los atributos de la clase.
+* Utilizar sus métodos estáticos
+  * Son aquellos que se declaran con la palabra reservada `static`.
+  * Se invocan con el nombre de la clase, punto y el nombre del método: `Clase.metodoEstatico()`.
+  * Un método estático solo puede acceder a otros métodos estáticos y atributos estáticos de la clase.
+    * El método estático no puede usar la palabra reservada `this`, en su lugar podría usar el nombre de la clase. 
+    * Pero podría crear un nuevo objeto de dicha clase y usarlo como si fuera código externo a la clase.
+  * Un método _normal_, si puede acceder a los métodos y atributos estáticos de la clase.
+
+#### 1.3.1 Variables y atributos _final_
+
+Una variable (o un atributo de clase (estático) o de instancia (no estático)) puede ser declarado con la palabra reservada `final` al principio.
+Esto convierte a la variable en una _constante_, es decir, un dato que, una vez inicializado, no puede cambiar su valor.
+Si intentamos cambiar el valor de una variable _final_, obtendremos un error en tiempo de compilación o de ejecución.
+
+## 2. Estructuras de control:
 
 Son las herramientas que tenemos para controlar el flujo de programa, iteraciones, controles de salida, etc, estos son los más usados :
 
 - __Bucles:__
 
-`while{...}`
-`do{..} while`
-`for(i=0;i<x;i++){..}`
+```
+// WHILE: Bucle con condicion
+//   (puede no ejecutarse ni siquiera una vez si la condición no se cumple al principio)
+//   MUCHO OJO CON CREAR BUCLES INFINITOS (que siempre cumplan la condición, y por tanto no salgan)
+//
+while (condicion) {...}
+
+// DO WHILE: Bucle con condicion que se ejecuta al menos una vez siempre
+//   La condición se evalú al final de cada iteración, con lo cual siempre hará la primera
+//   MUCHO OJO CON CREAR BUCLES INFINITOS (que siempre cumplan la condición, y por tanto no salgan)
+//   PUNTO Y COMA AL FINAL !!!!!
+//
+do { ... } while ();
+
+// FOR: Es una abreviatura de un bucle WHILE. Tiene tres parámetros:
+//     1- INICIALIZACION: aqui ponemos lo que hay que inicializar
+//            en un WHILE sería lo que va ANTES de entrar en el bucle
+//            Lo común es darle un valor inical a una variable numerioca (contador)
+//                 que será la que evaluemos en la condición del bucle
+//
+//     2- CONDICION DEL BUCLE: aqui escribimos la condición tal y como lo haríamos en un WHILE
+//            Lo común es comprobar si nuestro contador ha llegado a cierta candtidad
+//            Dependiendo de sin contamos hacia arriba o hacia abajo podremos hacer cosas como:
+//                 contador > 0         contador >= 0
+//                 contador < maximo    contador <= 0Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
+//
+//     3- FINAL DE ITERACION: lo que se hace al final de una iteración, para entrar en la siguiente o salir.
+//            Lo común es incrementar o decrementar la variable contador, ya sea sumando/restando 1 u otro vale
+//            ej: incrementar uno
+//                 contador = contador + 1
+//                 contador += 1
+//                 contador++
+//
+//            ej: decrementar uno
+//                 contador = contador - 1
+//                 contador -= 1
+//                 contador--
+//
+//            ej: incrementar dos
+//                 contador = contador + 2
+//                 contador += 2
+//Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
+//            ej: decrementar dos
+//                 contador = contador - 2
+//                 contador -= 2
+
+for ( INICIALIZACION ; CONDICION ; FINAL IT) {...}
+
+ej:
+for (contador=0 ; contador < 100 ; contador ++) {...}
+
+// esto seria equivalente al siguiente bucle WHILE
+contador = 0;
+while ( contador < 100 ) {
+	...
+	contador++;
+}
+
+// Si la variable de iteración no existe, se puede declarar dentro del for
+//     PERO ENTONCES NO EXISTIRA FUERA DEL FOR
+
+for (int i=0; i < 100; i+=2 ) {...}
+
+// en este código la varible i se puede usar dentro del FOR pero no fuera, porque está declarada en el propio FOR
+
+```
+
 
 - __Condicionales:__
 
@@ -56,12 +221,20 @@ Son las herramientas que tenemos para controlar el flujo de programa, iteracione
 `ifelse`
 `elseif`
 
-- **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
+switch(valor){
+case 1 :
+	...
+case 2 :
+	
+}
+### **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
+
 `try` - aquí se pone el código "peligroso" que puede lanzar la excepción.
 `catch` - si se produce una excepción en el bloque `try` el programa saltará el bloque, aqui puedes definir como responder al error y puede haber varios bloques de `catch` para distintos tipos de excepciones.
 `finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
 - `return`también es una estructura de control porque modifica el flujo del programa.
 - `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
+
 ---
 ## 3.Template String:
 
@@ -110,7 +283,9 @@ int unreadMessages = 12;
 // ¡Así de simple!
 String message = STR."Hola \{name}, tienes \{unreadMessages} mensajes sin leer.";
 
-System.out.println(message);
+System.out.println(message);Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
 // Salida: Hola Maria, tienes 12 mensajes sin leer.
 ```
 
@@ -144,6 +319,57 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 
 >**Disponibilidad :** Esta característica fue introducida como vista previa (preview) en Java 21 y Java 22, y es una característica estándar y definitiva a partir de Java 23. Ya no necesitas activar ningún flag de preview para usarla si estás en Java 23 o una versión superior.
 
+
+### Tabla de Placeholders para `printf`
+
+|Placeholder|Tipo de Dato|Descripción|
+|---|---|---|
+|**Números Enteros**|||
+|`%d`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base decimal.|
+|`%o`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base octal.|
+|`%x`, `%X`|`byte`, `short`, `int`, `long`|Formatea el número como un entero en base hexadecimal (minúsculas o mayúsculas).|
+|**Números Decimales**|||
+|`%f`|`float`, `double`|Formatea el número como un valor de punto flotante (decimal).|
+|`%e`, `%E`|`float`, `double`|Formatea el número en notación científica (minúsculas o mayúsculas).|
+|`%g`, `%G`|`float`, `double`|Usa `%f` o `%e` según cuál sea más corto.|
+|**Caracteres y Strings**|||
+|`%c`, `%C`|`char`|Formatea un único carácter (la versión mayúscula lo convierte a mayúscula).|
+|`%s`, `%S`|`String`|Formatea una cadena de texto (la versión mayúscula la convierte a mayúscula).|
+|**Booleanos**|||
+|`%b`, `%B`|`boolean`|Formatea como `"true"` o `"false"` (la versión mayúscula lo convierte a mayúscula).|
+|**Otros / Especiales**|||
+|`%n`|(ninguno)|Inserta un salto de línea específico para el sistema operativo.|
+|`%%`|(ninguno)|Inserta un símbolo de porcentaje literal (`%`).|
+
+
+### Ejemplo de Uso
+
+Un ejemplo práctico te ayudará a verlo en acción:
+
+
+```
+String nombre = "Alex";
+int edad = 28;
+double salario = 1950.758;
+
+// Usamos printf para formatear una salida limpia
+System.out.printf("Empleado: %s (%d años).%n", nombre, edad);
+System.out.printf("Su salario es de %.2f €.%n", salario);
+
+/*
+Salida en la consola:
+Empleado: Alex (28 años).
+Su salario es de 1950.76 €.
+*/
+```
+
+Como ves en el ejemplo, también puedes añadir **modificadores** para controlar la precisión y el ancho:
+
+- `%.2f`: Limita un número decimal a **2** cifras después de la coma (y lo redondea).
+    
+- `%10d`: Reserva **10** espacios para un número entero, alineándolo a la derecha.
+    
+- `%-10s`: Reserva **10** espacios para un String, alineándolo a la izquierda (por el guion `-`).
 ---
 ## 4. Librería y clases de utilidades :
 
@@ -198,9 +424,10 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
     System.out.print("Introduce tu nombre: ");
     String nombre = scanner.nextLine();
     System.out.println("Hola, " + nombre);
+    scanner.close();
     ```
     
-> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `Scanner.close()`
+> Recuerda que una vez usado y no necesites la clase Scanner, cierralo con el comando `scanner.close()` para ahorrar recursos.
 
 ### **Manejo de Fechas y Horas**
 
@@ -219,7 +446,9 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 Estas herramientas son solo una pequeña muestra del poder y la flexibilidad que el paquete `java.util` ofrece a los desarrolladores de Java, simplificando una gran variedad de tareas de programación comunes.
 
 
----
+---Si no escribes ningún modificador, se aplica la visibilidad por defecto. Un miembro default solo es accesible para clases que están en el mismo paquete. No es accesible desde subclases en paquetes diferentes.
+
+
 ## 5. Punto de entrada de la ejecución :
 
 El archivo del proyecto main es el punto de entrada en la ejecución del mismo, y es necesario en cualquier aplicación aunque luego haya otras clases o funciones que entren en acción en la ejecución :
@@ -395,6 +624,8 @@ public class Moto extends Vehiculo {
 
 Si **no escribes ningún modificador**, se aplica la visibilidad por defecto. Un miembro `default` solo es accesible para clases que están en el **mismo paquete**. No es accesible desde subclases en paquetes diferentes.
 
+También se puede escribir literalmentela palabra clave `default` o `package`.
+
 - **Uso común**: Para clases o métodos "ayudantes" que solo tienen sentido dentro del contexto de un paquete específico y no deben ser expuestos al resto de la aplicación.
     
 
@@ -526,7 +757,6 @@ System.out.println(coche.velocidad);
 
 Se utiliza esto:
 
-
 ```
 // Acceso controlado mediante métodos
 coche.setVelocidad(200);
@@ -535,7 +765,6 @@ System.out.println(coche.getVelocidad());
 
 ---
 ## 10. Herencia :
-
 
 La **herencia** es uno de los pilares de la Programación Orientada a Objetos (POO). Permite que una clase (llamada **subclase** o clase hija) adquiera los atributos y métodos de otra clase (llamada **superclase** o clase padre). La principal ventaja es la **reutilización de código** y la creación de una jerarquía lógica entre las clases. En Java, la herencia se implementa usando la palabra clave `extends`.
 
@@ -662,8 +891,6 @@ En Java, una **interfaz** es como un **contrato** o un plano que define un conju
 
 Piensa en los botones de un control remoto de TV. Todos los controles remotos (sin importar la marca) tienen botones como "encender", "subir volumen" y "cambiar canal". La interfaz sería el conjunto de esos botones (las acciones que se pueden realizar). Cada fabricante (Sony, Samsung, etc.) decide cómo implementa internamente esa funcionalidad, pero todos cumplen con el contrato de ofrecer esos botones.
 
----
-
 ## **Características Clave**
 
 - **100% Métodos Abstractos (por defecto):** Tradicionalmente, todos los métodos de una interfaz son `abstract`, lo que significa que no tienen cuerpo (código). Solo se define su firma (nombre, parámetros y tipo de retorno). La clase que implementa la interfaz está obligada a proporcionar el código para estos métodos.
@@ -674,8 +901,6 @@ Piensa en los botones de un control remoto de TV. Todos los controles remotos (s
     
 - **`default` y `static` methods:** Versiones más modernas de Java permiten que las interfaces tengan métodos con implementación (`default` methods) para añadir nueva funcionalidad sin romper las clases que ya la implementan.
     
-
----
 
 ## **Ejemplo Práctico**
 
@@ -905,3 +1130,167 @@ public class Main {
 ```
 
 En resumen, el polimorfismo es una herramienta clave para escribir código flexible, reutilizable y fácil de mantener.
+<<<<<<< HEAD
+
+## 13 . Clases abstractas :
+
+Una **clase abstracta** es como una plantilla o un esqueleto para otras clases. No puedes crear un objeto directamente a partir de ella, sino que la usas como base para crear otras clases más específicas (clases "hijas").
+
+Piensa en ella como el concepto "vehículo". Sabes que un vehículo debe tener ciertas características (como `color` o `velocidad`) y comportamientos (como `acelerar()` o `frenar()`), pero "vehículo" es una idea general, no algo concreto que puedas usar. No conduces un "vehículo", conduces un "coche", una "moto" o un "camión".
+
+### Características Principales
+
+- **No se puede instanciar:** No puedes crear un objeto de una clase abstracta. Siguiendo el ejemplo, no puedes hacer `miVehiculo = new Vehiculo()`.
+    
+- **Contiene métodos abstractos:** Son métodos que se declaran pero no se implementan en la clase abstracta. Obligan a las clases hijas a que ellas mismas los definan. Por ejemplo, el método `tocarClaxon()` sería abstracto en "vehículo", porque un coche, una moto y un camión lo hacen de forma diferente.
+    
+- **Puede tener métodos normales:** También puede tener métodos con su lógica ya definida que las clases hijas simplemente heredan y usan tal cual, como `acelerar()`.
+    
+
+En resumen, una clase abstracta define un conjunto de reglas y comportamientos comunes que otras clases deben seguir y/o implementar, asegurando que todas tengan una estructura similar.
+## Constantes:
+
+## La palabra reservada `static`:
+
+La palabra clave `static` significa que algo pertenece a la **clase misma** y no a una **instancia** (un objeto) de esa clase.
+
+Imagina una clase `Coche` 🚗.
+
+- Una variable normal (no estática) como `color` es única para cada coche que creas. Tienes un coche rojo, otro azul... cada uno tiene su propio color.
+    
+- Una variable `static` como `numeroDeCochesFabricados` sería **una sola variable compartida por todos los objetos** `Coche`. Si fabricas un coche nuevo, este contador aumenta para la clase entera, no solo para ese coche.
+    
+
+### ## Variables estáticas (o de clase)
+
+Son **compartidas** por todos los objetos de la clase. Solo existe una copia de esta variable, sin importar cuántos objetos crees.
+
+Java
+
+```
+class Coche {
+    public static int contadorDeCoches = 0; // Variable estática
+    public String color; // Variable de instancia
+
+    public Coche() {
+        contadorDeCoches++; // Se incrementa el contador de la CLASE
+    }
+}
+
+// En el main:
+System.out.println("Coches creados: " + Coche.contadorDeCoches); // Imprime 0
+Coche miCocheAzul = new Coche();
+Coche miCocheRojo = new Coche();
+System.out.println("Coches creados: " + Coche.contadorDeCoches); // Imprime 2
+```
+
+### ## Métodos estáticos
+
+Se pueden llamar **directamente desde la clase, sin necesidad de crear un objeto**. Son como herramientas o utilidades generales que no dependen de los datos de un objeto particular. 🔧
+
+El ejemplo perfecto son los métodos de la clase `Math`:
+
+
+```
+// No necesitas crear un objeto "Math" para usar sus métodos
+double raiz = Math.sqrt(25); // Llamada directamente desde la clase Math
+```
+
+**Regla clave:** Un método `static` no puede usar variables o métodos que no sean `static`, porque no está asociado a ningún objeto en concreto y no sabría de qué objeto tomar esos datos.
+
+El método `main` es el ejemplo más famoso, ya que Java necesita poder llamarlo para iniciar el programa antes de que se cree cualquier objeto.
+
+### ## En resumen
+
+✅ **Pertenece a la clase, no al objeto.** ✅ **Es compartido:** Para variables, hay una sola copia para todos los objetos. ✅ **No necesita un objeto:** Se accede usando el nombre de la clase (ej: `NombreClase.miMetodoEstatico()`).
+
+## Clases enumeradas :
+
+Los enumerados (o `enum`) son un tipo de dato especial que permite definir un **conjunto fijo de constantes con nombre**.
+
+Imagina que quieres representar los días de la semana. En lugar de usar números (`1` para lunes, `2` para martes) o strings (`"Lunes"`, `"Martes"`), que pueden llevar a errores, creas un enumerado. 🗓️
+
+
+### ## ¿Por qué usarlos?
+
+Principalmente por dos razones:
+
+1. **Seguridad de tipos:** Una variable de tipo `DiaDeLaSemana` solo puede valer `LUNES`, `MARTES`, etc. No puedes asignarle un `9` o un `"Juernes"`. Esto evita errores en tiempo de ejecución.
+    
+2. **Claridad y legibilidad:** El código es mucho más fácil de leer y entender. `if (dia == DiaDeLaSemana.LUNES)` es infinitamente más claro que `if (dia == 1)`.
+    
+### ## Ejemplo básico
+
+Así se declara y se usa un enumerado en un lenguaje como Java:
+
+
+```
+// 1. Declaramos el conjunto de constantes
+public enum DiaDeLaSemana {
+    LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO;
+}
+
+// 2. Lo usamos en nuestro código
+public class Calendario {
+    public static void main(String[] args) {
+        DiaDeLaSemana hoy = DiaDeLaSemana.LUNES;
+
+        if (hoy == DiaDeLaSemana.LUNES) {
+            System.out.println("¡Ánimo, empieza la semana!");
+        }
+
+        // También son muy útiles en estructuras de control como switch
+        switch (hoy) {
+            case SABADO:
+            case DOMINGO:
+                System.out.println("Es fin de semana.");
+                break;
+            default:
+                System.out.println("Es un día laboral.");
+                break;
+        }
+    }
+}
+```
+
+### Comparaciones con enumerados :
+
+Una de sus principales utilidades de los enumerados . Puedes usar enumerados en cualquier estructura de control que requiera una comparación, como `if`, `else if`, `else` y `switch`.
+### ## Un poco más avanzados
+
+Los enumerados no son solo listas de nombres; pueden tener **atributos y métodos**, como una clase normal. Esto los hace increíblemente potentes. 🚦
+
+Por ejemplo, un semáforo donde cada color tiene una acción asociada:
+
+Java
+
+```
+public enum Semaforo {
+    ROJO("Detenerse"),
+    AMARILLO("Precaución"),
+    VERDE("Avanzar");
+
+    private final String accion; // Atributo
+
+    // Constructor privado
+    Semaforo(String accion) {
+        this.accion = accion;
+    }
+
+    // Método público
+    public String getAccion() {
+        return accion;
+    }
+}
+
+// Cómo se usaría:
+Semaforo miLuz = Semaforo.ROJO;
+System.out.println(miLuz); // Imprime ROJO
+System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acción a realizar: Detenerse"
+```
+
+### ## En resumen
+
+✅ Un **enumerado** es una lista de **constantes predefinidas**. ✅ Aportan **seguridad** al no permitir valores incorrectos. ✅ Hacen el código mucho más **legible** y fácil de mantener. ✅ Pueden ser tan **simples** o **complejos** (con métodos y atributos) como necesites.
+
+## Arrays :
