@@ -72,7 +72,7 @@ No es un tipo básico, sino un objeto, se puede interpretar como un array de car
 
 Como es un objeto, al usar el operador `==` o `!=` lo que se compara es la referencia al objeto, y no el valor de las cadenas en sí.
 Para poder compararlas, debemos usar el método de la clase `Object` `public boolean equals(Object o2)`.
-```
+```java
 String s1 = new String("HOLA");
 String s2 = new String("HOLA");
 
@@ -83,7 +83,7 @@ System.out.println(s1.equals(s2)); // DA TRUE porque el metodo equals en la clas
 
 Desde Java7 se permite hacer un switch con cadenas de texto de manera simplificada.
 
-```
+```java
 String diaSemana = "jueves";
 int numDia = 0;
 
@@ -143,7 +143,7 @@ Son las herramientas que tenemos para controlar el flujo de programa, iteracione
 
 - __Bucles:__
 
-```
+```java
 // WHILE: Bucle con condicion
 //   (puede no ejecutarse ni siquiera una vez si la condición no se cumple al principio)
 //   MUCHO OJO CON CREAR BUCLES INFINITOS (que siempre cumplan la condición, y por tanto no salgan)
@@ -248,14 +248,14 @@ Antes de los String Templates, en Java tenías principalmente tres formas de con
 
 Concatenación con +: Simple para cosas pequeñas, pero se vuelve ilegible y es ineficiente si se usa en bucles.
 
-```
+```java
 `String name = "Maria";
 int unreadMessages = 12;
 String message = "Hola " + name + ", tienes " + unreadMessages + " mensajes sin leer.";
 StringBuilder: Más eficiente que la concatenación, pero muy verboso y aparatoso.
 ```
 
-```
+```java
 
 StringBuilder sb = new StringBuilder();
 sb.append("Hola ");
@@ -275,7 +275,7 @@ El procesador más común es STR. La sintaxis es: STR."texto con \{variable}"
 
 Veamos el mismo ejemplo de antes usando esta nueva forma:
 
-Java
+
 
 String name = "Maria";
 int unreadMessages = 12;
@@ -308,7 +308,7 @@ Marcadores de posición (\{...}): Dentro de la cadena, cualquier cosa que pongas
 
 FMT: Permite usar las reglas de formato de String.format() dentro de la plantilla.
 
-```
+```java
 double price = 19.99;
 // Formatea el precio a dos decimales
 String formattedPrice = FMT."El precio es %.2f\{price}€"; 
@@ -347,7 +347,7 @@ RAW: Crea un objeto de plantilla sin procesar, para usos más avanzados.
 Un ejemplo práctico te ayudará a verlo en acción:
 
 
-```
+```java
 String nombre = "Alex";
 int edad = 28;
 double salario = 1950.758;
@@ -384,7 +384,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 - **`ArrayList`**: Es una implementación de una lista dinámica que permite almacenar elementos de cualquier tipo. A diferencia de los arrays tradicionales, un `ArrayList` puede crecer y decrecer en tamaño de forma automática. Es ideal cuando se necesita acceso rápido a los elementos a través de su índice.
     
     
-    ```
+    ```java
     ArrayList<String> nombres = new ArrayList<>();
     nombres.add("Juan");
     nombres.add("María");
@@ -395,7 +395,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
     
 
     
-    ```
+    ```java
     HashMap<String, Integer> edades = new HashMap<>();
     edades.put("Juan", 25);
     edades.put("María", 30);
@@ -405,7 +405,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 - **`HashSet`**: Se utiliza para almacenar una colección de elementos únicos, es decir, no permite duplicados. No garantiza el orden de los elementos.
     
     
-    ```
+    ```java
     HashSet<String> unicos = new HashSet<>();
     unicos.add("Lunes");
     unicos.add("Martes");
@@ -419,7 +419,7 @@ Es el corazón del paquete `java.util` y ofrece un conjunto unificado de interfa
 - **`Scanner`**: Es una clase muy útil para leer datos de entrada desde diversas fuentes, como el teclado, ficheros o cadenas de texto. Proporciona métodos sencillos para leer diferentes tipos de datos como enteros, cadenas o booleanos.
     
     
-    ```
+    ```java
     Scanner scanner = new Scanner(System.in);
     System.out.print("Introduce tu nombre: ");
     String nombre = scanner.nextLine();
@@ -462,7 +462,7 @@ El argumento `String[] args` que recibe método principal o `main`, podemos usar
 
 Se trata de la capacidad de una función a ejecutarse a si misma por ejemplo :
 
-```
+```java
 public class EjemploRecursividad {
 
     /**
@@ -501,7 +501,7 @@ En la POO tenemos clases con atributos y métodos, podemos considerar las clases
 
 - Clase Perro tendría :
 
-```
+```java
 package com.avante.veterinaria;
 
 class Perro{
@@ -532,7 +532,7 @@ class Perro{
 
 El `main` que incluye la clase perro en su código :
 
-```
+```java
 package com.avante.veterinaria;
 
 pubic class veterinaria {
@@ -585,7 +585,7 @@ Es el nivel más permisivo. Un miembro `public` es accesible desde **cualquier l
 - **Uso común**: Para métodos que forman la API principal de tu clase (como constructores, getters y setters) y para clases que deben ser usadas por todo el proyecto.
     
 
-```
+```java
 public class Coche {
     public String marca; // Cualquiera puede ver y modificar la marca
 
@@ -607,7 +607,7 @@ Un miembro `protected` es accesible para:
 - **Uso común**: Para atributos o métodos que no son públicos pero que necesitan ser accedidos o sobrescritos por clases que heredan de ella.
     
 
-```
+```java
 public class Vehiculo {
     protected int velocidad; // Accesible por Vehiculo y sus subclases
 }
@@ -629,7 +629,7 @@ También se puede escribir literalmentela palabra clave `default` o `package`.
 - **Uso común**: Para clases o métodos "ayudantes" que solo tienen sentido dentro del contexto de un paquete específico y no deben ser expuestos al resto de la aplicación.
     
 
-```
+```java
 // En el paquete com.transporte
 class Motor { // Sin modificador, es 'default'
     void encender() {
@@ -653,7 +653,7 @@ Es el nivel más restrictivo. Un miembro `private` solo es accesible **dentro de
 - **Uso común**: Es la opción preferida para los **atributos** para lograr una buena encapsulación. El acceso se gestiona a través de métodos públicos (`getters` y `setters`).
     
 
-```
+```java
 public class Persona {
     private String nombre; // Solo accesible dentro de la clase Persona
 
@@ -700,7 +700,7 @@ Un método **getter** se utiliza para _obtener_ o _leer_ el valor de una variabl
 Por ejemplo, para una variable `private String nombre;`, el getter sería:
 
 
-```
+```java
 public String getNombre() {
     return nombre;
 }
@@ -724,7 +724,7 @@ Un método **setter** se utiliza para _establecer_ o _modificar_ el valor de una
 Para la misma variable `private String nombre;`, el setter sería:
 
 
-```
+```java
 public void setNombre(String nuevoNombre) {
     this.nombre = nuevoNombre;
 }
@@ -749,7 +749,7 @@ La idea principal es tener un control total sobre cómo se accede y se modifica 
 En resumen, en lugar de hacer esto (que es una mala práctica):
 
 
-```
+```java
 // Acceso directo (no recomendado)
 coche.velocidad = 200;
 System.out.println(coche.velocidad);
@@ -757,7 +757,7 @@ System.out.println(coche.velocidad);
 
 Se utiliza esto:
 
-```
+```java
 // Acceso controlado mediante métodos
 coche.setVelocidad(200);
 System.out.println(coche.getVelocidad());
@@ -788,7 +788,7 @@ Imaginemos que queremos modelar diferentes tipos de animales. Podemos crear una 
 Esta clase tiene propiedades y comportamientos que todos los animales comparten, como un nombre y el método de comer.
 
 
-```
+```java
 // Clase Padre o Superclase
 class Animal {
     String nombre;
@@ -812,7 +812,7 @@ class Animal {
 La clase `Perro` **hereda** de `Animal`. Tendrá acceso a `nombre`, `comer()` y `dormir()`. Además, añadimos un método exclusivo para los perros: `ladrar()`.
 
 
-```
+```java
 // Clase Hija o Subclase
 class Perro extends Animal {
 
@@ -832,7 +832,7 @@ class Perro extends Animal {
 
 La clase `Gato` también hereda de `Animal` y añade su propio método: `maullar()`.
 
-```
+```java
 // Otra Clase Hija o Subclase
 class Gato extends Animal {
 
@@ -853,7 +853,7 @@ class Gato extends Animal {
 Ahora, podemos crear objetos de estas clases y ver cómo funciona la herencia.
 
 
-```
+```java
 public class Zoologico {
     public static void main(String[] args) {
         // Creamos un objeto de la clase Perro
@@ -911,7 +911,7 @@ Imaginemos que queremos definir el comportamiento "volador" para diferentes enti
 Este es nuestro contrato. Cualquier cosa que sea un "Volador" debe ser capaz de despegar, volar y aterrizar.
 
 
-```
+```java
 // La interfaz define QUÉ se debe hacer
 interface Volador {
     void despegar();
@@ -927,7 +927,7 @@ Ahora creamos clases que "firman" este contrato usando la palabra clave `impleme
 **Clase `Pajaro`** 🐦
 
 
-```
+```java
 class Pajaro implements Volador {
 
     @Override
@@ -950,7 +950,7 @@ class Pajaro implements Volador {
 **Clase `Avion`** ✈️
 
 
-```
+```java
 class Avion implements Volador {
 
     @Override
@@ -976,7 +976,7 @@ Gracias a la interfaz, podemos tratar a un `Pajaro` y a un `Avion` de la misma m
 
 
 
-```
+```java
 public class SimuladorVuelo {
     public static void main(String[] args) {
         Volador miPajaro = new Pajaro();
@@ -1030,7 +1030,7 @@ Este es el concepto más común de polimorfismo. Ocurre cuando una subclase prop
 Primero, creamos una superclase `Figura` con un método `dibujar()`.
 
 
-```
+```java
 // Superclase
 class Figura {
     public void dibujar() {
@@ -1042,7 +1042,7 @@ class Figura {
 Ahora, creamos subclases que **sobrescriben** (`@Override`) este método para proporcionar su propio comportamiento.
 
 
-```
+```java
 // Subclase Círculo
 class Circulo extends Figura {
     @Override
@@ -1063,7 +1063,7 @@ class Cuadrado extends Figura {
 Finalmente, vemos el polimorfismo en acción. Usamos una referencia de tipo `Figura` para apuntar a objetos de sus subclases.
 
 
-```
+```java
 public class Lienzo {
     public static void main(String[] args) {
         Figura miFigura1 = new Circulo(); // Objeto Circulo, referencia Figura
@@ -1091,7 +1091,7 @@ Esto ocurre cuando múltiples métodos en la misma clase tienen el mismo nombre 
 **Ejemplo Práctico:**
 
 
-```
+```java
 class Calculadora {
 
     // Método sumar con dos enteros
@@ -1165,9 +1165,8 @@ Imagina una clase `Coche` 🚗.
 
 Son **compartidas** por todos los objetos de la clase. Solo existe una copia de esta variable, sin importar cuántos objetos crees.
 
-Java
 
-```
+```java
 class Coche {
     public static int contadorDeCoches = 0; // Variable estática
     public String color; // Variable de instancia
@@ -1191,9 +1190,11 @@ Se pueden llamar **directamente desde la clase, sin necesidad de crear un objeto
 El ejemplo perfecto son los métodos de la clase `Math`:
 
 
-```
+```java
 // No necesitas crear un objeto "Math" para usar sus métodos
+
 double raiz = Math.sqrt(25); // Llamada directamente desde la clase Math
+
 ```
 
 **Regla clave:** Un método `static` no puede usar variables o métodos que no sean `static`, porque no está asociado a ningún objeto en concreto y no sabría de qué objeto tomar esos datos.
@@ -1208,8 +1209,7 @@ El método `main` es el ejemplo más famoso, ya que Java necesita poder llamarlo
 
 Los enumerados (o `enum`) son un tipo de dato especial que permite definir un **conjunto fijo de constantes con nombre**.
 
-Imagina que quieres representar los días de la semana. En lugar de usar números (`1` para lunes, `2` para martes) o strings (`"Lunes"`, `"Martes"`), que pueden llevar a errores, creas un enumerado. 🗓️
-
+Imagina que quieres representar los días de la semana. En lugar de usar números (`1` para lunes, `2` para martes) o Strings (`"Lunes"`, `"Martes"`), que pueden llevar a errores, creas un enumerado. 🗓️
 
 ### ## ¿Por qué usarlos?
 
@@ -1224,7 +1224,7 @@ Principalmente por dos razones:
 Así se declara y se usa un enumerado en un lenguaje como Java:
 
 
-```
+```java
 // 1. Declaramos el conjunto de constantes
 public enum DiaDeLaSemana {
     LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO;
@@ -1264,7 +1264,7 @@ Por ejemplo, un semáforo donde cada color tiene una acción asociada:
 
 Java
 
-```
+```java
 public enum Semaforo {
     ROJO("Detenerse"),
     AMARILLO("Precaución"),
@@ -1297,9 +1297,9 @@ System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acci
 
 ## `if`ternario :
 
-Como dijimos las expresiones devuelven un valor, los `if`  ternarios son una expresión, que se usa de la siguiente forma :
+Como dijimos las expresiones devuelven un valor, los `if`  ternarios son una expresión que no es numérica ni lógica es todo a la vez  y  se usa de la siguiente forma :
 
-```
+```java
 condición ? valor_si_verdadero : valor_si_falso;
 ```
 
@@ -1319,6 +1319,10 @@ En resumen, se compone de 3 partes, una condición un valor si es verdadera y un
 
 Un ejemplo en código de su suso sería :
 
-```
-double precio = 100.0; double precioFinal = (precio > 50.0) ? precio * 0.90 : precio; // precioFinal ahora es 90.0
+```java
+double precio = 100.0;
+
+double precioFinal = (precio > 50.0) ? precio * 0.90 : precio; 
+
+// precioFinal ahora es 90.0
 ```

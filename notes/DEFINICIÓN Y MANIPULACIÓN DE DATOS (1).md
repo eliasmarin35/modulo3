@@ -12,7 +12,7 @@ Comprobamos que en 'Sistema' se ejecuta en segundo plano la base de datos, con n
 ## 2. Ejercicios y ejemplos SQL:
 
 Para crear la tabla de primer ejercicio:
-```
+```sql
 
 -- Database: videoclub
 
@@ -34,7 +34,7 @@ COMMENT ON DATABASE videoclub
 ```    
 Para agilizar y poder crear tablas, creamos un esquema vc para escribir menos en un futuro y que PostgreSQL nos deja crear tablas. Para crear esquema de vc :
 
-```¡
+```sql
 -- SCHEMA: vc
 
 -- DROP SCHEMA IF EXISTS vc ;
@@ -52,7 +52,7 @@ Los esquemas son un espacio de nombre que contienen objetos de base de datos com
 
 Creamos la tabla de prueba :
 
-```
+```sql
 -- Table: vc.pruebas
 
 -- DROP TABLE IF EXISTS vc.pruebas;
