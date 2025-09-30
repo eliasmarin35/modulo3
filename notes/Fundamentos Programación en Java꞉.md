@@ -1294,3 +1294,31 @@ System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acci
 ✅ Un **enumerado** es una lista de **constantes predefinidas**. ✅ Aportan **seguridad** al no permitir valores incorrectos. ✅ Hacen el código mucho más **legible** y fácil de mantener. ✅ Pueden ser tan **simples** o **complejos** (con métodos y atributos) como necesites.
 
 ## Arrays :
+
+## `if`ternario :
+
+Como dijimos las expresiones devuelven un valor, los `if`  ternarios son una expresión, que se usa de la siguiente forma :
+
+```
+condición ? valor_si_verdadero : valor_si_falso;
+```
+
+En resumen, se compone de 3 partes, una condición un valor si es verdadera y un valor si es falsa.
+
+- **`condición`**: La expresión a evaluar (devuelve `true` o `false`).
+    
+- **`?`**: Separa la condición del valor si es `true`.
+    
+- **`:`**: Separa el valor si es `true` del valor si es `false`.
+
+## ¿Cuándo usarlo?
+
+👍 **Ideal para:** Asignaciones condicionales simples y claras, donde la lógica es muy directa. Mejora la legibilidad en casos sencillos.
+
+👎 **Evítalo para:** Condiciones muy complejas o anidadas (un `if` dentro de otro `if`). En esos casos, un `if-else` tradicional es mucho más fácil de leer y mantener.
+
+Un ejemplo en código de su suso sería :
+
+```
+double precio = 100.0; double precioFinal = (precio > 50.0) ? precio * 0.90 : precio; // precioFinal ahora es 90.0
+```
