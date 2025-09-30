@@ -49,7 +49,7 @@ Supongamos que tienes una tabla de `empleados` y quieres crear una "tabla virtua
 
 SQL
 
-```
+```sql
 CREATE VIEW empleados_ventas AS
 SELECT id, nombre, apellido, email
 FROM empleados
@@ -60,7 +60,7 @@ Ahora puedes consultar la vista como si fuera una tabla normal:
 
 SQL
 
-```
+```sql
 SELECT * FROM empleados_ventas;
 ```
 

@@ -68,6 +68,7 @@ Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y ad
 | boolean   | Boolean |
 
 ### 1.2. Cadenas de Caracteres
+
 No es un tipo básico, sino un objeto, se puede interpretar como un array de caracteres (aunque formalmente no es un array).
 
 Como es un objeto, al usar el operador `==` o `!=` lo que se compara es la referencia al objeto, y no el valor de las cadenas en sí.
@@ -232,6 +233,7 @@ case 2 :
 `try` - aquí se pone el código "peligroso" que puede lanzar la excepción.
 `catch` - si se produce una excepción en el bloque `try` el programa saltará el bloque, aqui puedes definir como responder al error y puede haber varios bloques de `catch` para distintos tipos de excepciones.
 `finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
+
 - `return`también es una estructura de control porque modifica el flujo del programa.
 - `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
 
@@ -1265,6 +1267,7 @@ Por ejemplo, un semáforo donde cada color tiene una acción asociada:
 Java
 
 ```java
+
 public enum Semaforo {
     ROJO("Detenerse"),
     AMARILLO("Precaución"),
@@ -1317,7 +1320,7 @@ En resumen, se compone de 3 partes, una condición un valor si es verdadera y un
 
 👎 **Evítalo para:** Condiciones muy complejas o anidadas (un `if` dentro de otro `if`). En esos casos, un `if-else` tradicional es mucho más fácil de leer y mantener.
 
-Un ejemplo en código de su suso sería :
+Un ejemplo en código de su uso sería :
 
 ```java
 double precio = 100.0;
