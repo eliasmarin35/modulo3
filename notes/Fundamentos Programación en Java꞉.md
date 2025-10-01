@@ -1298,6 +1298,87 @@ System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acci
 
 ## Arrays :
 
+Un **array** (también conocido como arreglo, vector o matriz) es una de las estructuras de datos más fundamentales en programación. Imagina un archivador o una estantería con un número fijo de casillas numeradas: eso es un array.
+
+Es una colección de elementos donde cada uno se almacena en una posición específica y se identifica por un número llamado **índice**.
+
+### ## ⚙️ Características Clave
+
+1. **Tamaño Fijo:** Cuando creas un array, debes definir su tamaño, y este **no puede cambiar** después. Si creas un array para 10 elementos, siempre tendrá espacio para exactamente 10.
+    
+2. **Mismo Tipo de Dato:** Todos los elementos dentro de un array deben ser del **mismo tipo**. No puedes mezclar números enteros con texto en el mismo array (por ejemplo, o todos son `int` o todos son `String`).
+    
+3. **Acceso por Índice:** Se accede a cada elemento directamente a través de su índice. Los índices **siempre empiezan en 0**. Por lo tanto, en un array de 10 elementos, los índices van del 0 al 9.
+    
+4. **Memoria Contigua:** Los elementos de un array se almacenan uno al lado del otro en la memoria del ordenador. Esta organización es lo que permite un acceso tan rápido a sus elementos.
+    
+
+### ## ✅ Ventajas y ❌ Desventajas
+
+- **✅ Ventaja Principal: Rapidez de Acceso.** El punto fuerte de los arrays es el **acceso directo** a sus elementos. Saber el índice te permite ir instantáneamente al dato que buscas (lo que se conoce como complejidad `O(1)`), sin importar si el array tiene 10 o un millón de elementos.
+    
+- **❌ Desventaja Principal: Poca Flexibilidad.** Su **tamaño fijo** es su mayor debilidad. Si no sabes cuántos datos vas a guardar de antemano, o si la cantidad de datos cambia constantemente, los arrays no son la mejor opción. Además, insertar o eliminar elementos en medio del array es una operación lenta porque obliga a desplazar al resto de elementos.
+    
+
+### ## 💻 Ejemplo Práctico en Java
+
+Vamos a ver un ejemplo sencillo: guardar y manipular las notas de 5 estudiantes.
+
+Java
+
+```
+public class EjemploArray {
+
+    public static void main(String[] args) {
+        // 1. DECLARACIÓN Y CREACIÓN
+        // Creamos un array de tipo 'int' con un tamaño fijo de 5.
+        // Las casillas se inicializan a 0 por defecto.
+        int[] notas = new int[5];
+
+        // 2. ASIGNACIÓN DE VALORES (usando el índice)
+        // Los índices van de 0 a 4.
+        notas[0] = 10; // Primera posición
+        notas[1] = 7;
+        notas[2] = 9;
+        notas[3] = 5;
+        notas[4] = 8; // Última posición
+
+        // 3. ACCESO A UN VALOR
+        // Obtenemos la nota del tercer estudiante (índice 2).
+        int notaDelTercerAlumno = notas[2];
+        System.out.println("La nota del tercer alumno es: " + notaDelTercerAlumno);
+
+        // 4. MODIFICACIÓN DE UN VALOR
+        // Cambiamos la nota del cuarto estudiante (índice 3).
+        System.out.println("La nota antigua del cuarto alumno era: " + notas[3]);
+        notas[3] = 6;
+        System.out.println("La nota nueva del cuarto alumno es: " + notas[3]);
+
+        // 5. RECORRIDO DEL ARRAY
+        // Usamos un bucle 'for' para mostrar todas las notas.
+        System.out.println("\n--- Listado de todas las notas ---");
+        for (int i = 0; i < notas.length; i++) {
+            // 'notas.length' nos da el tamaño del array (en este caso, 5).
+            System.out.println("Nota del alumno " + (i + 1) + ": " + notas[i]);
+        }
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+La nota del tercer alumno es: 9
+La nota antigua del cuarto alumno era: 5
+La nota nueva del cuarto alumno es: 6
+
+--- Listado de todas las notas ---
+Nota del alumno 1: 10
+Nota del alumno 2: 7
+Nota del alumno 3: 9
+Nota del alumno 4: 6
+Nota del alumno 5: 8
+```
 ## `if`ternario :
 
 Como dijimos las expresiones devuelven un valor, los `if`  ternarios son una expresión que no es numérica ni lógica es todo a la vez  y  se usa de la siguiente forma :
