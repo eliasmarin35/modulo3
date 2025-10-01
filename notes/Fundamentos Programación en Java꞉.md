@@ -1319,7 +1319,7 @@ Es una colección de elementos donde cada uno se almacena en una posición espec
     
 - **❌ Desventaja Principal: Poca Flexibilidad.** Su **tamaño fijo** es su mayor debilidad. Si no sabes cuántos datos vas a guardar de antemano, o si la cantidad de datos cambia constantemente, los arrays no son la mejor opción. Además, insertar o eliminar elementos en medio del array es una operación lenta porque obliga a desplazar al resto de elementos.
     
-
+	
 ### ## 💻 Ejemplo Práctico en Java
 
 Vamos a ver un ejemplo sencillo: guardar y manipular las notas de 5 estudiantes.
