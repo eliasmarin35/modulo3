@@ -1425,9 +1425,8 @@ El operador de preincremento sigue la lógica de **"incrementa y luego usa"**.
         
 - **Ejemplo:**
     
-    Java
     
-    ```
+    ```java
     int a = 5;
     int b = ++a; // Preincremento
     ```
@@ -1454,9 +1453,8 @@ El operador de postincremento sigue la lógica de **"usa y luego incrementa"**.
         
 - **Ejemplo:**
     
-    Java
     
-    ```
+    ```java
     int a = 5;
     int b = a++; // Postincremento
     ```
@@ -1478,6 +1476,5 @@ El operador de postincremento sigue la lógica de **"usa y luego incrementa"**.
 |**`++variable`**|Preincremento|Incrementa y luego usa|El valor **después** del incremento.|
 |**`variable++`**|Postincremento|Usa y luego incrementa|El valor **antes** del incremento.|
 
-Exportar a Hojas de cálculo
 
-Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
+>Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
