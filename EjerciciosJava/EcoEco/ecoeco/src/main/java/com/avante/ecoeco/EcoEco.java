@@ -44,6 +44,6 @@ public class EcoEco {
         }
 
         // Ceramos el scanner
-        // scan.close();
+        scan.close();
     }
 }
