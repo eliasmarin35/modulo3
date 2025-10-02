@@ -1621,6 +1621,108 @@ Nota del alumno 3: 9
 Nota del alumno 4: 6
 Nota del alumno 5: 8
 ```
+
+### Funciones o métodos mas usados para manipular Arrays :
+
+la mayoría de las funciones útiles para arrays se encuentran en la clase de utilidad `java.util.Arrays`. Aquí tienes las más importantes y prácticas.
+
+## **Ordenar y Buscar** 🔍
+
+Estas son las operaciones más comunes: ordenar los elementos y luego buscar dentro de ellos.
+
+- **`Arrays.sort(array)`**: Ordena un array en **orden ascendente**. Funciona para tipos primitivos (como `int`, `double`) y para objetos que implementan la interfaz `Comparable` (como `String`). Es extremadamente eficiente, usando un algoritmo de Doble Pivote Quicksort.
+    
+    
+    ```java
+    int[] numeros = {5, 2, 8, 1, 9};
+    Arrays.sort(numeros); // ahora numeros es {1, 2, 5, 8, 9}
+    ```
+    
+- **`Arrays.parallelSort(array)`**: Similar a `sort()`, pero utiliza un **algoritmo de ordenamiento en paralelo**. Puede ser más rápido en sistemas con múltiples procesadores para arrays muy grandes.
+    
+- **`Arrays.binarySearch(array, clave)`**: Busca un elemento (`clave`) en un array **previamente ordenado** usando el algoritmo de búsqueda binaria. Es mucho más rápido que una búsqueda lineal. Devuelve el índice del elemento si lo encuentra, o un número negativo si no.
+    
+    
+    ```java
+    int[] numerosOrdenados = {1, 2, 5, 8, 9};
+    int indice = Arrays.binarySearch(numerosOrdenados, 5); // indice es 2
+    int noEncontrado = Arrays.binarySearch(numerosOrdenados, 3); // devuelve un valor negativo
+    ```
+    
+
+## **Copiar y Manipular** ✂️
+
+Crear copias o sub-secciones de un array es fundamental para no modificar los datos originales.
+
+- **`Arrays.copyOf(original, nuevoTamaño)`**: Crea una **copia** de un array. Puedes especificar un nuevo tamaño. Si el nuevo tamaño es mayor, los espacios extra se rellenan con el valor por defecto (0 para `int`, `null` para objetos).
+    
+    
+    ```java
+    String[] mascotas = {"Perro", "Gato", "Pez"};
+    String[] copiaMascotas = Arrays.copyOf(mascotas, 3); // copiaMascotas es {"Perro", "Gato", "Pez"}
+    ```
+    
+- **`Arrays.copyOfRange(original, desde, hasta)`**: Copia una **porción** de un array, desde un índice inicial (incluido) hasta un índice final (excluido).
+    
+    
+    ```java
+    int[] numeros = {10, 20, 30, 40, 50};
+    int[] rango = Arrays.copyOfRange(numeros, 1, 4); // rango es {20, 30, 40}
+    ```
+    
+- **`Arrays.fill(array, valor)`**: **Rellena** todo el array con un valor específico. Es útil para inicializar arrays con un valor constante.
+    
+    
+    ```java
+    int[] miArray = new int[5];
+    Arrays.fill(miArray, 100); // miArray es {100, 100, 100, 100, 100}
+    ```
+    
+
+## **Comparar y Convertir** ↔️
+
+Estas funciones te ayudan a verificar si dos arrays son iguales o a representarlos de forma legible.
+
+- **`Arrays.equals(array1, array2)`**: Compara si dos arrays son **iguales**. Devuelve `true` si ambos tienen el mismo tamaño y todos sus elementos son idénticos y están en el mismo orden.
+    
+    
+    ```java
+    int[] a = {1, 2, 3};
+    int[] b = {1, 2, 3};
+    boolean sonIguales = Arrays.equals(a, b); // true
+    ```
+    
+- **`Arrays.deepEquals(array1, array2)`**: Se usa para comparar arrays que contienen **otros arrays** (arrays multidimensionales o de objetos). Compara el contenido de los sub-arrays de forma recursiva.
+    
+- **`Arrays.toString(array)`**: Devuelve una **representación en formato `String`** del contenido del array. Es increíblemente útil para depurar y ver qué contiene un array sin tener que iterar sobre él manualmente.
+    
+        
+    ```java
+    String[] nombres = {"Ana", "Luis", "Marta"};
+    System.out.println(Arrays.toString(nombres)); // Imprime "[Ana, Luis, Marta]"
+    ```
+    
+- **`Arrays.deepToString(array)`**: Similar a `toString()`, pero para arrays **multidimensionales**.
+    
+
+## **Uso con Streams (Java 8+)** 💧
+
+A partir de Java 8, puedes convertir un array en un `Stream` para usar una API funcional muy potente.
+
+- **`Arrays.stream(array)`**: Convierte un array en un `Stream`. Esto te permite encadenar operaciones como `filter`, `map`, `reduce`, etc., de una manera muy expresiva y concisa.
+    
+        
+    ```java
+    int[] numeros = {1, 2, 3, 4, 5, 6};
+    // Sumar solo los números pares
+    int sumaPares = Arrays.stream(numeros)
+                          .filter(n -> n % 2 == 0) // Filtra los pares {2, 4, 6}
+                          .sum();                   // Suma los elementos
+    System.out.println(sumaPares); // Imprime 12
+    ```
+    
+
+Estas funciones de la clase `Arrays` cubren la gran mayoría de las operaciones que necesitarás al trabajar con arrays en Java.
 ## `if`ternario :
 
 Como dijimos las expresiones devuelven un valor, los `if`  ternarios son una expresión que no es numérica ni lógica es todo a la vez  y  se usa de la siguiente forma :
