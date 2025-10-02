@@ -1255,19 +1255,265 @@ public class Calendario {
 }
 ```
 
-### Comparaciones con enumerados :
 
-Una de sus principales utilidades de los enumerados . Puedes usar enumerados en cualquier estructura de control que requiera una comparación, como `if`, `else if`, `else` y `switch`.
-### ## Un poco más avanzados
+Los métodos más comunes se dividen en dos categorías:
+
+1. **Métodos estáticos proporcionados por Java**: Son métodos que el compilador añade automáticamente a cada `enum`.
+    
+2. **Métodos de instancia**: Métodos que cada constante del `enum` puede invocar.
+    
+3. **Métodos personalizados**: Métodos que puedes añadir tú mismo para extender la funcionalidad.
+    
+
+#### ## En resumen
+
+✅ Un **enumerado** es una lista de **constantes predefinidas**. ✅ Aportan **seguridad** al no permitir valores incorrectos. ✅ Hacen el código mucho más **legible** y fácil de mantener. ✅ Pueden ser tan **simples** o **complejos** (con métodos y atributos) como necesites.
+### 1. Métodos Estáticos (Proporcionados por el compilador)
+
+Estos son los métodos más importantes y usados para trabajar con enumerados de forma general.
+
+#### `values()`
+
+Es, sin duda, el método más utilizado. Devuelve un **array** que contiene todas las constantes del enumerado, en el orden en que fueron declaradas.
+
+Es perfecto para iterar sobre todas las opciones disponibles.
+
+**Sintaxis:** `NombreDelEnum.values()`
+
+**Ejemplo:**
+
+
+```java
+public enum DiaSemana {
+    LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO;
+}
+
+public class TestEnum {
+    public static void main(String[] args) {
+        // Iterar sobre todos los días de la semana
+        for (DiaSemana dia : DiaSemana.values()) {
+            System.out.println(dia);
+        }
+    }
+}
+```
+
+**Salida:**
+
+```
+LUNES
+MARTES
+MIÉRCOLES
+JUEVES
+VIERNES
+SÁBADO
+DOMINGO
+```
+
+#### `valueOf(String nombre)`
+
+Este método estático devuelve la constante del enumerado que corresponde exactamente con el `String` proporcionado. Es sensible a mayúsculas y minúsculas.
+
+Es muy útil para convertir una cadena de texto (por ejemplo, recibida de un formulario o una API) a su valor de enumerado correspondiente.
+
+**Sintaxis:** `NombreDelEnum.valueOf(String)`
+
+**Ejemplo:**
+
+```java
+public class TestEnum {
+    public static void main(String[] args) {
+        String diaRecibido = "MARTES";
+        DiaSemana dia = DiaSemana.valueOf(diaRecibido);
+
+        System.out.println("El día seleccionado es: " + dia); // Imprime: El día seleccionado es: MARTES
+
+        // ¡Cuidado! Si el String no coincide, lanzará una excepción
+        try {
+            DiaSemana.valueOf("martes"); // Esto fallará
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: No existe una constante con ese nombre.");
+        }
+    }
+}
+```
+
+### 2. Métodos de Instancia (Heredados de `java.lang.Enum`)
+
+Cada constante de un enumerado es una instancia de la clase `Enum`, por lo que hereda los siguientes métodos.
+
+#### `name()`
+
+Devuelve el nombre de la constante del `enum` **exactamente como fue declarada** en el código. Es un método `final`, por lo que no se puede sobrescribir.
+
+**Sintaxis:** `instanciaEnum.name()`
+
+**Ejemplo:**
+
+
+```java
+DiaSemana primerDiaLaboral = DiaSemana.LUNES;
+System.out.println(primerDiaLaboral.name()); // Salida: LUNES
+```
+
+#### `toString()`
+
+Por defecto, `toString()` se comporta igual que `name()`, devolviendo el nombre de la constante. Sin embargo, a diferencia de `name()`, **puedes sobrescribir `toString()`** para proporcionar una representación más amigable.
+
+**Sintaxis:** `instanciaEnum.toString()`
+
+**Ejemplo con `toString()` sobrescrito:**
+
+
+```java
+public enum EstadoPedido {
+    PROCESANDO,
+    ENVIADO,
+    ENTREGADO;
+
+    @Override
+    public String toString() {
+        // Devuelve el nombre capitalizado (primera en mayúscula, resto en minúscula)
+        return this.name().charAt(0) + this.name().substring(1).toLowerCase();
+    }
+}
+
+public class TestEnum {
+    public static void main(String[] args) {
+        EstadoPedido estado = EstadoPedido.PROCESANDO;
+        System.out.println(estado.name());      // Salida: PROCESANDO
+        System.out.println(estado.toString());  // Salida: Procesando
+    }
+}
+```
+
+#### `ordinal()`
+
+Devuelve la posición (índice) de la constante en la declaración del enumerado, comenzando desde `0`.
+
+**Sintaxis:** `instanciaEnum.ordinal()`
+
+**Advertencia:** No es recomendable basar la lógica de tu programa en el `ordinal`, ya que si se reordena la declaración de las constantes, los valores cambiarán y podrían introducir errores difíciles de detectar. Es mejor usar campos personalizados (ver más abajo).
+
+**Ejemplo:**
+
+```java
+System.out.println(DiaSemana.LUNES.ordinal());    // Salida: 0
+System.out.println(DiaSemana.MARTES.ordinal());   // Salida: 1
+System.out.println(DiaSemana.DOMINGO.ordinal());  // Salida: 6
+```
+
+#### `compareTo(E o)`
+
+Compara el enumerado con otro objeto del mismo tipo basándose en su `ordinal()`. Devuelve un número negativo si la instancia actual va antes, cero si son iguales, o un número positivo si va después.
+
+**Sintaxis:** `instanciaEnum1.compareTo(instanciaEnum2)`
+
+**Ejemplo:**
+
+```java
+DiaSemana lunes = DiaSemana.LUNES;
+DiaSemana viernes = DiaSemana.VIERNES;
+
+// lunes (ordinal 0) vs viernes (ordinal 4)
+System.out.println(lunes.compareTo(viernes)); // Salida: un número negativo (-4)
+```
+
+### 3. Métodos Personalizados (Definidos por el usuario)
+
+Aquí es donde los `enum` muestran todo su potencial. Puedes añadirles atributos, constructores y tus propios métodos para asociar más lógica y datos a cada constante.
+
+**Ejemplo Completo:** Un `enum` para tipos de planeta con atributos y métodos personalizados.
+
+
+```java
+public enum TipoPlaneta {
+    // Cada constante llama al constructor con sus propios valores
+    TERRESTRE("Rocoso", 5.51),
+    GIGANTE_GASEOSO("Gaseoso", 1.33),
+    GIGANTE_HELADO("Helado", 1.64),
+    ENANO("Sólido", 2.0);
+
+    // 1. Atributos (campos)
+    private final String composicion;
+    private final double densidadMedia;
+
+    // 2. Constructor (siempre es privado por defecto)
+    TipoPlaneta(String composicion, double densidadMedia) {
+        this.composicion = composicion;
+        this.densidadMedia = densidadMedia;
+    }
+
+    // 3. Métodos "getter" para acceder a los atributos
+    public String getComposicion() {
+        return composicion;
+    }
+
+    public double getDensidadMedia() {
+        return densidadMedia;
+    }
+
+    // 4. Método personalizado con lógica propia
+    public boolean esDenso() {
+        return this.densidadMedia > 3.0;
+    }
+}
+
+public class TestPlanetas {
+    public static void main(String[] args) {
+        TipoPlaneta tierra = TipoPlaneta.TERRESTRE;
+
+        System.out.println("Planeta: " + tierra.name());
+        System.out.println("Composición: " + tierra.getComposicion()); // Método personalizado
+        System.out.println("Densidad media (g/cm³): " + tierra.getDensidadMedia()); // Método personalizado
+        System.out.println("¿Es un planeta denso? " + tierra.esDenso()); // Método personalizado
+
+        System.out.println("---");
+
+        TipoPlaneta jupiter = TipoPlaneta.GIGANTE_GASEOSO;
+        System.out.println("Planeta: " + jupiter); // Usa el name() por defecto
+        System.out.println("¿Es un planeta denso? " + jupiter.esDenso());
+    }
+}
+```
+
+**Salida:**
+
+```
+Planeta: TERRESTRE
+Composición: Rocoso
+Densidad media (g/cm³): 5.51
+¿Es un planeta denso? true
+---
+Planeta: GIGANTE_GASEOSO
+¿Es un planeta denso? false
+```
+
+### Resumen de los Métodos Más Usados con Enumerados
+
+| Método                     | Tipo      | ¿Para qué sirve?                                         | Caso de uso común                                                   |
+| -------------------------- | --------- | -------------------------------------------------------- | ------------------------------------------------------------------- |
+| **`values()`**             | Estático  | Obtener un array con todas las constantes.               | Iterar sobre todas las opciones (e.g., para llenar un `JComboBox`). |
+| **`valueOf(String)`**      | Estático  | Convertir un `String` a una constante del `enum`.        | Procesar entradas de usuario o datos externos.                      |
+| **`name()`**               | Instancia | Obtener el nombre de la constante como `String`.         | Logging, depuración, almacenamiento en base de datos.               |
+| **`toString()`**           | Instancia | Obtener una representación en `String` (sobrescribible). | Mostrar el valor en una interfaz de usuario de forma amigable.      |
+| **`ordinal()`**            | Instancia | Obtener el índice numérico de la constante.              | Comparaciones simples (con precaución).                             |
+| **Métodos personalizados** | Instancia | Añadir lógica y datos específicos a cada constante.      | Modelar conceptos complejos y asociar comportamiento.               |
+|                            |           |                                                          |                                                                     |
+
+
+>Una de sus principales utilidades de los enumerados . Puedes usar enumerados en cualquier estructura de control que requiera una comparación, como `if`, `else if`, `else` y `switch`.
+
+### ## Enumerados un poco más avanzados
 
 Los enumerados no son solo listas de nombres; pueden tener **atributos y métodos**, como una clase normal. Esto los hace increíblemente potentes. 🚦
 
 Por ejemplo, un semáforo donde cada color tiene una acción asociada:
 
-
 ```java
 
 public enum Semaforo {
+    
     ROJO("Detenerse"),
     AMARILLO("Precaución"),
     VERDE("Avanzar");
@@ -1286,14 +1532,12 @@ public enum Semaforo {
 }
 
 // Cómo se usaría:
+
 Semaforo miLuz = Semaforo.ROJO;
 System.out.println(miLuz); // Imprime ROJO
 System.out.println("Acción a realizar: " + miLuz.getAccion()); // Imprime "Acción a realizar: Detenerse"
+
 ```
-
-### ## En resumen
-
-✅ Un **enumerado** es una lista de **constantes predefinidas**. ✅ Aportan **seguridad** al no permitir valores incorrectos. ✅ Hacen el código mucho más **legible** y fácil de mantener. ✅ Pueden ser tan **simples** o **complejos** (con métodos y atributos) como necesites.
 
 ## Arrays :
 
@@ -1301,7 +1545,7 @@ Un **array** (también conocido como arreglo, vector o matriz) es una de las est
 
 Es una colección de elementos donde cada uno se almacena en una posición específica y se identifica por un número llamado **índice**.
 
-### ## ⚙️ Características Clave
+### ### ⚙️ Características Clave
 
 1. **Tamaño Fijo:** Cuando creas un array, debes definir su tamaño, y este **no puede cambiar** después. Si creas un array para 10 elementos, siempre tendrá espacio para exactamente 10.
     
@@ -1312,19 +1556,19 @@ Es una colección de elementos donde cada uno se almacena en una posición espec
 4. **Memoria Contigua:** Los elementos de un array se almacenan uno al lado del otro en la memoria del ordenador. Esta organización es lo que permite un acceso tan rápido a sus elementos.
     
 
-### ## ✅ Ventajas y ❌ Desventajas
+### ### ✅ Ventajas y ❌ Desventajas
 
 - **✅ Ventaja Principal: Rapidez de Acceso.** El punto fuerte de los arrays es el **acceso directo** a sus elementos. Saber el índice te permite ir instantáneamente al dato que buscas (lo que se conoce como complejidad `O(1)`), sin importar si el array tiene 10 o un millón de elementos.
     
 - **❌ Desventaja Principal: Poca Flexibilidad.** Su **tamaño fijo** es su mayor debilidad. Si no sabes cuántos datos vas a guardar de antemano, o si la cantidad de datos cambia constantemente, los arrays no son la mejor opción. Además, insertar o eliminar elementos en medio del array es una operación lenta porque obliga a desplazar al resto de elementos.
     
 	
-### ## 💻 Ejemplo Práctico en Java
+### ### 💻 Ejemplo Práctico en Java
 
 Vamos a ver un ejemplo sencillo: guardar y manipular las notas de 5 estudiantes.
 
 
-```
+```java
 public class EjemploArray {
 
     public static void main(String[] args) {
@@ -1393,7 +1637,7 @@ En resumen, se compone de 3 partes, una condición un valor si es verdadera y un
     
 - **`:`**: Separa el valor si es `true` del valor si es `false`.
 
-## ¿Cuándo usarlo?
+### ¿Cuándo usarlo?
 
 👍 **Ideal para:** Asignaciones condicionales simples y claras, donde la lógica es muy directa. Mejora la legibilidad en casos sencillos.
 

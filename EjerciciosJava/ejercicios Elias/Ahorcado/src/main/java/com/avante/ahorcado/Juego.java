@@ -23,6 +23,7 @@ public class Juego {
     };
 
     // --- ESTADO DEL JUEGO ---
+    
     private final String palabraSecreta;
     private final char[] palabraAdivinada;
     private int intentosRestantes;
@@ -30,9 +31,7 @@ public class Juego {
     //lo he usado por recomendacion de IA es mas rapido y final permite proteger de asignaciones pero si modificarla aunque sea final
     private final Set<Character> letrasUsadas; 
 
-    /**
-     * Constructor que inicia una nueva partida.
-     */
+    // Crea de nuevo esto, porque esto me apoye en IA
     public Juego() {
         Random rand = new Random();
         this.palabraSecreta = DICCIONARIO[rand.nextInt(DICCIONARIO.length)];
@@ -45,7 +44,7 @@ public class Juego {
         }
     }
 
-    /**
+    /*
      * Devuelve una cadena con el estado visual actual del juego.
      * Incluye el dibujo, la palabra y las letras usadas.
      */
@@ -62,11 +61,7 @@ public class Juego {
         return sb.toString();
     }
 
-    /**
-     * Procesa la letra introducida por el jugador.
-     * @param letra El carácter a comprobar.
-     * @return Un mensaje indicando el resultado del intento.
-     */
+   
     public String procesarLetra(char letra) {
         letra = Character.toUpperCase(letra);
 
@@ -85,10 +80,10 @@ public class Juego {
         }
 
         if (acierto) {
-            return "¡BIEN! La letra '" + letra + "' está en la palabra.";
+            return "La letra '" + letra + "' está en la palabra.";
         } else {
             intentosRestantes--;
-            return "¡Fallo! La letra '" + letra + "' no está en la palabra.";
+            return "La letra '" + letra + "' no está en la palabra.";
         }
     }
 
@@ -100,17 +95,12 @@ public class Juego {
         return new String(palabraAdivinada).equals(palabraSecreta);
     }
 
-    /**
-     * Comprueba si el jugador ha perdido la partida.
-     * @return true si se ha quedado sin intentos, false en caso contrario.
-     */
+    
     public boolean haPerdido() {
         return intentosRestantes <= 0;
     }
 
-    /**
-     * Devuelve la palabra secreta. Útil para mostrarla al final.
-     */
+   
     public String getPalabraSecreta() {
         return this.palabraSecreta;
     }

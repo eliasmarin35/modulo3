@@ -23,7 +23,7 @@ public class Ahorcado {
 
             // 3. Valida la entrada del usuario
             if (entrada.length() != 1 || !Character.isLetter(entrada.charAt(0))) {
-                System.out.println("Error: Por favor, introduce una única letra.");
+                System.out.println("Error: Por favor, introduce una unica letra.");
                 continue; // Vuelve al inicio del bucle
             }
 
@@ -35,13 +35,13 @@ public class Ahorcado {
 
         // --- Fin del Juego ---
         System.out.println("\n=====================================");
-        System.out.println("¡Fin de la partida!");
+        System.out.println("Fin de juego !");
 
         if (miJuego.haGanado()) {
-            System.out.println("🎉 ¡Felicidades! ¡Has adivinado la palabra! 🎉");
+            System.out.println("¡Has adivinado la palabra! 🎉");
             System.out.println("La palabra era: " + miJuego.getPalabraSecreta());
         } else {
-            System.out.println("💀 ¡Oh no! Has sido ahorcado. 💀");
+            System.out.println(" Se acabo a la horca !");
             System.out.println("La palabra secreta era: " + miJuego.getPalabraSecreta());
             // Muestra el estado final del ahorcado
             System.out.println(miJuego.getEstadoVisual());
