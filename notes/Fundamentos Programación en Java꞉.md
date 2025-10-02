@@ -1264,7 +1264,6 @@ Los enumerados no son solo listas de nombres; pueden tener **atributos y método
 
 Por ejemplo, un semáforo donde cada color tiene una acción asociada:
 
-Java
 
 ```java
 
@@ -1324,7 +1323,6 @@ Es una colección de elementos donde cada uno se almacena en una posición espec
 
 Vamos a ver un ejemplo sencillo: guardar y manipular las notas de 5 estudiantes.
 
-Java
 
 ```
 public class EjemploArray {
@@ -1410,3 +1408,76 @@ double precioFinal = (precio > 50.0) ? precio * 0.90 : precio;
 
 // precioFinal ahora es 90.0
 ```
+
+## Operador unario : postincremento y preincremento :
+
+Tanto el operador de **preincremento (`++variable`)** como el de **postincremento (`variable++`)** tienen el mismo objetivo final: aumentar el valor de una variable numérica en una unidad. Sin embargo, la diferencia fundamental entre ellos radica en el **momento exacto en que se realiza la operación de incremento** en relación con la evaluación de la expresión en la que se encuentran.
+
+#### 1. Operador de Preincremento (`++variable`)
+
+El operador de preincremento sigue la lógica de **"incrementa y luego usa"**.
+
+- **Funcionamiento:**
+    
+    1. Primero, el valor de la variable se incrementa en 1.
+        
+    2. Después, el nuevo valor (ya incrementado) es el que se utiliza en la expresión circundante.
+        
+- **Ejemplo:**
+    
+    Java
+    
+    ```
+    int a = 5;
+    int b = ++a; // Preincremento
+    ```
+    
+    En esta operación:
+    
+    1. `a` se incrementa primero. Su valor pasa de 5 a 6.
+        
+    2. El nuevo valor de `a` (que es 6) se asigna a `b`.
+        
+    
+    - **Resultado:** `a` es `6` y `b` es `6`.
+        
+
+#### 2. Operador de Postincremento (`variable++`)
+
+El operador de postincremento sigue la lógica de **"usa y luego incrementa"**.
+
+- **Funcionamiento:**
+    
+    1. Primero, el valor original de la variable se utiliza en la expresión circundante.
+        
+    2. Después de que la expresión ha sido evaluada, el valor de la variable se incrementa en 1.
+        
+- **Ejemplo:**
+    
+    Java
+    
+    ```
+    int a = 5;
+    int b = a++; // Postincremento
+    ```
+    
+    En esta operación:
+    
+    1. El valor original de `a` (que es 5) se asigna primero a `b`.
+        
+    2. Después, `a` se incrementa. Su valor pasa de 5 a 6.
+        
+    
+    - **Resultado:** `a` es `6` y `b` es `5`.
+        
+
+### Resumen clave
+
+|Operador|Nombre|Lógica|Valor devuelto en la expresión|
+|---|---|---|---|
+|**`++variable`**|Preincremento|Incrementa y luego usa|El valor **después** del incremento.|
+|**`variable++`**|Postincremento|Usa y luego incrementa|El valor **antes** del incremento.|
+
+Exportar a Hojas de cálculo
+
+Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
