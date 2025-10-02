@@ -1477,4 +1477,6 @@ El operador de postincremento sigue la lógica de **"usa y luego incrementa"**.
 |**`variable++`**|Postincremento|Usa y luego incrementa|El valor **antes** del incremento.|
 
 
->Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
+Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
+
+> Aunque hemos hablado de incremento esta operación es idéntica para el decremento `--i` o `i++` pero no para multiplicación, división y resto de operaciones.
