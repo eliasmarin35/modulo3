@@ -1826,3 +1826,268 @@ El operador de postincremento sigue la lógica de **"usa y luego incrementa"**.
 Aunque en bucles simples como `for (int i = 0; i < 10; i++)` la diferencia funcional es nula, entender este comportamiento es crucial cuando los operadores forman parte de expresiones más complejas, como asignaciones, comparaciones o parámetros de funciones, ya que el resultado puede variar drásticamente.
 
 > Aunque hemos hablado de incremento esta operación es idéntica para el decremento `--i` o `i++` pero no para multiplicación, división y resto de operaciones.
+
+## Números expresados en otros formatos :
+
+Normalmente representamos los números enteros en base 10 o sea   :
+
+`0 1 2 3 4 5 6 7 8 9`
+
+Representación de otras base de números en java :
+
+```java
+public class Representaciones {
+
+	int numBase2;
+	int numBase8;
+	int numBase16;
+	
+	//se indican con 0b delante
+	// 1001 = 9
+	
+	numBase2 = 0b1001;
+	
+	System.out.printf("El numero binario es %b es %d", numBase2, numBase2);
+	
+	// completar con codigo de Juanma
+}
+```
+
+
+
+
+## La clase `record`
+
+La clase `record` en Java, introducida en la versión 14, es una forma especial y concisa de crear clases que actúan como simples contenedores de datos inmutables. Piensa en ellas como una manera rápida de definir "registros" de información, como las coordenadas de un punto o los datos de un usuario.
+
+### ## Teoría de la Clase `record`
+
+Antes de los `records`, si querías crear una clase para almacenar datos (por ejemplo, `Punto` con `x` e `y`), tenías que escribir mucho código repetitivo (_boilerplate_):
+
+- Campos privados (`private final int x;`).
+    
+- Un constructor para inicializar los campos.
+    
+- Métodos "getters" para cada campo (ej. `getX()`).
+    
+- Los métodos `equals()`, `hashCode()` y `toString()` para que la clase se comportara correctamente en colecciones y al imprimirla.
+    
+
+Todo esto hacía que el código fuera largo y propenso a errores.
+
+Un **`record`** automatiza todo eso. Al declarar un `record`, el compilador de Java genera automáticamente por ti:
+
+1. **Campos `private` y `final`**: Los componentes que declaras en la cabecera del `record` se convierten en campos privados y finales. Esto garantiza que el objeto sea **inmutable** (sus datos no pueden cambiar una vez creado).
+    
+2. **Constructor canónico**: Un constructor público que acepta todos los componentes en el mismo orden en que los declaraste.
+    
+3. **Métodos de acceso públicos**: Para cada componente, genera un método con el mismo nombre (por ejemplo, si tienes un componente `x`, crea un método `x()`). ¡Ojo! No sigue el convenio `getX()`.
+    
+4. **Implementaciones de `equals()` y `hashCode()`**: Compara dos `records` basándose en el valor de sus componentes, no en su referencia en memoria.
+    
+5. **Implementación de `toString()`**: Genera una representación en texto útil que muestra el nombre del `record` y sus componentes.
+    
+
+En resumen, un `record` te da una clase inmutable y centrada en los datos con el mínimo código posible.
+
+### ## Pequeño Ejemplo
+
+Imaginemos que queremos representar un producto simple con un nombre y un precio.
+
+#### **La forma tradicional (antes de `record`)**
+
+```java
+import java.util.Objects;
+
+public final class ProductoClasico {
+    private final String nombre;
+    private final double precio;
+
+    public ProductoClasico(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductoClasico that = (ProductoClasico) o;
+        return Double.compare(that.precio, precio) == 0 && Objects.equals(nombre, that.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, precio);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductoClasico[" +
+               "nombre='" + nombre + '\'' +
+               ", precio=" + precio +
+               ']';
+    }
+}
+```
+
+Como puedes ver, es mucho código para algo tan simple.
+
+#### **La forma moderna (usando `record`)**
+
+Ahora, mira cómo se hace lo mismo con un `record`:
+
+
+```java
+public record Producto(String nombre, double precio) {}
+```
+
+¡Y ya está! 🎉 Esta única línea de código genera una clase con la misma funcionalidad que el ejemplo anterior.
+
+#### **Cómo se usa**
+
+Puedes usarlo de la siguiente manera:
+
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Creas una instancia como si fuera una clase normal
+        Producto libro = new Producto("El Quijote", 25.99);
+        Producto taza = new Producto("Taza de café", 12.50);
+        Producto libroRepetido = new Producto("El Quijote", 25.99);
+
+        // Accedes a los datos con los métodos generados
+        System.out.println("Nombre del producto: " + libro.nombre());
+        System.out.println("Precio: €" + libro.precio());
+
+        // El método toString() ya está implementado
+        // Imprime: Producto[nombre=El Quijote, precio=25.99]
+        System.out.println(libro);
+
+        // El método equals() compara el valor de los datos
+        System.out.println("¿Es 'libro' igual a 'taza'? " + libro.equals(taza)); // false
+        System.out.println("¿Es 'libro' igual a 'libroRepetido'? " + libro.equals(libroRepetido)); // true
+    }
+}
+```
+
+Como ves, la clase `record` simplifica enormemente la creación de clases de datos, haciendo tu código más limpio, legible y menos propenso a errores.
+
+> Los `record` no pueden ser hijos de nadie, porque ya son hijos de una clase genérica interna.
+
+## Clases genéricas :
+
+En Java, una **clase genérica** es una clase que puede trabajar con cualquier tipo de dato. Piensa en ella como una especie de plantilla que te permite definir una clase con un "marcador de posición" para el tipo de objeto que va a manejar. Este tipo se especifica cuando se crea una instancia de la clase.
+
+La característica de los genéricos fue introducida en Java 5 (J2SE 5.0) para aumentar la flexibilidad, la reutilización y la seguridad del código.
+
+### ¿Para qué sirven y cuáles son sus beneficios?
+
+El uso de clases genéricas aporta ventajas muy importantes en el desarrollo:
+
+- **Seguridad de tipos (Type Safety):** 🔒 El principal beneficio es que el compilador de Java puede verificar los tipos en tiempo de compilación. Si intentas usar un tipo de dato incorrecto, el programa no compilará, evitando errores inesperados en tiempo de ejecución (como el temido `ClassCastException`).
+    
+- **Reutilización de código:** ♻️ En lugar de crear múltiples clases que hacen lo mismo pero con diferentes tipos de datos (por ejemplo, una lista para `Integer`, otra para `String`, etc.), puedes crear una única clase genérica. Esto reduce la duplicación y facilita el mantenimiento del código.
+    
+- **Eliminación de "castings":** Se elimina la necesidad de hacer conversiones explícitas de tipo (casting). Al recuperar un objeto de una colección genérica, el compilador ya sabe de qué tipo es, lo que hace el código más limpio y legible.
+    
+
+### Sintaxis de una Clase Genérica
+
+La sintaxis para crear una clase genérica es sencilla. Se utilizan los corchetes angulares (`<>`), también conocidos como "operador diamante", para declarar uno o más parámetros de tipo. Por convención, se suelen usar letras mayúsculas como `T` (Type), `E` (Element), `K` (Key) y `V` (Value).
+
+Aquí tienes la estructura básica:
+
+
+```java
+public class NombreClase<T> {
+    // La variable "t" será del tipo que se especifique al crear el objeto.
+    private T t;
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+}
+```
+
+En este ejemplo, `T` es el parámetro de tipo que será reemplazado por un tipo de dato real cuando se cree un objeto de `NombreClase`.
+
+
+### Ejemplo práctico: una clase "Caja"
+
+Imagina que necesitas una clase `Caja` para guardar un objeto de cualquier tipo. Sin genéricos, tendrías que usar `Object`, lo cual es inseguro y requiere casting.
+
+**Enfoque sin genéricos (no recomendado):**
+
+
+```java
+public class CajaSinGenericos {
+    private Object objeto;
+
+    public void guardar(Object objeto) {
+        this.objeto = objeto;
+    }
+
+    public Object obtener() {
+        return objeto;
+    }
+}
+
+// Uso
+CajaSinGenericos miCaja = new CajaSinGenericos();
+miCaja.guardar("Hola Mundo");
+String miTexto = (String) miCaja.obtener(); // ¡Se necesita un casting!
+
+miCaja.guardar(123); // Esto es válido, pero peligroso
+// String otroTexto = (String) miCaja.obtener(); // ¡Error en tiempo de ejecución! ClassCastException
+```
+
+Ahora, veamos la versión con genéricos, mucho más segura y limpia.
+
+**Enfoque con clase genérica (recomendado):**
+
+
+```java
+public class Caja<T> {
+    private T contenido;
+
+    public void guardar(T contenido) {
+        this.contenido = contenido;
+    }
+
+    public T obtener() {
+        return contenido;
+    }
+}
+
+// Uso
+// Creamos una caja que SÓLO contendrá Strings
+Caja<String> cajaDeTexto = new Caja<>();
+cajaDeTexto.guardar("Hola Mundo Genérico");
+String textoObtenido = cajaDeTexto.obtener(); // No se necesita casting
+// cajaDeTexto.guardar(123); // ¡Error de compilación! El compilador nos protege.
+
+System.out.println(textoObtenido);
+
+// Creamos una caja que SÓLO contendrá Integers
+Caja<Integer> cajaDeEnteros = new Caja<>();
+cajaDeEnteros.guardar(42);
+Integer numeroObtenido = cajaDeEnteros.obtener();
+
+System.out.println(numeroObtenido);
+```
+
+Como puedes ver, el ejemplo con genéricos es mucho más robusto. El compilador se asegura de que solo puedas guardar y obtener los tipos de datos correctos, haciendo tu código más seguro y fiable desde el principio. Las colecciones más comunes en Java, como `ArrayList`, `HashMap` o `LinkedList`, son ejemplos perfectos del poder de los genéricos.
