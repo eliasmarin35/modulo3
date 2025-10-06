@@ -2091,3 +2091,7 @@ System.out.println(numeroObtenido);
 ```
 
 Como puedes ver, el ejemplo con genéricos es mucho más robusto. El compilador se asegura de que solo puedas guardar y obtener los tipos de datos correctos, haciendo tu código más seguro y fiable desde el principio. Las colecciones más comunes en Java, como `ArrayList`, `HashMap` o `LinkedList`, son ejemplos perfectos del poder de los genéricos.
+
+## Colecciones :
+### Colección : clase par :
+
