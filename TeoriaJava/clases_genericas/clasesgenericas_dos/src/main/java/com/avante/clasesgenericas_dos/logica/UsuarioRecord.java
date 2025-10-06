@@ -4,6 +4,18 @@
  */
 package com.avante.clasesgenericas_dos.logica;
 
+/*
+    OJO !!!!!
+
+    Esta clase se creó para recordar lon queb eran los record y no se usa en el
+        resto del proyecto.
+
+    Si estás leyendo esto porque estás repasando clases genéricas, puedes
+        ignorar este archivo.
+*/
+
+
+
 /**
  *
  * @author Juanma
