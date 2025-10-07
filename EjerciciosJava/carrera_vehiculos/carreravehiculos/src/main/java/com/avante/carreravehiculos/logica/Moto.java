@@ -8,19 +8,20 @@ package com.avante.carreravehiculos.logica;
  *
  * @author jprof
  */
-public class Coche extends Vehiculo {
+public class Moto extends Vehiculo {
     // ==== ATRIBUTOS DE LA CLASE ====
     
     // Velocidades mínimas y máximas expresadas en metros por iteración
-    private static final int MIN_VEL = 0;
-    private static final int MAX_VEL = 0;
+    private static final int MIN_VEL = 10;
+    private static final int MAX_VEL = 50;
+    private static final String TIPO = "moto";
     
     // ==== CONSTRUCTOR ===
     /**
      * LLama la constructor de la clase padre que lo hace todo
      * @param nombre 
      */
-    public Coche (String nombre) {
+    public Moto (String nombre) {
         super(nombre);
     }
     
@@ -31,7 +32,7 @@ public class Coche extends Vehiculo {
      */
     @Override
     public int getMinVel() {
-            return Coche.MIN_VEL;
+            return Moto.MIN_VEL;
     };
     
     /**
@@ -40,6 +41,15 @@ public class Coche extends Vehiculo {
      */
     @Override
     public int getMAxVel() {
-            return Coche.MAX_VEL;
+            return Moto.MAX_VEL;
     };
+    
+    /**
+     * Obtiene el tipo de vehiculo en forma de texto
+     * @return el tipo de vehículo
+     */
+    @Override
+    protected String getTipoVehiculo() {
+        return Moto.TIPO;
+    }
 }
