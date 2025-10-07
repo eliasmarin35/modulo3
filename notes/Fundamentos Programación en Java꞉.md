@@ -1208,7 +1208,7 @@ El método `main` es el ejemplo más famoso, ya que Java necesita poder llamarlo
 ✅ **Pertenece a la clase, no al objeto.** ✅ **Es compartido:** Para variables, hay una sola copia para todos los objetos. ✅ **No necesita un objeto:** Se accede usando el nombre de la clase (ej: `NombreClase.miMetodoEstatico()`).
 
 ## Clases enumeradas :
-
+ 
 Los enumerados (o `enum`) son un tipo de dato especial que permite definir un **conjunto fijo de constantes con nombre**.
 
 Imagina que quieres representar los días de la semana. En lugar de usar números (`1` para lunes, `2` para martes) o Strings (`"Lunes"`, `"Martes"`), que pueden llevar a errores, creas un enumerado. 🗓️
@@ -2011,6 +2011,7 @@ Aquí tienes la estructura básica:
 ```java
 public class NombreClase<T> {
     // La variable "t" será del tipo que se especifique al crear el objeto.
+    
     private T t;
 
     public void set(T t) {
@@ -2047,12 +2048,16 @@ public class CajaSinGenericos {
 }
 
 // Uso
+
 CajaSinGenericos miCaja = new CajaSinGenericos();
 miCaja.guardar("Hola Mundo");
 String miTexto = (String) miCaja.obtener(); // ¡Se necesita un casting!
 
-miCaja.guardar(123); // Esto es válido, pero peligroso
-// String otroTexto = (String) miCaja.obtener(); // ¡Error en tiempo de ejecución! ClassCastException
+miCaja.guardar(123); 
+
+// Esto es válido, pero peligroso
+// String otroTexto = (String) miCaja.obtener(); 
+// ¡Error en tiempo de ejecución! ClassCastException
 ```
 
 Ahora, veamos la versión con genéricos, mucho más segura y limpia.
@@ -2061,6 +2066,7 @@ Ahora, veamos la versión con genéricos, mucho más segura y limpia.
 
 
 ```java
+
 public class Caja<T> {
     private T contenido;
 
@@ -2075,14 +2081,18 @@ public class Caja<T> {
 
 // Uso
 // Creamos una caja que SÓLO contendrá Strings
+
 Caja<String> cajaDeTexto = new Caja<>();
 cajaDeTexto.guardar("Hola Mundo Genérico");
-String textoObtenido = cajaDeTexto.obtener(); // No se necesita casting
+String textoObtenido = cajaDeTexto.obtener(); 
+
+// No se necesita casting
 // cajaDeTexto.guardar(123); // ¡Error de compilación! El compilador nos protege.
 
 System.out.println(textoObtenido);
 
 // Creamos una caja que SÓLO contendrá Integers
+
 Caja<Integer> cajaDeEnteros = new Caja<>();
 cajaDeEnteros.guardar(42);
 Integer numeroObtenido = cajaDeEnteros.obtener();
@@ -2093,5 +2103,17 @@ System.out.println(numeroObtenido);
 Como puedes ver, el ejemplo con genéricos es mucho más robusto. El compilador se asegura de que solo puedas guardar y obtener los tipos de datos correctos, haciendo tu código más seguro y fiable desde el principio. Las colecciones más comunes en Java, como `ArrayList`, `HashMap` o `LinkedList`, son ejemplos perfectos del poder de los genéricos.
 
 ## Colecciones :
-### Colección : clase par :
+### Colección : clase par : 
+
+`Mirar ejercicio en teoría ejercicios`
+
+Hay muchos tipos de listas: 
+
+- Listas Enlazadas (Linked list):
+- 
+- 
+
+
+
+
 
