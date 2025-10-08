@@ -2232,6 +2232,11 @@ public class EjemploArrayList {
 }
 ```
 
+Las Linked List o Listas enlazadas en Java :
+(añadir lo de Juanma)
+
+(añadir código de Juanma)
+
 - conjuntos:
 
 - pilas:
@@ -2479,7 +2484,7 @@ public class EjemploModerno {
 
 Como puedes ver, el código moderno con **`java.time` es más legible, menos propenso a errores y más directo**.
 
-**En resumen**: aunque es importante saber qué es `GregorianCalendar` por si te lo encuentras en código antiguo, **para cualquier proyecto nuevo, utiliza siempre las clases del paquete `java.time`**.
+**En resumen**: aunque es importante saber qué es `GregorianCalendar` por si te lo encuentras en código antiguo, **para cualquier proyecto nuevo, utiliza siempre las clases del paquete `java.time`**
 
 
 ### Acceso a ficheros
