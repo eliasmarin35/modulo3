@@ -916,6 +916,7 @@ Este es nuestro contrato. Cualquier cosa que sea un "Volador" debe ser capaz de 
 ```java
 // La interfaz define QUÉ se debe hacer
 interface Volador {
+    
     void despegar();
     void volar();
     void aterrizar();
@@ -2103,15 +2104,529 @@ System.out.println(numeroObtenido);
 Como puedes ver, el ejemplo con genéricos es mucho más robusto. El compilador se asegura de que solo puedas guardar y obtener los tipos de datos correctos, haciendo tu código más seguro y fiable desde el principio. Las colecciones más comunes en Java, como `ArrayList`, `HashMap` o `LinkedList`, son ejemplos perfectos del poder de los genéricos.
 
 ## Colecciones :
-### Colección : clase par : 
 
-`Mirar ejercicio en teoría ejercicios`
+Las **colecciones** son objetos que agrupan y gestionan un conjunto de elementos. Piensa en ellas como contenedores diseñados para almacenar, recuperar, manipular y comunicar datos de manera eficiente. Toda la estructura de las colecciones se organiza en el **Java Collections Framework**, que es una arquitectura unificada que proporciona un conjunto de interfaces y clases.
 
-Hay muchos tipos de listas: 
+- Listas Enlazadas (Linked list) y  listas doblemente enlazadas:
 
-- Listas Enlazadas (Linked list):
-- 
-- 
+Tenemos en Java dos tipos de listas, la Array List y las Linked List, la diferencia entre ellas principalmente son : se usan para poder añadir de forma dinámica elementos.
+
+`ArrayList<tipo_de_dato>`
+
+Implementamos la lógica :
+
+```java
+package com.avante.coleccioneslistas.logica;
+
+/**
+ *
+ * @author jprof
+ */
+public record Alumno(int numero, String nombre) {
+    public String toString() {
+        return String.format("<%03d: %s >",this.numero,this.nombre);
+    }
+}
+```
+
+Y ahora el Main :
+
+```java
+package com.avante.coleccioneslistas;
+
+import com.avante.coleccioneslistas.logica.Alumno;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ *
+ * @author jprof
+ */
+public class EjemploArrayList {
+
+    public static void main(String[] args) {
+        // VARS
+        ArrayList<Alumno> listaAlumnos;
+        Iterator<Alumno> it, it1, it2;
+        Alumno a1, a2;
+        boolean hayElementos;
+        int contador;
+        
+        // Creamos nuestra lista de alumnos
+        listaAlumnos = new ArrayList<Alumno>();
+        
+        // Añadimos alumnos -> metodo add de una lista
+        // En un ArrayList añadir un elemento es eficiente
+        listaAlumnos.add(new Alumno(45,"Jose Alfredo"));
+        listaAlumnos.add(new Alumno(34,"Maria"));
+        listaAlumnos.add(new Alumno(89,"Juana"));
+        listaAlumnos.add(new Alumno(1,"Luisa"));
+        listaAlumnos.add(new Alumno(90,"Fernanda"));
+        
+        // 1.- Imprimos alumnos --> for-each
+        System.out.println("\n ===> 1.- Recorrido con for-each");
+        
+        for (Alumno a : listaAlumnos) {
+            System.out.println(a);
+        }
+        
+        
+        // 2.- Imprimimos alumos --> for tradicional
+        // usamos .size() para obtener el tamaño de la lista
+        // usamos .get(posicion) para obtener el elemento en la posicion x
+        //
+        // En un ArrayList obtener el elemento en la posicion x es eficiente
+        
+        System.out.println("\n ===> 2.- Recorrido con for tradicional");
+        
+        for (int i=0; i < listaAlumnos.size();i++) {
+            a1 = listaAlumnos.get(i);
+            System.out.println(a1);
+        }
+        
+        // 3.- Imprimimos alumos --> patron iterador
+        System.out.println("\n ===> 3.- Recorrido con el patron iterador");
+        
+        // 1- Creamos el iterador
+        // El iterador es su propio objeto en si mismo
+        it = listaAlumnos.iterator();
+        
+        // Para saber si quedan elementos, se usa el metodo .hasNext() del
+        //    iterador
+        // Para obtener el siguiente elemento, se usa el metodo .next()
+        while ( it.hasNext() ) {
+            a1 = it.next();
+            System.out.println(a1);
+        }
+        
+        
+        // Usar dos iteradores en la misma lista
+        System.out.println("\n ===> 3.- Uso de dos iteradores");
+        
+        // Creo dos iteradores
+        it1 = listaAlumnos.iterator();
+        it2 = listaAlumnos.iterator();
+        
+        hayElementos = it1.hasNext() || it2.hasNext();
+        contador=0;
+                
+        while ( hayElementos ) {
+            // incremento contador
+            contador++;
+            
+            if (it1.hasNext()) {
+                a1 = it1.next();
+                System.out.printf("1 : %s.\n",a1);
+            }
+            
+            if (contador % 2 == 0 && it2.hasNext()) {
+                a2 = it2.next();
+                System.out.printf("\t2 : %s.\n",a2);
+            }
+            
+            // Fin de la iteracion
+            hayElementos = it1.hasNext() || it2.hasNext();
+        }
+       
+    }
+}
+```
+
+- conjuntos:
+
+- pilas:
+
+- colas:
+
+- Combinadas de pilas y colas:
+
+- Colas de prioridad:
+
+
+
+## Por dar hoy 08/10/2025 y em adelante :
+### char <-> int
+
+Los caracteres se escriben con comillas simples, no existe el caracter vacio pero si el caracter espacio.  Los caracteres se pueden traducir a un int , es importante saber el orden de tipo de datos:
+
+	byte < short < int < big < float < double
+
+	char < int 
+
+
+Es importante tener en cuenta el orden a la hora de hacer un casting explicito o implicito.
+
+```java
+package com.avante.charint;
+
+/**
+ *
+ * @author jprof
+ */
+public class Charint {
+    /*
+        ENLACE A LA TABLA ASCII: https://www.ascii-code.com/
+    */
+
+    public static void main(String[] args) {
+        // VARS
+        char c1, c2, c3, c4;
+        int  n1, n2, n3, n4;
+        
+        
+        // 1.- Literales caracter
+        System.out.println("\n =========> 1.- literales caracter.");
+        c1 = 'A';
+        System.out.println(c1);
+        
+        // 2.- Caracter como int
+        System.out.println("\n =========> 2.- meter un char en un int.");
+        c1 = 'A';
+        n1 = c1;
+        System.out.println(n1);
+        
+        // 3.- Int como char
+        System.out.println("\n =========> 3.- meter un int en un char.");
+        // Usamos la S (01010011 en binario, 123 en octal, 53 en hex y 83 en decimal).
+        n1 = 0b01010011; // binario
+        n2 = 0123;       // octal
+        n3 = 0x53;       // hexadecimal
+        n4 = 83;         // decimal
+        
+        c1 = (char) n1;
+        c2 = (char) n2;
+        c3 = (char) n3;
+        c4 = (char) n4;
+        
+        System.out.printf("Los caracteres son %c, %c, %c y %c.\n", c1,c2,c3,c4);
+        
+        // 4.- Usar los char como si fueran numeros
+        System.out.println("\n =========> 4.- Usar un bucle for de chars");
+        c1 = 'A';
+        c2 = 'Z';
+        
+        for (char c=c1; c<=c2; c++) {
+            System.out.println(c);
+        }
+        
+        // 5.- Poner una letra en mayuscula
+        System.out.println("\n =========> 5.- Poner una letra en mayuscula.");
+        c1 = 'a';
+        c2 = 'A';
+        n1 = c1 - c2;
+        
+        System.out.printf("Entre la %c y la %c hay %d.\n",c1,c2,n1);
+        
+        c1 = 't';
+        c2 = (char) (c1 - n1);
+        
+        System.out.printf("La letra %c menos %d nos da la letra %c.\n",c1,n1,c2);
+    }
+}
+```
+
+> Como inciso aquí hablamos un poco de caracteres especiales :
+
+```java
+package com.avante.charint;
+
+/**
+ *
+ * @author jprof
+ */
+public class CaracteresEspeciales {
+    /*
+        ENLACE A LA TABLA ASCII: https://www.ascii-code.com/
+        ENLACE A LOS CODIGOS ANSI: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+    */
+    public static void main(String[] args) {
+        // 1.- Caracteres especiales
+        /*
+            \\ -> \
+            \n -> intro
+            \t -> tabulador
+            \" -> "
+            \' -> '
+            \r -> retorno de carro
+            \b -> retroceso
+            \f -> avance de pagina (form feed)
+        
+            Escribiendo el codigo:
+            \nnn -> se interpreta como el codigo octal del caracter (obsoleto)
+                    ejemplo \033 es el caracter ESC
+        
+            \\uNNNN -> se interpreta como el codigo hexadecimal unicode del caracter
+                    ejemplo \u001B es el caracter ESC
+        */
+        
+        String s1;
+        
+        // 1.- Ejemplo escribiendo color rojo
+        // es el caracter ESC + "[31m"
+        // ( se resetea con ESC + "[0m"
+        // OJO!! Funciona en terminal que soporte codigos ANSI
+        
+        System.out.println("\n-----> 1.- Escribir un texto con rojo");
+        s1 = "Hola \u001B[31mLuis\u001B[0m, que tal?";
+        System.out.println(s1);
+        
+        
+        // 2.- Ejemplo con una letra
+        // LA R mayuscula es el codigo hex 52
+        System.out.println("\n-----> 2.- Ejemplo con una letra.");
+        s1 = "Mi letra es \u0052";
+        System.out.println(s1);
+        
+        
+        // 3.- Ejemplo de backspace
+        System.out.println("\n-----> 3.- Ejemplo de backspace.");
+        s1 = "HOLA\b LUIS";
+        System.out.println(s1);
+        System.out.printf("La cadena anterior tiene %d.\n",s1.length());
+    }
+}
+```
+### GregorianCalendar
+
+- **¿Qué es?**: Es una implementación concreta de la clase abstracta `Calendar`. Permite trabajar con fechas (año, mes, día) y horas (hora, minuto, segundo), teniendo en cuenta reglas como los años bisiestos.
+    
+- **Paquete**: Pertenece a `java.util`.
+    
+- **Característica principal**: Es **mutable**, lo que significa que un objeto `GregorianCalendar` puede ser modificado después de su creación. Por ejemplo, puedes añadirle días o cambiar el mes.
+    
+- **Punto clave problemático**: Su API puede ser poco intuitiva. Por ejemplo, **los meses se representan de 0 (enero) a 11 (diciembre)**, una fuente común de errores.
+    
+
+### ⚠️ ¿Por qué ya no se recomienda su uso?
+
+Desde la introducción de Java 8, `GregorianCalendar` y toda la antigua API de fechas (`java.util.Date`, `java.util.Calendar`) se consideran **clases heredadas (legacy)**. Su uso está desaconsejado para nuevos desarrollos por las siguientes razones:
+
+1. **API Confusa**: La indexación de meses en base 0 es propensa a errores.
+    
+2. **Mutabilidad**: Al ser mutable, puede causar problemas en aplicaciones con múltiples hilos (multithreading).
+    
+3. **Complejidad**: Realizar operaciones como calcular la diferencia entre dos fechas es innecesariamente complicado.
+    
+
+La alternativa moderna y recomendada es el paquete `java.time` (con clases como `LocalDate`, `LocalDateTime` y `ZonedDateTime`), que es inmutable, más seguro y mucho más fácil de usar.
+
+## ✅ Ejemplo Práctico
+
+A continuación, se muestra un ejemplo de cómo se usaría `GregorianCalendar` y luego su equivalente moderno para que veas la diferencia.
+
+### Código con `GregorianCalendar` (Forma antigua)
+
+
+```java
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
+
+public class EjemploLegacy {
+    public static void main(String[] args) {
+        // 1. Crear una instancia con la fecha y hora actuales
+        Calendar calendario = new GregorianCalendar();
+
+        // 2. Obtener datos de la fecha (¡CUIDADO CON EL MES!)
+        int anio = calendario.get(Calendar.YEAR);
+        int mes = calendario.get(Calendar.MONTH) + 1; // Se suma 1 porque Enero es 0
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
+        int hora = calendario.get(Calendar.HOUR_OF_DAY);
+
+        System.out.println("Fecha actual: " + dia + "/" + mes + "/" + anio);
+        System.out.println("Hora actual: " + hora);
+
+        // 3. Modificar la fecha (sumar 10 días)
+        calendario.add(Calendar.DAY_OF_MONTH, 10);
+
+        // 4. Formatear la nueva fecha para mostrarla
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("Fecha en 10 días: " + formato.format(calendario.getTime()));
+    }
+}
+```
+
+### El mismo código con `java.time` (Forma moderna)
+
+
+```java
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class EjemploModerno {
+    public static void main(String[] args) {
+        // 1. Crear una instancia con la fecha y hora actuales (inmutable)
+        LocalDateTime ahora = LocalDateTime.now();
+
+        // 2. Obtener datos de la fecha (mucho más intuitivo)
+        int anio = ahora.getYear();
+        int mes = ahora.getMonthValue(); // El mes es de 1 a 12, ¡sin trampas!
+        int dia = ahora.getDayOfMonth();
+        int hora = ahora.getHour();
+
+        System.out.println("Fecha actual: " + dia + "/" + mes + "/" + anio);
+        System.out.println("Hora actual: " + hora);
+
+        // 3. Modificar la fecha (crea un nuevo objeto)
+        LocalDateTime futuro = ahora.plusDays(10);
+
+        // 4. Formatear la nueva fecha para mostrarla
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.println("Fecha en 10 días: " + futuro.format(formato));
+    }
+}
+```
+
+Como puedes ver, el código moderno con **`java.time` es más legible, menos propenso a errores y más directo**.
+
+**En resumen**: aunque es importante saber qué es `GregorianCalendar` por si te lo encuentras en código antiguo, **para cualquier proyecto nuevo, utiliza siempre las clases del paquete `java.time`**.
+
+
+### Acceso a ficheros
+### Ficheros de propiedades
+### Caracteres especiales
+
+(completa con IA general y mirar ejercicio de apuntes del repo)
+  
+### String Builder
+
+Se usan para cadena de de caracteres dinámicas. Cuando se trata de cadenas de caracteres mas grandes usamos este tipo de String. Es como un buffer de memoria para los string y asi mejorar rendimiento.
+
+Sus constructores por defecto son : 
+
+`StringBuffer()`
+`StringBuffer(int capacidad)`
+`StringBuffer(String cadena)`
+`StringBuffer(charSequence seq)`
+
+A ese buffer podemos añadir lo que sea, y se añade como String sea el tipo que sea :
+
+`nombrebuffer.apped("cadena de texto  o no ")`
+
+> Podemos depender del `toString` gracias al casting implícito.
+
+Modificar caracteres en `StringBuffer`, se puede hacer con el siguiente ejemplo lo veremos :
+
+```java
+
+for(int i = 0; i <10 ; i++){
+	
+	buff2.setCharAt(i, 'X');
+}
+
+// devuevlve el buffer axadien X en los primeros 10 caracteres XXXXXXXXXXjdajkjkjk
+```
+
+Para insertar se usa :
+
+```java
+buff2.insert(int posicionInicio, String cadena)
+```
+
+Veamos un ejemplo con String Buffer :
+
+```java
+package com.avante.stringbuilder;
+
+/**
+ *
+ * @author jprof
+ */
+public class Stringbuilder {
+    
+    /*
+        Las cadenas de caracteres en Java son inmutables (o invariantes), ESO
+            quiere decir que cada cadena se crea en menoria, y cada modificacion
+            o concatenación resulta en crear en memoria una nueva cadena
+            resultado.
+    
+        Para textos pequeños esto no es un problema, pero para trozos de texto
+            grandes resulta en un uso ineficiente de la memoria.
+    
+        En general, si sabemos que vamos a construir un texto por trozos, es
+            recomendable usar StringBuffer.
+    
+        StringBuffer es un buffer en memoria para almacenar texto de manera
+            eficiente, que permite ir añadiendo y modificando el texto que
+            llevamos.
+    
+        A la hora de imprimirlo por pantalla se transforma en String, la idea
+            es que solo acabe existiendo un String para todo el buffer.
+    
+    
+        StringBuffer es seguro para concurrencia (multihilos).
+    
+        StringBuilder no es seguro en concurrencia, pero tiene los mismos
+            metodos que StringBuffer y se puede usar tranquilamente si nuestro
+            programa sólo tiene un hilo de procesamiento.
+    
+    
+        ENLACE AL LOREM IPSUM: https://loremipsum.io/generator
+    
+    */
+
+    public static void main(String[] args) {
+        // VARS
+        StringBuffer buff1, buff2;
+        String s1;
+        
+        // 1.- constructor por defecto y añadir
+        System.out.println("\n ====> 1.- Constructor por defecto, u sando append y directamente sout.");
+        
+        buff1 = new StringBuffer();
+        
+        buff1.append("Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.");
+        buff1.append("\n\n");
+        buff1.append(57);
+        buff1.append('Z');
+        buff1.append("\n\n");
+        buff1.append("Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.");
+        buff1.append("\n\n");
+        
+        // Podemos depender del toString gracias al casting implicito
+        System.out.println(buff1);
+        
+        
+        
+        // 2.- Metodo para convertir a cadena usando el constructor con parametros
+        System.out.println("\n ====> 2.- Constructor con parametros, usando append y directamente sout.");
+        
+        buff2 = new StringBuffer(buff1);
+        buff2.append("\n\nHOLA QUE TAL!");
+        
+        s1 = buff2.toString();
+        
+        System.out.println(s1);
+        
+        
+        // 3.- Modificacion de caracteres
+        System.out.println("\n ====> 3.- Modificar caracteres en StringBuffer.");
+        
+        // Cojo el buffer2 y modifico el principio poniendo X en los
+        //      10 primeros caracteres
+        
+        for (int i=0; i<=10; i++) {
+            buff2.setCharAt(i,'X');
+        }
+        
+        System.out.println(buff2);
+        
+        
+        // 4.- Insercion
+        System.out.println("\n ====> 4.- Insercion.");
+        
+        buff2.insert(11,"\nFIN DE LAS X\n\n");
+        buff2.insert(0 ,"EMPIEZAN LAS X:\n");
+        
+        System.out.println(buff2);
+        
+    }
+}
+```
+### Lanzar excepciones propias
+### CLASPATH
+
+
 
 
 
