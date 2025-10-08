@@ -16,7 +16,6 @@ public class TestInterfaces {
     public static void sacaPorPantalla( Imprimible i ) {
         i.imprimir();
     }
-    
 
     public static void main(String[] args) {
         // Creo un alunmo y un coche
