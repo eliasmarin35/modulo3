@@ -2487,13 +2487,215 @@ Como puedes ver, el código moderno con **`java.time` es más legible, menos pro
 **En resumen**: aunque es importante saber qué es `GregorianCalendar` por si te lo encuentras en código antiguo, **para cualquier proyecto nuevo, utiliza siempre las clases del paquete `java.time`**
 
 
-### Acceso a ficheros
-### Ficheros de propiedades
-### Caracteres especiales
+## Acceso a ficheros
 
-(completa con IA general y mirar ejercicio de apuntes del repo)
-  
-### String Builder
+El manejo de ficheros en Java se basa en el concepto de **Streams (flujos)**. Un stream es una secuencia de datos que fluye desde una fuente (como un fichero, la red o la memoria) hacia un destino. Piensa en ello como una tubería: por un lado entran los datos y por el otro salen.
+
+Java divide los streams en dos grandes familias:
+
+1. **Byte Streams**: Para manejar datos binarios en bruto (bytes). Son la base de todo.
+    
+2. **Character Streams**: Para manejar datos de texto (caracteres), gestionando automáticamente la codificación (UTF-8, ISO-8859-1, etc.).
+    
+
+### 1. Byte Streams (Ficheros Binarios) 💾
+
+Se usan para leer y escribir cualquier tipo de fichero tal cual está, byte por byte. Son ideales para imágenes, vídeos, ejecutables o cualquier dato no textual.
+
+- **Para leer**: Se usa `InputStream`. La clase más común es **`FileInputStream`**.
+    
+- **Para escribir**: Se usa `OutputStream`. La clase más común es **`FileOutputStream`**.
+    
+
+Estos leen y escriben datos en su forma más primitiva (bytes). Son universales pero poco prácticos para manejar texto directamente.
+
+### 2. Character Streams (Ficheros de Texto) 📄
+
+Son una capa de abstracción sobre los Byte Streams, diseñados específicamente para trabajar con texto. Traducen los bytes a caracteres según un juego de caracteres (charset) específico, lo que evita problemas de codificación.
+
+- **Para leer**: Se usa `Reader`. La clase más común es **`FileReader`**.
+    
+- **Para escribir**: Se usa `Writer`. La clase más común es **`FileWriter`**.
+    
+
+Siempre deberías usar Character Streams cuando estés seguro de que el fichero contiene texto.
+
+### 3. Decoradores o "Wrappers" (Para Mejorar la Eficiencia) 🧱
+
+Tanto los Byte Streams como los Character Streams básicos son poco eficientes, ya que realizan una operación de lectura/escritura en el disco por cada byte o carácter. Para solucionar esto, se "envuelven" con clases _buffer_ que leen y escriben en grandes bloques, mejorando drásticamente el rendimiento.
+
+- **`BufferedInputStream` y `BufferedOutputStream`**: Para envolver Byte Streams.
+    
+- **`BufferedReader` y `BufferedWriter`**: Para envolver Character Streams. El `BufferedReader` es muy popular porque tiene un método muy útil: `readLine()`, que lee una línea de texto completa de una vez.
+    
+
+**Analogía**: En lugar de llevar ladrillos uno por uno (ineficiente), usas una carretilla (`Buffer`) para llevar muchos a la vez (eficiente).
+
+
+### 4. Serialización de Objetos (Guardar Objetos Completos) 📦
+
+A veces no quieres guardar texto o bytes sueltos, sino el **estado completo de un objeto** en un fichero para recuperarlo más tarde. Este proceso se llama **serialización**.
+
+- **¿Cómo funciona?**: Tu clase debe implementar la interfaz **`Serializable`**. Esta es una interfaz "marcador", no tiene métodos; solo le dice a Java que los objetos de esta clase pueden ser convertidos a un stream de bytes.
+    
+- **Para escribir (serializar)**: Envuelves un `FileOutputStream` con un **`ObjectOutputStream`** y usas su método `writeObject()`.
+    
+- **Para leer (deserializar)**: Envuelves un `FileInputStream` con un **`ObjectInputStream`** y usas su método `readObject()`.
+    
+
+Es extremadamente útil para guardar configuraciones, estados de una aplicación o enviar objetos a través de una red.
+
+### 5. La Forma Moderna: Java NIO (New I/O) 🚀
+
+Desde Java 7, existe una API más moderna y sencilla para operaciones comunes con ficheros llamada **NIO.2 (New I/O)**. Se basa en las clases `Path` (una representación de una ruta de fichero) y `Files` (una clase de utilidad con métodos estáticos).
+
+Para tareas sencillas, **`java.nio.file.Files`** es la opción recomendada hoy en día por su simplicidad y potencia.
+
+- **Leer todo un fichero de texto en una lista de líneas**: `Files.readAllLines(Path.of("miFichero.txt"))`
+    
+- **Leer todo un fichero en un array de bytes**: `Files.readAllBytes(Path.of("miImagen.jpg"))`
+    
+- **Escribir texto en un fichero (sobrescribiéndolo)**: `Files.writeString(Path.of("miFichero.txt"), "Hola mundo")`
+    
+- **Copiar un fichero**: `Files.copy(sourcePath, destinationPath)`
+    
+
+Esta API es mucho más concisa para las operaciones del día a día.
+
+---
+
+#### Resumen: ¿Cuándo usar qué?
+
+| Si quieres...                              | Usa esto (Opción Recomendada)                | Alternativa Clásica (`java.io`)              |
+| ------------------------------------------ | -------------------------------------------- | -------------------------------------------- |
+| **Leer/escribir texto simple**             | `Files.readString()` / `Files.writeString()` | `FileReader` / `FileWriter`                  |
+| **Leer un fichero de texto línea a línea** | `Files.newBufferedReader(path)`              | `BufferedReader` envolviendo un `FileReader` |
+| **Leer/escribir ficheros binarios**        | `Files.readAllBytes()` / `Files.write()`     | `FileInputStream` / `FileOutputStream`       |
+| **Guardar y recuperar objetos Java**       | (No hay equivalente directo en NIO)          | `ObjectOutputStream` / `ObjectInputStream`   |
+| **Manejar ficheros muy grandes**           | Streams con buffer (`BufferedInputStream`)   | Streams con buffer (`BufferedInputStream`)   |
+### Ficheros de propiedades
+
+Un fichero de propiedades (`.properties`) es un **archivo de texto simple** utilizado en aplicaciones Java para **externalizar la configuración**. En lugar de escribir datos de configuración directamente en el código (lo que se conoce como "hardcodear"), los almacenas fuera, en estos ficheros.
+
+Esto te permite cambiar la configuración sin necesidad de modificar y recompilar el código fuente, lo cual es extremadamente útil.
+
+**Usos comunes:**
+
+- **Configuración de base de datos**: URL de conexión, usuario, contraseña.
+    
+- **Textos y etiquetas (Internacionalización)**: Guardar textos en diferentes idiomas (`messages_es.properties`, `messages_en.properties`).
+    
+- **Parámetros de la aplicación**: Rutas de archivos, número de hilos, credenciales de APIs, etc.
+    
+
+### Formato del Fichero
+
+La estructura es muy sencilla:
+
+- Cada línea contiene un par **`clave=valor`**.
+    
+- Las líneas que empiezan con **`#`** o **`!`** son comentarios y son ignoradas.
+    
+- Las claves y valores son cadenas de texto.
+    
+
+**Ejemplo de fichero `config.properties`:**
+
+Properties
+
+```
+# Configuración de la base de datos
+db.url=jdbc:mysql://localhost:3306/mi_basedatos
+db.usuario=admin
+
+# Esta contraseña es secreta!
+db.contrasena=12345
+
+# Configuración de la aplicación
+app.nombre=Mi Aplicación Genial
+app.version=1.2.0
+```
+
+---
+
+###  ¿Cómo se Usan en Java?
+
+Java proporciona una clase específica para trabajar con estos ficheros: **`java.util.Properties`**. Esta clase funciona como un `Map` (un mapa de clave-valor) optimizado para manejar cadenas.
+
+El flujo de trabajo es muy simple:
+
+1. **Crear un objeto `Properties`**.
+    
+2. **Cargar (`load`)** el fichero `.properties` en el objeto.
+    
+3. **Leer (`getProperty`)** los valores usando su clave.
+    
+4. (Opcional) Modificar (`setProperty`) o guardar (`store`) las propiedades.
+    
+
+###  Pequeño Ejemplo Práctico
+
+Imagina que tienes el fichero `config.properties` del ejemplo anterior en la carpeta raíz de tu proyecto.
+
+El siguiente código Java lee este fichero y muestra los valores por consola:
+
+
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class LectorDeConfiguracion {
+
+    public static void main(String[] args) {
+        
+        // 1. Crear un objeto Properties
+        Properties propiedades = new Properties();
+        
+        // Usamos un bloque try-with-resources para asegurar que el fichero se cierre
+        try (FileInputStream fis = new FileInputStream("config.properties")) {
+            
+            // 2. Cargar el fichero de propiedades
+            propiedades.load(fis);
+            
+            // 3. Leer los valores usando su clave
+            String nombreApp = propiedades.getProperty("app.nombre");
+            String versionApp = propiedades.getProperty("app.version");
+            String usuarioDB = propiedades.getProperty("db.usuario");
+            
+            // Imprimir los valores leídos
+            System.out.println("Nombre de la aplicación: " + nombreApp);
+            System.out.println("Versión: " + versionApp);
+            System.out.println("Usuario de la BD: " + usuarioDB);
+
+            // Si una clave no existe, getProperty devuelve null
+            String autor = propiedades.getProperty("app.autor");
+            System.out.println("Autor: " + autor); // Imprimirá "Autor: null"
+
+            // También puedes proporcionar un valor por defecto
+            String tema = propiedades.getProperty("app.tema", "oscuro");
+            System.out.println("Tema por defecto: " + tema); // Imprimirá "Tema por defecto: oscuro"
+
+        } catch (IOException e) {
+            System.err.println("Error al leer el fichero de propiedades: " + e.getMessage());
+        }
+    }
+}
+```
+
+**Salida del programa:**
+
+```
+Nombre de la aplicación: Mi Aplicación Genial
+Versión: 1.2.0
+Usuario de la BD: admin
+Autor: null
+Tema por defecto: oscuro
+```
+
+En resumen, los ficheros `.properties` son la forma estándar, simple y eficaz de manejar la configuración externa en cualquier aplicación Java.
+
+## String Builder
 
 Se usan para cadena de de caracteres dinámicas. Cuando se trata de cadenas de caracteres mas grandes usamos este tipo de String. Es como un buffer de memoria para los string y asi mejorar rendimiento.
 
@@ -2628,10 +2830,198 @@ public class Stringbuilder {
     }
 }
 ```
-### Lanzar excepciones propias
-### CLASPATH
+## Lanzar excepciones propias
+## CLASPATH
+
+El **Classpath** en Java es, en pocas palabras,  una **lista de rutas** (carpetas y archivos JAR) donde la Máquina Virtual de Java (JVM) busca las clases y otros archivos de recursos que tu programa necesita para ejecutarse.
+
+### **¿Qué contiene el Classpath?**
+
+El Classpath le dice a la JVM dónde buscar principalmente dos cosas:
+
+1. **Carpetas con archivos `.class`**: Directorios en tu sistema de archivos que contienen los archivos compilados de tu propio código.
+    
+2. **Archivos JAR (Java Archive)**: Son archivos `.zip` que empaquetan muchas clases y recursos juntos. Se usan para distribuir bibliotecas o dependencias de terceros (por ejemplo, el driver JDBC que mencionaste antes).
+    
+
+En resumen, es una configuración fundamental que le indica a Java: "**Oye, cuando necesites cargar una clase, búscala aquí**".
+
+## JDBC :
+
+**JDBC (Java Database Connectivity)** es, en esencia, un **puente** que permite a una aplicación Java comunicarse con cualquier base de datos que utilice el lenguaje SQL (como MySQL, Oracle, PostgreSQL, etc.). Es una API (Interfaz de Programación de Aplicaciones) que forma parte de la plataforma Java estándar.
+
+Piensa en ello como un **traductor universal** o un **adaptador estándar** para bases de datos. En lugar de tener que aprender el protocolo de comunicación específico de cada base de datos, los programadores de Java escriben código utilizando un conjunto común de clases e interfaces proporcionadas por JDBC. Luego, un componente llamado **"driver"** o "controlador" se encarga de traducir esas llamadas genéricas de JDBC al lenguaje específico que la base de datos entiende.
+
+### **¿Para qué sirve?**
+
+El propósito principal de JDBC es estandarizar la forma en que los programas Java realizan las siguientes operaciones con una base de datos:
+
+1. **Establecer una conexión** con la base de datos.
+    
+2. **Enviar consultas SQL** (como `SELECT`, `INSERT`, `UPDATE`, `DELETE`).
+    
+3. **Procesar los resultados** que la base de datos devuelve.
+    
+4. **Manejar errores** que puedan ocurrir durante la comunicación.
+    
+
+### **Componentes Clave de JDBC**
+
+Cuando trabajas con JDBC, siempre te encontrarás con las siguientes interfaces y clases fundamentales:
+
+- **`DriverManager`**: Es como un gestor de controladores. Su función principal es cargar el "driver" específico de la base de datos que quieres usar (por ejemplo, el driver de MySQL) y establecer la conexión inicial.
+    
+- **`Connection`**: Representa la conexión activa con la base de datos. Una vez que tienes un objeto `Connection`, puedes empezar a interactuar con la base de datos. Es como tener una línea telefónica abierta.
+    
+- **`Statement`**: Se utiliza para ejecutar una consulta SQL estática. Creas un objeto `Statement` a partir de tu `Connection` y le pasas el comando SQL que quieres ejecutar.
+    
+- **`PreparedStatement`**: Es una versión más segura y eficiente del `Statement`. Se usa para ejecutar consultas SQL que se repiten con diferentes parámetros. Ayuda a prevenir ataques de inyección SQL.
+    
+- **`ResultSet`**: Cuando ejecutas una consulta que devuelve datos (como un `SELECT`), el resultado se almacena en un objeto `ResultSet`. Puedes imaginarlo como una tabla virtual con filas y columnas a través de la cual puedes iterar para leer los datos.
+    
+
+### **¿Cómo funciona en la práctica? (Los 4 pasos básicos)**
+
+El flujo de trabajo típico para usar JDBC es bastante sencillo:
+
+1. **Cargar el Driver**: Le dices a tu programa qué base de datos vas a usar.
+    
+2. **Obtener la Conexión**: Usas el `DriverManager` para conectar con la base de datos, proporcionando la URL de la base de datos, un usuario y una contraseña.
+    
+3. **Crear y Ejecutar la Consulta**: Creas un objeto `Statement` o `PreparedStatement` y ejecutas tu comando SQL.
+    
+4. **Procesar los Resultados y Cerrar**: Si la consulta devuelve datos, los lees desde el `ResultSet`. Finalmente, y muy importante, cierras el `ResultSet`, el `Statement` y la `Connection` para liberar los recursos.
+    
+
+En resumen, JDBC es la herramienta estándar y fundamental en el ecosistema de Java para todo lo que implique interactuar con bases de datos relacionales. Datenbank ↔️ Driver ↔️ JDBC ↔️ Aplicación Java.
+
+>Según el moto de base de datos se configura de una forma u otra o necesita un driver distinto, nosotros  usaremos PostgreSQL Maven lo configura automáticamente pero para bajarlo se usa el siguiente enlace [[https://jdbc.postgresql.org/]]
+
+## MAVEN :
+
+###  ¿Qué es Maven? 📦
+
+Maven es una **herramienta de gestión y construcción de proyectos** para Java. Su principal objetivo es automatizar y estandarizar el proceso de creación de un software. Piensa en Maven como un director de obra inteligente para tu proyecto.
+
+Sus dos funciones más importantes son:
+
+1. **Gestión de Dependencias**: Automáticamente descarga y gestiona todas las librerías externas (JARs) que tu proyecto necesita (como un driver de base de datos, una librería para JSON, etc.). No tienes que buscar y descargar los archivos JAR manualmente.
+    
+2. **Construcción del Proyecto (Build)**: Define un ciclo de vida estándar para compilar tu código, ejecutar tests, empaquetar tu aplicación (en un JAR o WAR) e instalarla, todo con comandos simples.
+    
+
+El corazón de Maven es el archivo **`pom.xml`**.
+
+### El Fichero `pom.xml` (Project Object Model)
+
+El `pom.xml` es un archivo de configuración en formato XML que contiene toda la información sobre tu proyecto. Es el "plano" que Maven utiliza para construirlo.
+
+**Las partes más importantes de un `pom.xml` son:**
+
+- **Coordenadas del Proyecto**: Identifican tu proyecto de forma única.
+    
+    - `<groupId>`: El nombre de tu organización o grupo (ej. `com.miempresa`).
+        
+    - `<artifactId>`: El nombre de tu proyecto (ej. `gestor-clientes`).
+        
+    - `<version>`: La versión de tu proyecto (ej. `1.0.0-SNAPSHOT`).
+        
+- **`<properties>`**: Para definir variables que puedes reutilizar en el POM, como la versión de Java.
+    
+- **`<dependencies>`**: La sección más importante. Aquí declaras todas las librerías externas que tu proyecto necesita.
+    
+- **`<build>`**: Para configurar cómo se construye tu proyecto, incluyendo los plugins que se usarán (como el plugin para compilar el código).
+    
 
 
+###  Ejemplo: Configurar un Proyecto para Base de Datos
+
+Vamos a configurar un proyecto Maven para que pueda conectarse a una base de datos **MySQL**.
+
+#### **Paso 1: Encontrar la Dependencia**
+
+Para usar MySQL, necesitamos el driver JDBC de MySQL. En lugar de buscar el JAR, vamos al **Repositorio Central de Maven** (una biblioteca online gigante) a través de su web: **[mvnrepository.com](https://mvnrepository.com/)**.
+
+1. Busca "MySQL Connector Java".
+    
+2. Selecciona el resultado oficial (`mysql-connector-j`).
+    
+3. Elige una versión estable (ej. `8.0.33`).
+    
+4. La página te dará el fragmento de XML exacto que necesitas.
+    
+
+#### **Paso 2: Configurar el `pom.xml`**
+
+Ahora, edita tu `pom.xml` para añadir esa dependencia y configurar el proyecto para que use una versión específica de Java (por ejemplo, Java 17).
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.miempresa</groupId>
+    <artifactId>gestor-clientes</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope> </dependency>
+        
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+```
+
+#### **Paso 3: ¿Qué ocurre ahora?**
+
+Cuando guardes este `pom.xml` y construyas tu proyecto (por ejemplo, con el comando `mvn clean install` en la terminal), Maven hará lo siguiente:
+
+1. Leerá el `pom.xml`.
+    
+2. Verá la dependencia de `mysql-connector-j`.
+    
+3. Se conectará al repositorio central, descargará el archivo JAR `mysql-connector-j-8.0.33.jar` (y cualquier otra librería que este a su vez necesite).
+    
+4. Lo guardará en tu repositorio local (una carpeta en tu ordenador llamada `.m2`).
+    
+5. Hará que esa librería esté disponible en el **Classpath** de tu proyecto para que puedas usarla en tu código Java (`Class.forName("com.mysql.cj.jdbc.Driver");`).
+    
+
+En resumen, Maven y su `pom.xml` te permiten definir y automatizar todo lo que tu proyecto necesita para funcionar, ahorrándote una enorme cantidad de trabajo manual.
 
 
 
