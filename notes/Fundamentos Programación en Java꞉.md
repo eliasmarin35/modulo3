@@ -3295,6 +3295,222 @@ Veamos como se estructura la clase `singleton` :
 
 (pegamos codigo de juanma)
 
+```java
+package com.avante.pruebasingleton;
 
+/**
+ * Ejemplo de clase Singleton.
+ * 
+ * Un Singleton es una clase que solo permite un unico objeto instanciado.
+ * 
+ * La instanciación del objeto se lleva a cabo por la propia clase.
+ * 
+ * El resto, lo único que hace es pedirle a la clase una referencia a ese único
+ *    objeto, y ya la clase lo instanciará si no lo estaba ya.
+ * 
+ * Durante todo el ciclo de vida de la Aplicación la instancia de la clase
+ *    permanera inicializada y accesible por el resto del código.
+ * 
+ * @author jprof
+ */
+public class AlumnoSingleton {
+
+    private int    numero;
+    private String nombre;
+    
+    // Unica instancia de la clase
+    private static AlumnoSingleton instance;
+
+    // Constructor privado para que nadie pueda crear instancias de la clase
+    //   (solo la misma clase).
+    private AlumnoSingleton() {}
+    
+    @Override
+    public String toString() {
+        return String.format("[%d: %s]",numero,nombre);
+    }
+    
+    public void set(int num, String name) {
+        this.numero = num;
+        this.nombre = name;
+    }
+    
+    // ESte metodo estatico es el que da acceso a la unica instancia de nuestra
+    //    clase
+    public static AlumnoSingleton getInstance() {
+        if (AlumnoSingleton.instance == null) {
+            AlumnoSingleton.instance = new AlumnoSingleton();
+        }
+        
+        return AlumnoSingleton.instance;
+    }
+}
+```
+
+
+```java
+package com.avante.pruebasingleton;
+
+/**
+ *
+ * @author jprof
+ */
+public class TestAlumnoSingleton {
+
+    public static void main(String[] args) {
+        AlumnoSingleton a1, a2, a3;
+        
+        a1 = AlumnoSingleton.getInstance();
+        a2 = AlumnoSingleton.getInstance();
+        a3 = AlumnoSingleton.getInstance();
+        
+        a1.set(1,"Luis");
+        a2.set(2,"Maria");
+        a3.set(3,"Juan");
+        
+        System.out.println(a1);
+        System.out.println(a2);
+        System.out.println(a3);
+        
+        System.out.println(a1==a2);
+        System.out.println(a1==a3);
+        System.out.println(a2==a3);
+    }
+}
+```
+
+## Framework lombok
+
+
+El enlace de descarga es https://projectlombok.org/download, debemos añadir las dependias en el archivo pom.xml para que Maven lo acepte.
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.42</version>
+		<scope>provided</scope>
+	</dependency>
+</dependencies>
+
+```
+
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<annotationProcessorPaths>
+					<path>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>1.18.42</version>
+					</path>
+				</annotationProcessorPaths>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+
+Debemos compilar con maven, `mvn clean install`
+
+Usa anotaciones para ahorrarnos código a la hora de programar en java. Recuerda las anotaciones se añaden con `@` como el `@override` por ejemplo. Java identifica las anotaciones y si tiene algun plugin o dependencia y al compilar va a hacer ciertas cosas que lombok lo hará por nosotros.
+
+`@AllArgsConstructor`
+### ¿Qué hace exactamente? ⚙️
+
+Imagina que tienes una clase. En lugar de escribir el constructor tú mismo, solo añades `@AllArgsConstructor` encima de la declaración de la clase. Durante el proceso de compilación, Lombok ve esta anotación y escribe el constructor por ti en el bytecode final. Tu código fuente se mantiene limpio y conciso.
+
+El constructor generado:
+
+- Es **público** por defecto.
+    
+- El **orden de los parámetros** en el constructor coincide con el orden en que los campos están declarados en la clase.
+    
+### Ejemplo práctico
+
+Veamos la diferencia entre escribir el código manualmente y usar Lombok.
+
+#### **1. Sin Lombok**
+
+Tendrías que escribir todo el constructor a mano, asignando cada parámetro a su campo correspondiente.
+
+
+```java
+public class Usuario {
+    private String nombre;
+    private String email;
+    private int edad;
+
+    // Tienes que escribir este constructor manualmente
+    public Usuario(String nombre, String email, int edad) {
+        this.nombre = nombre;
+        this.email = email;
+        this.edad = edad;
+    }
+}
+
+// Para crear un objeto:
+Usuario usuario = new Usuario("Ana", "ana@correo.com", 30);
+```
+
+#### **2. Con Lombok ✨**
+
+Simplemente añades la anotación y Lombok se encarga del resto. El resultado final es el mismo, pero tu código es mucho más limpio.
+
+
+```java
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Usuario {
+    private String nombre;
+    private String email;
+    private int edad;
+
+    // Lombok genera automáticamente el constructor:
+    // public Usuario(String nombre, String email, int edad) { ... }
+}
+
+// La creación del objeto es idéntica:
+Usuario usuario = new Usuario("Ana", "ana@correo.com", 30);
+```
+
+
+### Combinación con otras anotaciones
+
+`@AllArgsConstructor` es muy útil, pero a menudo se usa junto con otras anotaciones de Lombok para cubrir diferentes necesidades:
+
+- **`@NoArgsConstructor`**: Genera un constructor vacío (sin argumentos). Es muy útil para frameworks como JPA o Jackson.
+    
+- **`@RequiredArgsConstructor`**: Genera un constructor solo para los campos que son `final` o están anotados con `@NonNull`.
+    
+
+Puedes combinar varias de ellas en la misma clase para tener múltiples constructores disponibles.
+
+**En resumen, `@AllArgsConstructor` es una herramienta fantástica para reducir el código repetitivo (boilerplate), hacer tus clases más legibles y evitar errores al escribir constructores manualmente.**
+
+### Otras anotaciones más usadas en Lombok :
+
+`@Getter` por defecto el atributo le aplica un getter 
+
+`@Setter` por defecto el atributo que le aplicas la etiqueta se le genera un setter.
+
+Las anotaciones también pueden tener parámetros, por ejemplo `@Getter(AccessLevel.PROTECTED)` y hacemos el atributo protected.
+
+`@toString` añadir el método toString correctamente para formatear salida por defecto.
+
+`@NoArgsConstructor` crea un constructor sin parámetros aunque java ya lo hace, por ejemplo en Hibernate si es necesario usarlo.
+
+`@NotNull` para impedir valor nulo, útil a la hora de mapear datos no nulos en base de datos.
+
+`@EqualsAndHasCode` crea una sobreescritura de estos métodos por defectos de nuestra clase.
+	
+
+>Aquí tenemos la documentación con las distintas etiquetas usadas en Lombok https://projectlombok.org/features/
 
 
