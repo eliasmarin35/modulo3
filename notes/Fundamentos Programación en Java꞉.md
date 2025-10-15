@@ -2232,24 +2232,88 @@ public class EjemploArrayList {
 }
 ```
 
-Las Linked List o Listas enlazadas en Java :
-(añadir lo de Juanma)
 
-(añadir código de Juanma)
+### Linked List (Listas Enlazadas)
 
-- conjuntos:
+Una `LinkedList` es una colección lineal de datos donde los elementos no se almacenan en ubicaciones de memoria contiguas. En su lugar, cada elemento es un objeto (llamado **nodo**) que contiene el dato y una referencia (o "enlace") al siguiente nodo de la secuencia.
 
-- pilas:
+- **Ventajas**: Son muy eficientes para **agregar o eliminar** elementos en cualquier parte de la lista, ya que solo se necesita actualizar las referencias de los nodos adyacentes.
+    
+- **Desventajas**: El acceso a un elemento por su índice es lento (`get(index)`), porque debe recorrer la lista desde el principio hasta encontrar la posición deseada.
+    
+- **Implementación en Java**: `java.util.LinkedList`.
+    
 
-- colas:
+### Conjuntos (Sets)
 
-- Combinadas de pilas y colas:
+Un `Set` es una colección que **no permite elementos duplicados**. Su principal propósito es almacenar un grupo de elementos únicos y verificar rápidamente si un elemento pertenece o no al conjunto.
 
-- Colas de prioridad:
+- **`HashSet`**: Almacena los elementos en una tabla hash. No garantiza ningún orden específico y es la implementación más rápida para agregar y buscar.
+    
+- **`TreeSet`**: Almacena los elementos en un árbol ordenado. Mantiene los elementos en **orden ascendente** (natural o definido por un comparador).
+    
+- **`LinkedHashSet`**: Mantiene los elementos en el **orden en que fueron insertados**, combinando la rapidez de `HashSet` con la predictibilidad de una lista.
+    
 
+### Pilas (Stacks)
 
+Una Pila es una estructura de datos que funciona bajo el principio **LIFO** (Last-In, First-Out), que significa "el último en entrar es el primero en salir".
 
-## Por dar hoy 08/10/2025 y em adelante :
+- **Analogía**: Imagina una pila de platos. Solo puedes agregar un plato nuevo en la parte superior y solo puedes quitar el plato que está en la parte superior.
+    
+- **Operaciones comunes**: `push` (agregar un elemento a la cima) y `pop` (quitar el elemento de la cima).
+    
+- **Uso en Java**: Aunque existe una clase `Stack`, se recomienda usar una implementación de la interfaz `Deque`, como `ArrayDeque`, por ser más moderna y eficiente.
+    
+    Java
+    
+    ```
+    Deque<String> pila = new ArrayDeque<>();
+    pila.push("Plato 1");
+    pila.push("Plato 2");
+    String platoQuitado = pila.pop(); // Quita "Plato 2"
+    ```
+    
+
+### Colas (Queues)
+
+Una Cola es una estructura que sigue el principio **FIFO** (First-In, First-Out), es decir, "el primero en entrar es el primero en salir".
+
+- **Analogía**: Es como una fila de personas esperando para comprar algo. La primera persona que llegó a la fila es la primera en ser atendida.
+    
+- **Operaciones comunes**: `add` u `offer` (agregar un elemento al final) y `remove` o `poll` (quitar el elemento del frente).
+    
+- **Uso en Java**: Se utiliza la interfaz `Queue`, comúnmente implementada por `LinkedList` o `ArrayDeque`.
+    
+    Java
+    
+    ```
+    Queue<String> fila = new LinkedList<>();
+    fila.offer("Persona 1");
+    fila.offer("Persona 2");
+    String personaAtendida = fila.poll(); // Atiende a "Persona 1"
+    ```
+    
+
+### Combinadas de Pilas y Colas (Deque)
+
+Un `Deque` (pronunciado "dek"), o "cola de doble extremo", es una estructura híbrida que combina las funcionalidades de una pila y una cola. Permite **agregar y quitar elementos tanto por el principio como por el final**.
+
+- **Versatilidad**: Puede ser usada como una Pila (usando `push` y `pop`) o como una Cola (usando `addLast` y `removeFirst`).
+    
+- **Implementación en Java**: La interfaz `Deque` es implementada principalmente por `ArrayDeque` (más eficiente) y `LinkedList`.
+    
+
+### Colas de Prioridad (PriorityQueue)
+
+Es un tipo especial de cola donde los elementos no se procesan en el orden en que llegan, sino según su **prioridad**. Al extraer un elemento, siempre se obtiene el que tiene la **mayor prioridad**.
+
+- **Ordenamiento**: Por defecto, utiliza el "orden natural" (números de menor a mayor, strings alfabéticamente). También se le puede pasar un `Comparator` para definir una lógica de prioridad personalizada.
+    
+- **Funcionamiento**: No es una cola FIFO. Cada vez que se agrega un elemento, la estructura se reorganiza internamente para que el elemento con mayor prioridad esté siempre al frente, listo para ser extraído.
+    
+- **Implementación en Java**: `java.util.PriorityQueue`.
+
 ### char <-> int
 
 Los caracteres se escriben con comillas simples, no existe el caracter vacio pero si el caracter espacio.  Los caracteres se pueden traducir a un int , es importante saber el orden de tipo de datos:
@@ -2616,8 +2680,6 @@ app.nombre=Mi Aplicación Genial
 app.version=1.2.0
 ```
 
----
-
 ###  ¿Cómo se Usan en Java?
 
 Java proporciona una clase específica para trabajar con estos ficheros: **`java.util.Properties`**. Esta clase funciona como un `Map` (un mapa de clave-valor) optimizado para manejar cadenas.
@@ -2830,7 +2892,6 @@ public class Stringbuilder {
     }
 }
 ```
-## Lanzar excepciones propias
 ## CLASPATH
 
 El **Classpath** en Java es, en pocas palabras,  una **lista de rutas** (carpetas y archivos JAR) donde la Máquina Virtual de Java (JVM) busca las clases y otros archivos de recursos que tu programa necesita para ejecutarse.
