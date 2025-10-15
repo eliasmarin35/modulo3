@@ -4,6 +4,8 @@
 
 package com.avante.pruebasingletonlombok;
 
+import com.avante.pruebasingletonlombok.logic.AlumnoLombokCompleto;
+
 /**
  *
  * @author jprof
