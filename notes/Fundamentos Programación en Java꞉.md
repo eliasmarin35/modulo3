@@ -3480,7 +3480,6 @@ public class Usuario {
 Usuario usuario = new Usuario("Ana", "ana@correo.com", 30);
 ```
 
-
 ### Combinación con otras anotaciones
 
 `@AllArgsConstructor` es muy útil, pero a menudo se usa junto con otras anotaciones de Lombok para cubrir diferentes necesidades:
@@ -3506,7 +3505,7 @@ Las anotaciones también pueden tener parámetros, por ejemplo `@Getter(AccessLe
 
 `@NoArgsConstructor` crea un constructor sin parámetros aunque java ya lo hace, por ejemplo en Hibernate si es necesario usarlo.
 
-`@NotNull` para impedir valor nulo, útil a la hora de mapear datos no nulos en base de datos.
+`@NotNull` para impedir valor nulo, útil a la hora de mapear datos no nulos en base de datos, y mediante java dará una error tipo `NullPointerException`.
 
 `@EqualsAndHasCode` crea una sobreescritura de estos métodos por defectos de nuestra clase.
 	
