@@ -459,7 +459,6 @@ El archivo del proyecto main es el punto de entrada en la ejecución del mismo, 
 
 El argumento `String[] args` que recibe método principal o `main`, podemos usar estos argumentos mediante consola del sistema y accediendo a sus argumentos mediante `args[0]`, como si accediéramos a un array.
 
----
 ## 6. Recursividad :
 
 Se trata de la capacidad de una función a ejecutarse a si misma por ejemplo :
@@ -494,7 +493,6 @@ public class EjemploRecursividad {
 }
 ```
 
----
 ## 7. Clases :
 
 La programación orientada a objetos o POO, aqui movemos la responsabilidad de ejecución a cada clase no como en la programación estructuradas que una ejecución de arriba a abajo y dependiendo íntegramente de los controles de flujo esta ejecución estructurada.
@@ -568,7 +566,6 @@ pubic class veterinaria {
 
 > Las clases normalmente deben cerrarse tras ser usadas como por ejemplo la clase Scanner con el comando `close.Scanner();` en este caso la clase Perro porque no hemos creado un método `close()` y porque ya de por si Java tiene el método `finalice()` de la clase objetos.
 
----
 
 ## __8. Visibilidad  :__
 
@@ -680,8 +677,6 @@ Aquí tienes una tabla para verlo de forma más clara:
 | **`default`**   | ✅           | ✅             | ❌                       | ❌               |
 | **`private`**   | ✅           | ❌             | ❌                       | ❌               |
 
-
----
 ## 9. Getter y Setter :
 
 Llos métodos **getter** y **setter** son dos tipos de métodos públicos que se utilizan para acceder y modificar, respectivamente, el valor de las variables de instancia privadas de una clase. Su uso es una parte fundamental del principio de **encapsulamiento**, que consiste en ocultar el estado interno de un objeto y exponer solo lo necesario a través de una interfaz pública.
@@ -708,7 +703,6 @@ public String getNombre() {
 }
 ```
 
----
 
 ### Setters (Métodos de modificación)
 
@@ -2314,6 +2308,7 @@ Es un tipo especial de cola donde los elementos no se procesan en el orden en qu
     
 - **Implementación en Java**: `java.util.PriorityQueue`.
 
+> __Recuerda mirar código de estas estructuras en repositorio Teorica Java.__
 ### char <-> int
 
 Los caracteres se escriben con comillas simples, no existe el caracter vacio pero si el caracter espacio.  Los caracteres se pueden traducir a un int , es importante saber el orden de tipo de datos:
@@ -3084,6 +3079,221 @@ Cuando guardes este `pom.xml` y construyas tu proyecto (por ejemplo, con el coma
 
 En resumen, Maven y su `pom.xml` te permiten definir y automatizar todo lo que tu proyecto necesita para funcionar, ahorrándote una enorme cantidad de trabajo manual.
 
+## Conexión con java a base de datos :
+
+archivo DBConnectionDrive
+
+```java
+package com.avante.pruebaconexionjdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ *
+ * @author jprof
+ */
+public class DBConnectionDriver {
+    private String username;
+    private String password;
+    private String host;
+    private String port;
+    private String dbname;
+
+    private String url = null;
+            
+    public DBConnectionDriver(String un, String pass, String h, String port, String dbn) {
+    	this.username = un;
+    	this.password = pass;
+    	this.host = h;
+    	this.port = port;
+    	this.dbname = dbn;
+    }
+
+    private void updateUrl () {
+    	this.url = String.format(
+		"jdbc:postgresql://%s:%s/%s",
+    		this.host,
+    		this.port,
+    		this.dbname
+	);
+
+	System.out.printf(
+                "La cadena de conexión se construyó:\n\t%s\n",
+                this.url);
+    }
+
+    private boolean checkUrl () {
+    	return this.url != null;
+    }
+    
+    public Connection connection() throws SQLException {
+        Connection conn = null; 
+        conn = DriverManager.getConnection(this.url(),this.username, this.password);
+        return conn;
+    }
+
+    // ---> GETTERS
+    private String url() {
+    	if (!this.checkUrl()) {
+		this.updateUrl();
+	}
+
+	return this.url;
+    }
+
+    private String username() {
+    	return this.username;
+    }
+
+    private String pasword() {
+    	return this.password;
+    }
+}
+```
+
+archivo PruebaConexionJDBC.java
+
+```java
+package com.avante.pruebaconexionjdbc;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ *
+ * @author jprof\
+ */
+public class PruebaConexionJDBC {
+
+    public static void main(String[] args) {
+        DBConnectionDriver drv = new DBConnectionDriver(
+            "app_pruebaconjdbc",
+            "12345",
+            "localhost",
+            "5432",
+            "app_pruebaconjdbc"
+        );
+        
+        
+        Connection conn = null;
+        
+        String nombre;
+        double salario;
+        
+        try {
+            conn = drv.connection();
+        
+            Statement st = conn.createStatement();
+            
+            ResultSet rs = st.executeQuery("SELECT nombre, salario FROM empleados");
+            
+            while (rs.next()) {
+                nombre = rs.getString("nombre");
+                salario = rs.getDouble("salario");
+                
+                System.out.printf("Nombre: %s, Salario: %f\n",nombre,salario);
+            }
+            
+            System.out.println("Conectado con exito!");
+        }
+        catch (SQLException e) {
+            System.err.printf(
+                "Ha habido un error con la conexion a la BD:\n%s\n",
+                 e.getMessage()
+            );
+        }
+        finally {
+            if ( conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException e) {
+                   System.err.printf(
+                        "Ha habido un error cerrando la conexión con la BD:\n%s\n",
+                        e.getMessage()
+                    );
+                }
+            }
+            else {
+                System.err.println("Ha ocrrido un error SQL y la conexión no se había establecido");
+            }
+        }
+    }
+}
+```
+
+Ahora usaremos el bloque try con recursos para evitar el bloque finally que ya gestiona y cierra los recursos que usemos. (completar con codigo de la clase)
+
+```java
+package com.avante.pruebaconexionjdbc;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ *
+ * @author jprof\
+ */
+public class PruebaConexionJDBC1Recursos {
+
+    public static void main(String[] args) {
+        DBConnectionDriver drv = new DBConnectionDriver(
+            "app_pruebaconjdbc",
+            "12345",
+            "localhost",
+            "5432",
+            "app_pruebaconjdbc"
+        );
+        
+        try (
+            Connection conn = drv.connection();
+            Statement st = conn.createStatement();            
+        ) {
+            
+            String nombre;
+            double salario;
+            
+            ResultSet rs = st.executeQuery("SELECT nombre, salario FROM empleados");
+            
+            while (rs.next()) {
+                nombre = rs.getString("nombre");
+                salario = rs.getDouble("salario");
+                
+                System.out.printf("Nombre: %s, Salario: %f\n",nombre,salario);
+            }
+            
+            System.out.println("Conectado con exito!");
+        }
+        catch (SQLException e) {
+            System.err.printf(
+                "Ha habido un error con la conexion a la BD:\n%s\n",
+                 e.getMessage()
+            );
+        }
+    }
+}
+
+```
+
+## Singleton :
+
+Es una restricción que nos asegura que solo puede haber un objeto de ese tipo, con el singleton nos aseguramos que sólo existe uno y esta relacionado con los métodos `static`. Es parecido pero no igual porque será accesible desde cualquier lugar pero si existe el objeto en si.ç
+
+En que casos se usa : 
+
+- En métodos que controlan la configuración de la aplicación.
+- Para un Driver Manager de base de datos.
+- En un `logger` es un sistema con el que hacemos un login mediante un fichero de texto u otro tipo de recurso.
+
+Veamos como se estructura la clase `singleton` :
+
+(pegamos codigo de juanma)
 
 
 
