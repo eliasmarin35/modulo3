@@ -2990,19 +2990,19 @@ El `pom.xml` es un archivo de configuración en formato XML que contiene toda la
     
 
 
-###  Ejemplo: Configurar un Proyecto para Base de Datos
+Ejemplo: Configurar un Proyecto para Base de Datos
 
-Vamos a configurar un proyecto Maven para que pueda conectarse a una base de datos **MySQL**.
+Vamos a configurar un proyecto Maven para que pueda conectarse a una base de datos **PostgreSQL**.
 
 #### **Paso 1: Encontrar la Dependencia**
 
-Para usar MySQL, necesitamos el driver JDBC de MySQL. En lugar de buscar el JAR, vamos al **Repositorio Central de Maven** (una biblioteca online gigante) a través de su web: **[mvnrepository.com](https://mvnrepository.com/)**.
+Para usar PostgreSQL, necesitamos el driver JDBC de PostgreSQL. En lugar de buscar el JAR, vamos al **Repositorio Central de Maven** (una biblioteca online gigante) a través de su web: **[mvnrepository.com](https://mvnrepository.com/)**.
 
-1. Busca "MySQL Connector Java".
+1. Busca "**PostgreSQL JDBC Driver**".
     
-2. Selecciona el resultado oficial (`mysql-connector-j`).
+2. Selecciona el resultado oficial (`postgresql`).
     
-3. Elige una versión estable (ej. `8.0.33`).
+3. Elige una versión estable (ej. `42.7.3`).
     
 4. La página te dará el fragmento de XML exacto que necesitas.
     
@@ -3016,7 +3016,7 @@ Ahora, edita tu `pom.xml` para añadir esa dependencia y configurar el proyecto 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.miempresa</groupId>
@@ -3030,19 +3030,20 @@ Ahora, edita tu `pom.xml` para añadir esa dependencia y configurar el proyecto 
     </properties>
 
     <dependencies>
-        
+
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.33</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.10.0</version>
-            <scope>test</scope> </dependency>
-        
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -3068,13 +3069,13 @@ Cuando guardes este `pom.xml` y construyas tu proyecto (por ejemplo, con el coma
 
 1. Leerá el `pom.xml`.
     
-2. Verá la dependencia de `mysql-connector-j`.
+2. Verá la dependencia de `postgresql`.
     
-3. Se conectará al repositorio central, descargará el archivo JAR `mysql-connector-j-8.0.33.jar` (y cualquier otra librería que este a su vez necesite).
+3. Se conectará al repositorio central, descargará el archivo JAR `postgresql-42.7.3.jar` (y cualquier otra librería que este a su vez necesite).
     
 4. Lo guardará en tu repositorio local (una carpeta en tu ordenador llamada `.m2`).
     
-5. Hará que esa librería esté disponible en el **Classpath** de tu proyecto para que puedas usarla en tu código Java (`Class.forName("com.mysql.cj.jdbc.Driver");`).
+5. Hará que esa librería esté disponible en el **Classpath** de tu proyecto para que puedas usarla en tu código Java (`Class.forName("org.postgresql.Driver");`).
     
 
 En resumen, Maven y su `pom.xml` te permiten definir y automatizar todo lo que tu proyecto necesita para funcionar, ahorrándote una enorme cantidad de trabajo manual.
@@ -3082,6 +3083,7 @@ En resumen, Maven y su `pom.xml` te permiten definir y automatizar todo lo que t
 ## Conexión con java a base de datos :
 
 archivo DBConnectionDrive
+
 
 ```java
 package com.avante.pruebaconexionjdbc;
@@ -3102,58 +3104,59 @@ public class DBConnectionDriver {
     private String dbname;
 
     private String url = null;
-            
+
     public DBConnectionDriver(String un, String pass, String h, String port, String dbn) {
-    	this.username = un;
-    	this.password = pass;
-    	this.host = h;
-    	this.port = port;
-    	this.dbname = dbn;
+        this.username = un;
+        this.password = pass;
+        this.host = h;
+        this.port = port;
+        this.dbname = dbn;
     }
 
     private void updateUrl () {
-    	this.url = String.format(
-		"jdbc:postgresql://%s:%s/%s",
-    		this.host,
-    		this.port,
-    		this.dbname
-	);
+        this.url = String.format(
+        "jdbc:postgresql://%s:%s/%s",
+            this.host,
+            this.port,
+            this.dbname
+    );
 
-	System.out.printf(
-                "La cadena de conexión se construyó:\n\t%s\n",
-                this.url);
+    System.out.printf(
+              "La cadena de conexión se construyó:\n\t%s\n",
+              this.url);
     }
 
     private boolean checkUrl () {
-    	return this.url != null;
+        return this.url != null;
     }
-    
+
     public Connection connection() throws SQLException {
-        Connection conn = null; 
+        Connection conn = null;
         conn = DriverManager.getConnection(this.url(),this.username, this.password);
         return conn;
     }
 
     // ---> GETTERS
     private String url() {
-    	if (!this.checkUrl()) {
-		this.updateUrl();
-	}
+        if (!this.checkUrl()) {
+        this.updateUrl();
+    }
 
-	return this.url;
+    return this.url;
     }
 
     private String username() {
-    	return this.username;
+        return this.username;
     }
 
     private String pasword() {
-    	return this.password;
+        return this.password;
     }
 }
 ```
 
 archivo PruebaConexionJDBC.java
+
 
 ```java
 package com.avante.pruebaconexionjdbc;
@@ -3177,27 +3180,27 @@ public class PruebaConexionJDBC {
             "5432",
             "app_pruebaconjdbc"
         );
-        
-        
+
+
         Connection conn = null;
-        
+
         String nombre;
         double salario;
-        
+
         try {
             conn = drv.connection();
-        
+
             Statement st = conn.createStatement();
-            
+
             ResultSet rs = st.executeQuery("SELECT nombre, salario FROM empleados");
-            
+
             while (rs.next()) {
                 nombre = rs.getString("nombre");
                 salario = rs.getDouble("salario");
-                
+
                 System.out.printf("Nombre: %s, Salario: %f\n",nombre,salario);
             }
-            
+
             System.out.println("Conectado con exito!");
         }
         catch (SQLException e) {
@@ -3226,7 +3229,8 @@ public class PruebaConexionJDBC {
 }
 ```
 
-Ahora usaremos el bloque try con recursos para evitar el bloque finally que ya gestiona y cierra los recursos que usemos. (completar con codigo de la clase)
+Ahora usaremos el bloque try con recursos para evitar el bloque finally que ya gestiona y cierra los recursos que usemos.
+
 
 ```java
 package com.avante.pruebaconexionjdbc;
@@ -3250,24 +3254,24 @@ public class PruebaConexionJDBC1Recursos {
             "5432",
             "app_pruebaconjdbc"
         );
-        
+
         try (
             Connection conn = drv.connection();
-            Statement st = conn.createStatement();            
+            Statement st = conn.createStatement();
         ) {
-            
+
             String nombre;
             double salario;
-            
+
             ResultSet rs = st.executeQuery("SELECT nombre, salario FROM empleados");
-            
+
             while (rs.next()) {
                 nombre = rs.getString("nombre");
                 salario = rs.getDouble("salario");
-                
+
                 System.out.printf("Nombre: %s, Salario: %f\n",nombre,salario);
             }
-            
+
             System.out.println("Conectado con exito!");
         }
         catch (SQLException e) {
@@ -3278,7 +3282,6 @@ public class PruebaConexionJDBC1Recursos {
         }
     }
 }
-
 ```
 
 ## Singleton :
