@@ -3080,6 +3080,7 @@ Cuando guardes este `pom.xml` y construyas tu proyecto (por ejemplo, con el coma
 
 En resumen, Maven y su `pom.xml` te permiten definir y automatizar todo lo que tu proyecto necesita para funcionar, ahorrándote una enorme cantidad de trabajo manual.
 
+> Aquí tenemos en enlace de Maven para poder ejecutarlo en consola, ya que es muy útil y no queramos o podamos usar la consola que incluye Netbeans : [Introduction to the Build Lifecycle – Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
 ## Conexión con java a base de datos :
 
 archivo DBConnectionDrive
