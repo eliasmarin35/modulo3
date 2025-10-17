@@ -13,22 +13,18 @@ import java.sql.Statement;
  *
  * @author jprof
  */
-public class PruebaConexionBDTry {
+public class PruebaConexionBDDriver {
 
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/app_pruebaconjdbc";
-        String usuario = "app_pruebaconjdbc";
-        String contrasenya = "12345";
-        String sql;
         String nombre;
         Double salario;
-
-        sql = "SELECT * FROM empleados";
+         
+        DriverDB driver = DriverDB.getInstance();
 
         try (
-                Connection conn = DriverManager.getConnection(url, usuario, contrasenya); // Statement es un comando sql para ejecutar en la Base de Datos
+                Connection conn = driver.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
+                ResultSet rs = stmt.executeQuery("SELECT nombre, salario FROM empleados;");
         ) {
             // resulsent.next() prepara el result set para devolver los datos de
             //    la siguiente fila. Si hay fila devuelve true, y si no devuelve
