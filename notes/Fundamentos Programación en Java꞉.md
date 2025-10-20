@@ -3517,3 +3517,21 @@ Las anotaciones también pueden tener parámetros, por ejemplo `@Getter(AccessLe
 >Aquí tenemos la documentación con las distintas etiquetas usadas en Lombok https://projectlombok.org/features/
 
 
+## Connection Statement :
+
+Una vez que tenemos la conexión con la base de datos, el `statemen` será el que ejecuta una consulta de la base de datos. Puede ser un INSERT, UPDATE, DELETE o una llamada a una procedimiento almacenado.
+
+> Recuerda que las funciones en PostgreSQL reciben un SELECT.
+
+Depende si queremos hacer una operación parametrizada o no :
+
+- No parametrizada : `Statemen stnt = conn.createStetement();`
+- Parametrizado : 
+
+```java
+PreparedStatement stmt = conn.prepareStatement(sql_con_parametros);
+// Seria asi la forma :
+//(stmt.setString(numero indice, cadena) los parametros con ? cada uno
+stmt.setString(1,cadena)
+```
+
