@@ -3722,3 +3722,104 @@ El usuario actualiza el nombre a 'Ana Lopez'...
 Usuario: Ana Lopez
 -------------
 ```
+
+## POJO :
+
+Un **POJO** (siglas de **Plain Old Java Object**, u "Objeto Java Plano y Antiguo") es un término usado para describir un objeto de Java simple.
+
+La idea central es que un POJO es una clase que **NO** está atada a ningún framework o tecnología específica.
+
+No necesita:
+
+- Extender (heredar de) clases especiales.
+    
+- Implementar interfaces específicas.
+    
+- Usar anotaciones complicadas de un framework.
+    
+
+Es, en esencia, un objeto que se centra únicamente en la **lógica de negocio** o en **contener datos**.
+
+### Características Típicas de un POJO
+
+Aunque no hay una regla estricta, un POJO comúnmente sigue estos patrones (especialmente cuando se usa para transferir datos, a veces llamado _JavaBean_):
+
+1. **Atributos Privados:** Las variables de la clase son privadas para promover la encapsulación.
+    
+2. **Getters y Setters Públicos:** Se accede a los atributos privados a través de métodos `get()` (para obtener el valor) y `set()` (para establecer el valor).
+    
+3. **Constructor Público:** Al menos un constructor es público. A menudo, se incluye un constructor sin argumentos para que los frameworks (como Spring o Hibernate) puedan crear instancias de él fácilmente.
+    
+### Ejemplo de POJO
+
+Este es un POJO clásico que representa un "Producto". Observa que no importa ninguna librería externa (excepto las estándar de Java).
+
+
+```java
+// Esto es un POJO.
+// No extiende nada, no implementa nada especial.
+// Solo contiene datos.
+
+public class Producto {
+
+    // 1. Atributos privados
+    private String nombre;
+    private double precio;
+    private int id;
+
+    // 2. Constructor público (sin argumentos)
+    public Producto() {
+    }
+
+    // Constructor opcional (con argumentos)
+    public Producto(int id, String nombre, double precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    // 3. Getters y Setters públicos para cada atributo
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // Método opcional para facilitar la depuración
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
+}
+```
+
+### ¿Por qué son importantes los POJOs?
+
+- **Simplicidad:** Son fáciles de escribir, leer y entender.
+    
+- **Independencia (Desacoplamiento):** La lógica de negocio (el POJO) no depende del framework (la web, la base de datos).
+    
+- **Facilidad de Prueba:** Puedes probar un POJO en una prueba unitaria simple, sin necesidad de levantar un servidor de aplicaciones o una base de datos.
