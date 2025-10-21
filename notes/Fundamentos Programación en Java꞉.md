@@ -3400,6 +3400,8 @@ El enlace de descarga es https://projectlombok.org/download, debemos añadir las
 
 ```
 
+En algunos proyectos habrá que avisar al compilador de que debe usar estas anotaciones de Lombok :
+
 ```xml
 <build>
 	<plugins>
@@ -3516,7 +3518,7 @@ Las anotaciones también pueden tener parámetros, por ejemplo `@Getter(AccessLe
 
 >Aquí tenemos la documentación con las distintas etiquetas usadas en Lombok https://projectlombok.org/features/
 
-
+---
 ## Connection Statement :
 
 Una vez que tenemos la conexión con la base de datos, el `statemen` será el que ejecuta una consulta de la base de datos. Puede ser un INSERT, UPDATE, DELETE o una llamada a una procedimiento almacenado.
@@ -3535,3 +3537,188 @@ PreparedStatement stmt = conn.prepareStatement(sql_con_parametros);
 stmt.setString(1,cadena)
 ```
 
+----
+
+
+## El modelo MVC :
+
+El patrón **MVC (Modelo-Vista-Controlador)** es una arquitectura de software diseñada para separar una aplicación en tres componentes principales. El objetivo es **separar las preocupaciones**: la lógica de negocio (datos) se separa de la interfaz de usuario (presentación).
+
+
+### Los 3 Componentes :
+
+#### 1. Modelo (Model)
+
+- **Qué es:** Es el "cerebro" de la aplicación.
+    
+- **Qué hace:** Gestiona los **datos**, la **lógica de negocio** y las reglas. Por ejemplo, se conecta a la base de datos, valida datos, realiza cálculos.
+    
+- **Clave:** Es completamente independiente de la interfaz de usuario (no sabe cómo se "ve").
+    
+
+#### 2. Vista (View)
+
+- **Qué es:** Es la **interfaz de usuario (UI)**.
+    
+- **Qué hace:** Muestra los datos del Modelo al usuario. Es la parte "visible" (botones, formularios, gráficos).
+    
+- **Clave:** No contiene lógica de negocio. Solo muestra información y capta las acciones del usuario (como clics).
+    
+
+#### 3. Controlador (Controller)
+
+- **Qué es:** Es el **intermediario** entre el Modelo y la Vista.
+    
+- **Qué hace:** Recibe las entradas del usuario desde la Vista (ej. "el usuario hizo clic en el botón 'Guardar'"). Procesa esa entrada y le dice al Modelo qué hacer (ej. "Modelo, actualiza este dato").
+    
+- **Clave:** Decide qué pasa. Una vez que el Modelo se actualiza, el Controlador (o a veces el Modelo mismo, usando un patrón Observador) le dice a la Vista que se refresque.
+    
+
+**Flujo simple:**
+
+1. El usuario interactúa con la **Vista**.
+    
+2. La **Vista** notifica al **Controlador**.
+    
+3. El **Controlador** interactúa con el **Modelo** (ej. pide o actualiza datos).
+    
+4. El **Modelo** se actualiza.
+    
+5. El **Controlador** (o el Modelo) notifica a la **Vista** que debe refrescarse.
+    
+6. La **Vista** obtiene los nuevos datos del **Modelo** y los muestra.
+    
+
+### Ejemplo de Esqueleto en Java de un modelo MVC
+
+Este ejemplo simula la actualización del nombre de un usuario usando la consola para la Vista.
+
+##### El Modelo :
+
+```java
+/* --- 1. EL MODELO --- */
+// El Modelo gestiona los datos. Aquí, un simple objeto 'Usuario'.
+
+class Usuario {
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+}
+```
+##### La Vista :
+
+```java
+
+/* --- 2. LA VISTA --- */
+// La Vista es cómo se presentan los datos.
+// En una app real, esto sería Swing, JavaFX o una web (JSP/Thymeleaf).
+// Aquí, usamos la consola.
+
+class VistaUsuario {
+    public void imprimirDetallesUsuario(String nombreUsuario) {
+        System.out.println("---[VISTA]---");
+        System.out.println("Usuario: " + nombreUsuario);
+        System.out.println("-------------");
+    }
+}
+```
+
+##### El Controlador :
+
+```java
+
+/* --- 3. EL CONTROLADOR --- */
+// El Controlador conecta la Vista y el Modelo.
+
+class ControladorUsuario {
+    private Usuario modelo;
+    private VistaUsuario vista;
+
+    public ControladorUsuario(Usuario modelo, VistaUsuario vista) {
+        this.modelo = modelo;
+        this.vista = vista;
+    }
+
+    // Métodos para ser llamados desde la Vista (por eventos)
+    public void setNombreUsuario(String nombre) {
+        modelo.setNombre(nombre);
+    }
+
+    public String getNombreUsuario() {
+        return modelo.getNombre();
+    }
+
+    // Método para actualizar la vista
+    public void actualizarVista() {
+        vista.imprimirDetallesUsuario(modelo.getNombre());
+    }
+}
+```
+
+##### Nuestro Main o entrada a nuestro programa :
+
+```java
+
+/* --- CLASE PRINCIPAL (Demo) --- */
+// Aquí es donde "unimos" todos los componentes.
+
+public class DemoMVC {
+    public static void main(String[] args) {
+
+        // 1. Inicializar el Modelo (cargando datos, ej. de BBDD)
+        Usuario modelo = new Usuario();
+        modelo.setNombre("Nombre Inicial");
+
+        // 2. Inicializar la Vista
+        VistaUsuario vista = new VistaUsuario();
+
+        // 3. Inicializar el Controlador (conectando Modelo y Vista)
+        ControladorUsuario controlador = new ControladorUsuario(modelo, vista);
+
+        // --- Flujo de la aplicación ---
+
+        // Mostrar datos iniciales
+        System.out.println("Cargando datos iniciales...");
+        controlador.actualizarVista();
+
+        // Simulación: El usuario interactúa con la Vista y cambia el nombre
+        System.out.println("\nEl usuario actualiza el nombre a 'Juan Perez'...");
+        
+        // La Vista le diría al Controlador que actualice el nombre
+        controlador.setNombreUsuario("Juan Perez");
+
+        // El Controlador refresca la Vista
+        controlador.actualizarVista();
+
+        // Simulación: Otra interacción
+        System.out.println("\nEl usuario actualiza el nombre a 'Ana Lopez'...");
+        controlador.setNombreUsuario("Ana Lopez");
+        controlador.actualizarVista();
+    }
+}
+```
+
+#### Salida de la ejecución:
+
+```cmd
+Cargando datos iniciales...
+---[VISTA]---
+Usuario: Nombre Inicial
+-------------
+
+El usuario actualiza el nombre a 'Juan Perez'...
+---[VISTA]---
+Usuario: Juan Perez
+-------------
+
+El usuario actualiza el nombre a 'Ana Lopez'...
+---[VISTA]---
+Usuario: Ana Lopez
+-------------
+```
