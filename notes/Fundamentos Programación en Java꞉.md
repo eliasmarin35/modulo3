@@ -3400,7 +3400,7 @@ El enlace de descarga es https://projectlombok.org/download, debemos añadir las
 
 ```
 
-En algunos proyectos habrá que avisar al compilador de que debe usar estas anotaciones de Lombok :
+En algunos proyectos habrá que avisar al compilador de que debe usar estas anotaciones de Lombok, solamente en el caso que sea un proyecto por módulos  :
 
 ```xml
 <build>
