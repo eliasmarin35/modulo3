@@ -2238,6 +2238,100 @@ Una `LinkedList` es una colección lineal de datos donde los elementos no se alm
 - **Implementación en Java**: `java.util.LinkedList`.
     
 
+```java
+// 1. Importar la clase necesaria
+import java.util.LinkedList;
+import java.util.Iterator; // También útil para recorrerla
+
+/**
+ * Esqueleto de uso de la clase LinkedList de java.util
+ */
+public class UsoBasicoLinkedList {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se crea una lista enlazada. Usamos genéricos (<>) para 
+        // especificar qué tipo de datos guardará.
+        LinkedList<String> miLista = new LinkedList<>();
+
+        // --- 2. Métodos Comunes (El "Uso") ---
+
+        // A. Agregar elementos
+        System.out.println("--- Agregando ---");
+        miLista.add("Elemento 1");     // Agrega al final
+        miLista.add("Elemento 2");     // Agrega al final
+        miLista.addFirst("PRIMERO");   // Agrega al inicio
+        miLista.addLast("ULTIMO");     // Agrega al final (igual que add)
+        
+        System.out.println("Lista actual: " + miLista); // LinkedList tiene un .toString() útil
+
+        // B. Acceder a elementos (Leer)
+        System.out.println("\n--- Accediendo ---");
+        String primero = miLista.getFirst();
+        String ultimo = miLista.getLast();
+        String segundo = miLista.get(1); // Acceder por índice (0 es "PRIMERO")
+
+        System.out.println("El primero es: " + primero);
+        System.out.println("El segundo es: " + segundo);
+        System.out.println("El último es: " + ultimo);
+
+        // C. Eliminar elementos
+        System.out.println("\n--- Eliminando ---");
+        miLista.removeFirst();         // Quita "PRIMERO"
+        miLista.remove("Elemento 2");  // Quita la primera aparición de "Elemento 2"
+        
+        System.out.println("Lista después de eliminar: " + miLista);
+
+        // D. Comprobar el estado
+        System.out.println("\n--- Comprobando ---");
+        int tamano = miLista.size();
+        boolean estaVacia = miLista.isEmpty();
+
+        System.out.println("¿La lista contiene 'Elemento 1'? " + miLista.contains("Elemento 1"));
+        System.out.println("Tamaño actual: " + tamano);
+        System.out.println("¿Está vacía? " + estaVacia);
+
+        // E. Recorrer la lista (Iterar)
+        System.out.println("\n--- Recorriendo (Iterando) ---");
+        
+        // Opción 1: Bucle "for-each" (el más común y simple)
+        for (String elemento : miLista) {
+            System.out.println("-> " + elemento);
+        }
+
+        // Opción 2: Usando un Iterador (más control, permite eliminar mientras se recorre)
+        // Iterator<String> iterador = miLista.iterator();
+        // while (iterador.hasNext()) {
+        //     System.out.println("-> " + iterador.next());
+        // }
+    }
+}
+```
+
+### Resumen del Esqueleto
+
+El uso de `java.util.LinkedList` se reduce a:
+
+1. **Importar:** `import java.util.LinkedList;`
+    
+2. **Crear:** `LinkedList<Tipo> nombre = new LinkedList<>();`
+    
+3. **Usar Métodos:**
+    
+    - `.add(elemento)` / `.addFirst(elemento)`
+        
+    - `.get(indice)` / `.getFirst()`
+        
+    - `.remove(indice)` / `.remove(objeto)`
+        
+    - `.size()`
+        
+    - `.contains(objeto)`
+        
+    - Usar un bucle `for-each` para recorrerla.
+
+
 ### Conjuntos (Sets)
 
 Un `Set` es una colección que **no permite elementos duplicados**. Su principal propósito es almacenar un grupo de elementos únicos y verificar rápidamente si un elemento pertenece o no al conjunto.
@@ -2247,7 +2341,88 @@ Un `Set` es una colección que **no permite elementos duplicados**. Su principal
 - **`TreeSet`**: Almacena los elementos en un árbol ordenado. Mantiene los elementos en **orden ascendente** (natural o definido por un comparador).
     
 - **`LinkedHashSet`**: Mantiene los elementos en el **orden en que fueron insertados**, combinando la rapidez de `HashSet` con la predictibilidad de una lista.
+
+Usaremos principalmente de esta forma `HassSet` :
+
+```java
+// 1. Importar las clases necesarias
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Esqueleto de uso básico de la clase HashSet de java.util
+ */
+public class UsoBasicoSet {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se crea el conjunto.
+        // Nota: Declaramos con la interfaz (Set) pero instanciamos con la clase (HashSet).
+        Set<String> miSet = new HashSet<>();
+
+        // --- 2. Agregar Elementos (.add) ---
+        System.out.println("--- Agregando ---");
+        miSet.add("Manzana"); 🍎
+        miSet.add("Naranja"); 🍊
+        miSet.add("Plátano"); 🍌
+
+        // Intentamos agregar un duplicado
+        boolean anadido = miSet.add("Manzana"); // ⛔ Esto devolverá 'false'
+
+        // El conjunto NO garantiza un orden específico.
+        System.out.println("Set (sin duplicados, sin orden garantizado): " + miSet);
+        System.out.println("¿Se pudo añadir la Manzana de nuevo? " + anadido);
+
+        // --- 3. Comprobar Existencia (.contains) ---
+        // Esta es la operación más rápida y útil de un HashSet.
+        System.out.println("\n--- Comprobando ---");
+        boolean tieneNaranja = miSet.contains("Naranja"); // true
+        boolean tienePera = miSet.contains("Pera");     // false
+
+        System.out.println("¿Contiene Naranja? " + tieneNaranja);
+        System.out.println("¿Contiene Pera? " + tienePera);
+
+        // --- 4. Eliminar Elementos (.remove) ---
+        System.out.println("\n--- Eliminando ---");
+        miSet.remove("Plátano"); 🍌
+        System.out.println("Set después de eliminar: " + miSet);
+
+        // --- 5. Información del Set (.size, .isEmpty) ---
+        System.out.println("\n--- Información ---");
+        System.out.println("Tamaño actual: " + miSet.size());
+        System.out.println("¿Está vacío? " + miSet.isEmpty());
+
+        // --- 6. Recorrer la lista (Iterar) ---
+        // Se usa un bucle "for-each".
+        System.out.println("\n--- Recorriendo (Iterando) ---");
+        for (String fruta : miSet) {
+            System.out.println("-> " + fruta);
+        }
+        
+        // --- 7. Borrar todo ---
+        // miSet.clear();
+    }
+}
+```
+
+### Resumen del Esqueleto y Tipos
+
+1. **Importar:** `import java.util.Set;` y `import java.util.HashSet;`.
     
+2. **Crear:** `Set<Tipo> nombre = new HashSet<>();`
+    
+3. **Usar Métodos:**
+    
+    - `.add(elemento)`: Añade si no existe. Devuelve `true` si lo añadió, `false` si ya existía.
+        
+    - `.contains(elemento)`: Revisa (muy rápido) si un elemento existe.
+        
+    - `.remove(elemento)`: Elimina el elemento.
+        
+    - `.size()`: Devuelve el número de elementos.
+        
+    - Usar un bucle `for-each` para recorrerlo.
 
 ### Pilas (Stacks)
 
@@ -2259,15 +2434,84 @@ Una Pila es una estructura de datos que funciona bajo el principio **LIFO** (Las
     
 - **Uso en Java**: Aunque existe una clase `Stack`, se recomienda usar una implementación de la interfaz `Deque`, como `ArrayDeque`, por ser más moderna y eficiente.
     
-    Java
+        
+    ```java
+    // 1. Importar las clases necesarias
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+/**
+ * Esqueleto de uso básico de una Pila (Stack) usando
+ * la implementación moderna recomendada: ArrayDeque.
+ */
+public class UsoBasicoPila {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se declara como Deque (la interfaz) y se instancia como ArrayDeque.
+        Deque<String> miPila = new ArrayDeque<>();
+
+        // --- 2. Apilar Elementos (push) ---
+        // push() agrega elementos a la "cima" de la pila.
+        System.out.println("--- Apilando (Push) ---");
+        miPila.push("Libro 1"); // Queda al fondo
+        miPila.push("Libro 2");
+        miPila.push("Libro 3"); // Queda en la cima
+
+        // ArrayDeque imprime desde la cima hacia el fondo
+        System.out.println("Pila actual: " + miPila);
+
+        // --- 3. Consultar la Cima (peek) ---
+        // peek() "espía" el elemento de la cima SIN quitarlo.
+        System.out.println("\n--- Consultando (Peek) ---");
+        String libroEnCima = miPila.peek();
+        System.out.println("El libro en la cima es: " + libroEnCima);
+        System.out.println("La pila no cambió: " + miPila);
+
+        // --- 4. Desapilar Elementos (pop) ---
+        // pop() quita y devuelve el elemento de la cima.
+        System.out.println("\n--- Desapilando (Pop) ---");
+        String libroQuitado = miPila.pop(); // Saca "Libro 3"
+
+        System.out.println("Libro quitado: " + libroQuitado);
+        System.out.println("Pila después de pop: " + miPila);
+
+        // --- 5. Comprobar estado (.isEmpty, .size) ---
+        System.out.println("\n--- Comprobaciones ---");
+        System.out.println("Tamaño actual: " + miPila.size());
+        System.out.println("¿La pila está vacía? " + miPila.isEmpty());
+
+        // --- 6. Vaciar la pila ---
+        System.out.println("\n--- Vaciando la pila ---");
+        while (!miPila.isEmpty()) {
+            System.out.println("Sacando: " + miPila.pop());
+        }
+        System.out.println("Pila al final: " + miPila);
+        System.out.println("¿Está vacía ahora? " + miPila.isEmpty());
+    }
+}
+
     
     ```
-    Deque<String> pila = new ArrayDeque<>();
-    pila.push("Plato 1");
-    pila.push("Plato 2");
-    String platoQuitado = pila.pop(); // Quita "Plato 2"
-    ```
     
+
+### Resumen del Esqueleto
+
+1. **Importar:** `import java.util.Deque;` y `import java.util.ArrayDeque;`.
+    
+2. **Crear:** `Deque<Tipo> nombrePila = new ArrayDeque<>();`
+    
+3. **Métodos Clave:**
+    
+    - `.push(elemento)`: Apila un elemento (lo pone en la cima).
+        
+    - `.pop()`: Desapila (quita y devuelve) el elemento de la cima. Lanza una excepción si la pila está vacía.
+        
+    - `.peek()`: Espía (devuelve) el elemento de la cima sin quitarlo. Devuelve `null` si la pila está vacía.
+        
+    - `.isEmpty()`: Comprueba si la pila no tiene elementos.
+
 
 ### Colas (Queues)
 
@@ -2279,24 +2523,175 @@ Una Cola es una estructura que sigue el principio **FIFO** (First-In, First-Out)
     
 - **Uso en Java**: Se utiliza la interfaz `Queue`, comúnmente implementada por `LinkedList` o `ArrayDeque`.
     
-    Java
     
-    ```
-    Queue<String> fila = new LinkedList<>();
-    fila.offer("Persona 1");
-    fila.offer("Persona 2");
-    String personaAtendida = fila.poll(); // Atiende a "Persona 1"
+    ```java
+   // 1. Importar las clases necesarias
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * Esqueleto de uso básico de una Cola (Queue) usando
+ * la implementación LinkedList.
+ */
+public class UsoBasicoCola {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se declara como Queue (la interfaz) y se instancia como LinkedList.
+        Queue<String> miCola = new LinkedList<>();
+
+        // --- 2. Encolar Elementos (add / offer) ---
+        // .add() agrega elementos al "final" de la cola.
+        System.out.println("--- Encolando (Add) ---");
+        miCola.add("Cliente A"); // Entra primero
+        miCola.add("Cliente B");
+        miCola.add("Cliente C"); // Entra último
+
+        // LinkedList imprime en el orden de la cola
+        System.out.println("Cola actual: " + miCola);
+
+        // --- 3. Consultar el Frente (peek) ---
+        // .peek() "espía" el elemento al frente de la cola SIN quitarlo.
+        System.out.println("\n--- Consultando (Peek) ---");
+        String proximoCliente = miCola.peek();
+        System.out.println("El próximo en ser atendido es: " + proximoCliente); // Será "Cliente A"
+        System.out.println("La cola no cambió: " + miCola);
+
+        // --- 4. Desencolar Elementos (poll) ---
+        // .poll() quita y devuelve el elemento del "frente" de la cola.
+        System.out.println("\n--- Desencolando (Poll) ---");
+        String clienteAtendido = miCola.poll(); // Saca a "Cliente A" (el primero que entró)
+
+        System.out.println("Cliente atendido: " + clienteAtendido);
+        System.out.println("Cola después de poll: " + miCola);
+
+        // --- 5. Comprobar estado (.isEmpty, .size) ---
+        System.out.println("\n--- Comprobaciones ---");
+        System.out.println("Tamaño actual: " + miCola.size());
+        System.out.println("¿La cola está vacía? " + miCola.isEmpty());
+
+        // --- 6. Vaciar la cola ---
+        System.out.println("\n--- Vaciando la cola ---");
+        while (!miCola.isEmpty()) {
+            System.out.println("Atendiendo a: " + miCola.poll());
+        }
+        System.out.println("Cola al final: " + miCola);
+    }
+}
     ```
     
+### Resumen del Esqueleto
+
+1. **Importar:** `import java.util.Queue;` y `import java.util.LinkedList;`.
+    
+2. **Crear:** `Queue<Tipo> nombreCola = new LinkedList<>();`
+    
+3. **Métodos Clave:**
+    
+    - **.add(elemento)** (o `.offer(elemento)`): Encola un elemento (lo pone al final).
+        
+    - **.poll()**: Desencola (quita y devuelve) el elemento del frente. Devuelve `null` si la cola está vacía.
+        
+    - **.peek()**: Espía (devuelve) el elemento del frente sin quitarlo. Devuelve `null` si la cola está vacía.
+        
+    - **.isEmpty()**: Comprueba si la cola no tiene elementos.
+
 
 ### Combinadas de Pilas y Colas (Deque)
 
-Un `Deque` (pronunciado "dek"), o "cola de doble extremo", es una estructura híbrida que combina las funcionalidades de una pila y una cola. Permite **agregar y quitar elementos tanto por el principio como por el final**.
+Un `Deque` (pronunciado "dek") es una **"cola de doble extremo"** (Double-Ended Queue). Es una estructura de datos súper flexible ↔️.
 
-- **Versatilidad**: Puede ser usada como una Pila (usando `push` y `pop`) o como una Cola (usando `addLast` y `removeFirst`).
+Piensa en ella como una combinación de Pila (Stack) y Cola (Queue): puedes añadir o quitar elementos tanto del **principio** como del **final**.
+
+La implementación moderna recomendada en Java es `ArrayDeque`.
+
+Aquí tienes un esqueleto básico.
+
+
+```java
+// 1. Importar las clases necesarias
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+/**
+ * Esqueleto de uso básico de un Deque (Cola de Doble Extremo)
+ * usando la implementación ArrayDeque.
+ */
+public class UsoBasicoDeque {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se declara como Deque (interfaz) y se instancia como ArrayDeque.
+        Deque<Integer> miDeque = new ArrayDeque<>();
+
+        // --- 2. Métodos del Deque (Doble Extremo) ---
+        System.out.println("--- Operaciones de Deque ---");
+
+        // A. Añadir elementos
+        miDeque.addFirst(10); // 🔝 Añade al FRENTE
+        miDeque.addLast(99);  // 🔚 Añade al FINAL
+        miDeque.addFirst(5);  // 🔝 Añade al FRENTE
+        miDeque.addLast(100); // 🔚 Añade al FINAL
+
+        // El Deque ahora se ve así (FRENTE) [5, 10, 99, 100] (FINAL)
+        System.out.println("Deque actual: " + miDeque);
+
+        // B. Consultar elementos (sin quitarlos)
+        System.out.println("Elemento en el frente (peekFirst): " + miDeque.peekFirst()); // 5
+        System.out.println("Elemento en el final (peekLast): " + miDeque.peekLast());   // 100
+
+        // C. Quitar elementos
+        System.out.println("\n--- Quitando elementos ---");
+        int quitadoDelFrente = miDeque.removeFirst(); // Quita el 5
+        int quitadoDelFinal = miDeque.removeLast();  // Quita el 100
+
+        System.out.println("Quitado del frente: " + quitadoDelFrente);
+        System.out.println("Quitado del final: " + quitadoDelFinal);
+        System.out.println("Deque restante: " + miDeque); // [10, 99]
+
+        // --- 3. Usar el Deque como una Pila (Stack LIFO) ---
+        // (Opera solo en el FRENTE)
+        System.out.println("\n--- Usando como Pila (Stack) ---");
+        miDeque.push(1); // Equivale a .addFirst(1)
+        miDeque.push(2); // Equivale a .addFirst(2)
+        
+        System.out.println("Después de push: " + miDeque); // [2, 1, 10, 99]
+        System.out.println("Pop (saca el de arriba/frente): " + miDeque.pop()); // Quita el 2
+
+        // --- 4. Usar el Deque como una Cola (Queue FIFO) ---
+        // (Añade al FINAL, quita del FRENTE)
+        System.out.println("\n--- Usando como Cola (Queue) ---");
+        miDeque.add(200); // Equivale a .addLast(200)
+
+        System.out.println("Después de add (cola): " + miDeque); // [1, 10, 99, 200]
+        System.out.println("Poll (saca el del frente): " + miDeque.poll()); // Quita el 1
+        System.out.println("Cola final: " + miDeque);
+    }
+}
+```
+
+### Resumen del Esqueleto
+
+1. **Importar:** `import java.util.Deque;` y `import java.util.ArrayDeque;`.
     
-- **Implementación en Java**: La interfaz `Deque` es implementada principalmente por `ArrayDeque` (más eficiente) y `LinkedList`.
+2. **Crear:** `Deque<Tipo> nombreDeque = new ArrayDeque<>();`
     
+3. **Métodos Clave (Doble Extremo):**
+    
+    - **Añadir:** `.addFirst(e)` (frente) y `.addLast(e)` (final).
+        
+    - **Quitar:** `.removeFirst()` (frente) y `.removeLast()` (final).
+        
+    - **Consultar:** `.peekFirst()` (frente) y `.peekLast()` (final).
+        
+4. **Versatilidad:**
+    
+    - **Como Pila (LIFO):** Usa `.push(e)` (añade al frente) y `.pop()` (quita del frente).
+        
+    - **Como Cola (FIFO):** Usa `.add(e)` (añade al final) y `.poll()` (quita del frente).
+
 
 ### Colas de Prioridad (PriorityQueue)
 
@@ -2308,7 +2703,71 @@ Es un tipo especial de cola donde los elementos no se procesan en el orden en qu
     
 - **Implementación en Java**: `java.util.PriorityQueue`.
 
-> __Recuerda mirar código de estas estructuras en repositorio Teorica Java.__
+```java
+// 1. Importar las clases necesarias
+import java.util.PriorityQueue;
+import java.util.Queue; // PriorityQueue implementa la interfaz Queue
+
+/**
+ * Esqueleto de uso básico de una Cola de Prioridad (Min-Heap por defecto).
+ */
+public class UsoBasicoPriorityQueue {
+
+    public static void main(String[] args) {
+
+        // --- 1. Creación (Instanciación) ---
+        // Se declara como Queue, se instancia como PriorityQueue.
+        // Por defecto, es un "Min-Heap" (el menor sale primero).
+        Queue<Integer> colaPrioridad = new PriorityQueue<>();
+
+        // --- 2. Encolar Elementos (add / offer) ---
+        // Se añaden elementos en cualquier orden.
+        System.out.println("--- Agregando ---");
+        colaPrioridad.add(30); // 🥉
+        colaPrioridad.add(10); // 🥇
+        colaPrioridad.add(20); // 🥈
+
+        // ¡OJO! Imprimir la cola directamente NO muestra el orden de prioridad.
+        // Muestra su estructura interna (un "heap").
+        System.out.println("Estado interno de la cola (NO es el orden de salida): " + colaPrioridad);
+
+        // --- 3. Consultar la Cima (peek) ---
+        // .peek() "espía" el elemento con MÁS prioridad (el próximo en salir) SIN quitarlo.
+        System.out.println("\n--- Consultando (Peek) ---");
+        System.out.println("Próximo en salir (peek): " + colaPrioridad.peek()); // 🥇 Debería ser 10
+
+        // --- 4. Desencolar Elementos (poll) ---
+        // .poll() quita y devuelve el elemento con MÁS prioridad.
+        System.out.println("\n--- Desencolando (Poll) en orden de prioridad ---");
+        
+        // Vaciamos la cola para ver el orden
+        while (!colaPrioridad.isEmpty()) {
+            System.out.println("Sacando: " + colaPrioridad.poll());
+        }
+        // Salida esperada:
+        // Sacando: 10
+        // Sacando: 20
+        // Sacando: 30
+    }
+}
+```
+
+### Resumen del Esqueleto
+
+1. **Importar:** `import java.util.PriorityQueue;` (y `java.util.Comparator` si necesitas orden personalizado).
+    
+2. **Crear (Min-Heap):** `Queue<Tipo> pq = new PriorityQueue<>();`
+    
+3. **Crear (Max-Heap):** `Queue<Tipo> pq = new PriorityQueue<>(Comparator.reverseOrder());`
+    
+4. **Métodos Clave:**
+    
+    - `.add(elemento)`: Añade a la cola.
+        
+    - `.poll()`: Quita y devuelve el elemento con mayor prioridad.
+        
+    - `.peek()`: Muestra (sin quitar) el elemento con mayor prioridad.
+
 ### char <-> int
 
 Los caracteres se escriben con comillas simples, no existe el caracter vacio pero si el caracter espacio.  Los caracteres se pueden traducir a un int , es importante saber el orden de tipo de datos:
@@ -3287,7 +3746,7 @@ public class PruebaConexionJDBC1Recursos {
 
 ## Singleton :
 
-Es una restricción que nos asegura que solo puede haber un objeto de ese tipo, con el singleton nos aseguramos que sólo existe uno y esta relacionado con los métodos `static`. Es parecido pero no igual porque será accesible desde cualquier lugar pero si existe el objeto en si.ç
+Es una restricción que nos asegura que solo puede haber un objeto de ese tipo, con el singleton nos aseguramos que sólo existe uno y esta relacionado con los métodos `static`. Es parecido pero no igual porque será accesible desde cualquier lugar pero si existe el objeto en si..
 
 En que casos se usa : 
 
