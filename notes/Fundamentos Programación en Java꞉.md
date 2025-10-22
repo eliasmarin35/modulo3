@@ -55,7 +55,6 @@ mi-proyecto-java/
   - Valores posibles: _true_ o _false_
 - Valor vacío: `void`
   - no es un tipo de dato al uso, ya que no podemos declarar variables de tipo `void`, nos sirve como una marca para indicar que un método no devuelve nada
----
 
 Por cada tipo básico hay una clase (llamada clase _wrapper_) que lo modela y además nos proporciona métodos para trabajar con el tipo.
 
@@ -117,6 +116,7 @@ System.out.println(numDia); // Esto imprimira por pantalla 4
 ```
 
 ### 1.3. Clases y Objetos
+
 En Java se pueden definir clases con la palabra reservada `class`.
 Una clase es la definición de la estructura de una entidad que queremos representar en nuestro programa Java.
 
@@ -218,26 +218,341 @@ for (int i=0; i < 100; i+=2 ) {...}
 
 - __Condicionales:__
 
-`if`
-`ifelse`
-`elseif`
+Aquí tienes los esqueletos básicos de las estructuras de control de flujo en Java que pediste.
 
-switch(valor){
-case 1 :
-	...
-case 2 :
-	
+### `if` (Simple)
+
+Se usa para ejecutar un bloque de código **solo si** una condición es verdadera.
+
+
+```java
+// Esqueleto 'if'
+if (condicion) {
+    // Código a ejecutar si la 'condicion' es verdadera
 }
+
+// Ejemplo:
+int edad = 20;
+if (edad >= 18) {
+    System.out.println("Es mayor de edad.");
+}
+```
+
+
+### `if-else` (Alternativa)
+
+Se usa para decidir entre **dos bloques** de código. Uno se ejecuta si la condición es verdadera, y el otro si es falsa.
+
+
+```java
+// Esqueleto 'if-else'
+if (condicion) {
+    // Código si la 'condicion' es verdadera
+} else {
+    // Código si la 'condicion' es falsa
+}
+
+// Ejemplo:
+int temperatura = 15;
+if (temperatura > 25) {
+    System.out.println("Hace calor.");
+} else {
+    System.out.println("No hace calor.");
+}
+```
+
+
+### `if-else if-else` (Múltiples condiciones)
+
+Se usa para comprobar **varias condiciones en orden**. Ejecuta solo el bloque de la primera condición que sea verdadera.
+
+
+
+```java
+// Esqueleto 'if-else if-else'
+if (condicion_1) {
+    // Código si 'condicion_1' es verdadera
+    
+} else if (condicion_2) {
+    // Código si 'condicion_1' es falsa Y 'condicion_2' es verdadera
+    
+} else if (condicion_3) {
+    // Código si 'condicion_1' y 'condicion_2' son falsas Y 'condicion_3' es verdadera
+    
+} else {
+    // (Opcional) Código si NINGUNA condición anterior fue verdadera
+}
+
+// Ejemplo:
+int nota = 75;
+if (nota >= 90) {
+    System.out.println("Sobresaliente");
+} else if (nota >= 70) {
+    System.out.println("Notable"); // Esta es la que se ejecuta
+} else if (nota >= 50) {
+    System.out.println("Aprobado");
+} else {
+    System.out.println("Suspenso");
+}
+```
+
+### `switch` (Clásico)
+
+Se usa para seleccionar uno de **varios bloques de código** basándose en un valor exacto (no rangos). Es ideal para reemplazar múltiples `if` que comparan la misma variable.
+
+
+```java
+// Esqueleto 'switch' clásico
+switch (valor) {
+    case valor_1:
+        // Código si 'valor' es igual a 'valor_1'
+        break; // 🛑 ¡Importante! Evita que el código continúe al siguiente case
+
+    case valor_2:
+        // Código si 'valor' es igual a 'valor_2'
+        break; 
+
+    case valor_3:
+    case valor_4:
+        // Código si 'valor' es 'valor_3' O 'valor_4' (casos agrupados)
+        break;
+        
+    default:
+        // (Opcional) Código a ejecutar si 'valor' no coincide con ningún case
+        break;
+}
+
+// Ejemplo:
+int diaSemana = 3; // 1=Lunes, 2=Martes...
+switch (diaSemana) {
+    case 1:
+        System.out.println("Lunes");
+        break;
+    case 2:
+        System.out.println("Martes");
+        break;
+    case 3:
+        System.out.println("Miércoles"); // Esta es la que se ejecuta
+        break;
+    case 4:
+        System.out.println("Jueves");
+        break;
+    case 5:
+        System.out.println("Viernes");
+        break;
+    case 6:
+    case 7:
+        System.out.println("Fin de semana");
+        break;
+    default:
+        System.out.println("Día inválido");
+        break;
+}
+```
+
+
+## `switch` (Moderno - Java 14+)
+
+Java moderno (versión 14 en adelante) tiene una sintaxis `switch` más limpia que no necesita `break`.
+
+
+```java
+// Esqueleto 'switch' moderno (con "arrow syntax")
+switch (valor) {
+    case valor_1 -> {
+        // Código para 'valor_1'
+        // No se necesita 'break'
+    }
+    case valor_2 -> {
+        // Código para 'valor_2'
+    }
+    case valor_3, valor_4 -> {
+        // Agrupación de 'valor_3' y 'valor_4'
+    }
+    default -> {
+        // Código 'default'
+    }
+}
+
+// Ejemplo:
+int diaSemana = 3;
+switch (diaSemana) {
+    case 1 -> System.out.println("Lunes");
+    case 2 -> System.out.println("Martes");
+    case 3 -> System.out.println("Miércoles"); // Se ejecuta esto
+    case 4 -> System.out.println("Jueves");
+    case 5 -> System.out.println("Viernes");
+    case 6, 7 -> System.out.println("Fin de semana");
+    default -> System.out.println("Día inválido");
+}
+```
+
 ### **Excepciones:** principalmente se usa con el bloque  `try-catch-finally`:
 
-`try` - aquí se pone el código "peligroso" que puede lanzar la excepción.
-`catch` - si se produce una excepción en el bloque `try` el programa saltará el bloque, aqui puedes definir como responder al error y puede haber varios bloques de `catch` para distintos tipos de excepciones.
-`finally` - es opcional, y se ejecuta siempre, tanto si hubo una excepcion como si no, es ideal para limpieza como cerrar una base de datos o un archivo asegurando que no queden recursos abiertos.
+### 1. `try-catch-finally` (El "clásico" o "sin recursos" automáticos)
 
-- `return`también es una estructura de control porque modifica el flujo del programa.
-- `break`, `continue`- rompe el bucle o lo continúan  y no sigue con la iteración por tanto es otra opcion para controlar el flujo.
+Este es el bloque fundamental. Se usa para "intentar" (`try`) código peligroso, "atrapar" (`catch`) errores específicos si ocurren, y "finalmente" (`finally`) ejecutar código de limpieza _pase lo que pase_.
 
----
+**Usos:** Manejar cualquier tipo de error (lógico, matemático, etc.) o para la gestión manual de recursos (la forma antigua).
+
+🍳 Piensa en `try` como intentar cocinar, `catch` como limpiar si derramas algo, y `finally` como apagar la estufa (lo cual debes hacer siempre, derrames o no).
+
+### Esqueleto Básico
+
+
+```java
+try {
+    // 1. Bloque de código "peligroso"
+    // Código que podría lanzar una excepción (ej: dividir por cero)
+    
+} catch (TipoDeExceptionA e) {
+    // 2. Bloque de manejo (opcional)
+    // Código que se ejecuta SÓLO SI se lanza una TipoDeExceptionA
+    // 'e' es el objeto de la excepción, contiene detalles del error
+    
+} catch (TipoDeExceptionB e) {
+    // 2b. Puedes tener múltiples 'catch' para diferentes errores
+    
+} finally {
+    // 3. Bloque de limpieza (opcional)
+    // Este código se ejecuta SIEMPRE:
+    // - Si 'try' termina bien.
+    // - Si 'try' falla y un 'catch' lo maneja.
+    // - Si 'try' falla y NINGÚN 'catch' lo maneja.
+}
+```
+
+### Ejemplo (División por cero)
+
+
+```java
+
+public void division() {
+    try {
+        System.out.println("Intentando dividir...");
+        int resultado = 10 / 0; // 💥 ¡Peligro! Lanza ArithmeticException
+        System.out.println("El resultado es: " + resultado); // Esta línea nunca se ejecuta
+        
+    } catch (ArithmeticException e) {
+        System.err.println("Error: No se puede dividir por cero.");
+        
+    } finally {
+        System.out.println("Cálculo finalizado (la limpieza se ejecuta).");
+    }
+}
+// Salida:
+// Intentando dividir...
+// Error: No se puede dividir por cero.
+// Cálculo finalizado (la limpieza se ejecuta).
+```
+
+### 2. `try` sin recursos (Gestión Manual - El modo "antiguo")
+
+Este es un caso específico del `try-catch-finally` que muestra por qué se inventó el `try-with-resources`. Se usa cuando necesitas **cerrar manualmente** un recurso (como un archivo) en el bloque `finally`.
+
+🚫 **Nota:** Esta forma es verbosa y propensa a errores. **Debes evitarla** si el recurso implementa `AutoCloseable`.
+
+### Esqueleto Básico (Gestión manual)
+
+
+```java
+Recurso recurso = null; // 1. Declarar el recurso FUERA del try
+try {
+    recurso = new Recurso(); // 2. Inicializar el recurso DENTRO del try
+    // 3. Usar el recurso
+    
+} catch (Exception e) {
+    // 4. Manejar errores
+    
+} finally {
+    // 5. ¡Limpieza manual OBLIGATORIA!
+    if (recurso != null) {
+        recurso.close(); // 6. Cerrar el recurso explícitamente
+    }
+}
+```
+
+### Ejemplo (Lectura de archivo - MODO ANTIGUO)
+
+
+```java
+
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public void leerArchivoModoAntiguo() {
+    Scanner scanner = null; // 1. Declarar fuera
+    try {
+        scanner = new Scanner(new File("archivo.txt")); // 2. Inicializar
+        while (scanner.hasNextLine()) { // 3. Usar
+            System.out.println(scanner.nextLine());
+        }
+    } catch (FileNotFoundException e) {
+        System.err.println("Archivo no encontrado."); // 4. Manejar error
+    } finally {
+        System.out.println("Bloque 'finally': cerrando scanner.");
+        if (scanner != null) { // 5. Comprobar si es null
+            scanner.close(); // 6. Cerrar manualmente
+        }
+    }
+}
+```
+
+
+### 3. `try-with-resources` (El "moderno" y recomendado)
+
+Este es el `try` moderno (Java 7+). Está diseñado para recursos que necesitan cerrarse (cualquier cosa que implemente `AutoCloseable`, como archivos, conexiones de red, scanners).
+
+🤖 Es un `try` "inteligente": **cierra los recursos automáticamente** por ti. No necesitas `finally` para la limpieza.
+
+### Esqueleto Básico
+
+
+```java
+// 1. El recurso se declara DENTRO de los paréntesis ()
+try (Recurso recurso1 = new Recurso();
+     Recurso recurso2 = new Recurso()) {
+    
+    // 2. Código que usa los recursos
+    
+} catch (Exception e) {
+    // 3. Manejo de errores (opcional)
+}
+// 4. ¡No hay 'finally'! Java llama a 'recurso1.close()' y 'recurso2.close()'
+// automáticamente al salir del bloque 'try', incluso si hay un error.
+```
+
+### Ejemplo (Lectura de archivo - MODO MODERNO)
+
+Esta es la forma preferida de hacer el ejemplo anterior.
+
+
+```java
+
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public void leerArchivoModoModerno() {
+    
+    // 1. Scanner se declara y crea en los paréntesis
+    try (Scanner scanner = new Scanner(new File("archivo.txt"))) {
+        
+        // 2. Usar el scanner
+        while (scanner.hasNextLine()) {
+            System.out.println(scanner.nextLine());
+        }
+        
+    } catch (FileNotFoundException e) {
+        // 3. Manejar el error
+        System.err.println("Archivo no encontrado.");
+    }
+    // 4. 'scanner.close()' se llama automáticamente aquí.
+    // El código es más limpio y seguro.
+}
+```
+
 ## 3.Template String:
 
 Los **String Templates** (o plantillas de cadena) son una característica moderna de Java diseñada para hacer que la creación de cadenas de texto sea mucho más fácil, legible y segura.
