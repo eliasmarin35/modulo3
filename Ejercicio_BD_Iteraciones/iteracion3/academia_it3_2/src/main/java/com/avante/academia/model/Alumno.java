@@ -23,5 +23,4 @@ public class Alumno {
     private String apellidos;
     private String email;
     private int curso_id;
-    private String curso_nombre;
 }

@@ -21,11 +21,13 @@ public class AcademiaApp {
     public static void main(String[] args) {
         //Curso curso;
         Alumno alumno;
+        Curso  curso;
         
         //String query = "SELECT id, nombre, fecha_inicio, fecha_fin FROM cursos;";
         String query = """
             SELECT
-                a.id, a.nombre, a.apellidos, email, a.curso_id, c.nombre
+                a.id, a.nombre, a.apellidos, email, a.curso_id,
+                c.nombre, c.fecha_inicio, c.fecha_fin 
             FROM
                 alumnos a
                 INNER JOIN cursos c ON a.curso_id=c.id
@@ -51,13 +53,21 @@ public class AcademiaApp {
                         .apellidos(rs.getString(3))
                         .email(rs.getString(4))
                         .curso_id(rs.getInt(5))
-                        .curso_nombre(rs.getString(6))
+                        .build();
+                
+                curso = Curso.builder()
+                        .id(rs.getInt(5))
+                        .nombre(rs.getString(6))
+                        .fecha_inicio(rs.getObject(7, LocalDate.class))
+                        .fecha_fin(rs.getObject(8, LocalDate.class))
                         .build();
                 
                 
                 // Tambien se podria obetner un Date generico y pasar a LocalDate
                 //fecInicio = rs.getDate(3).toLocalDate();
                 System.out.println(alumno);
+                System.out.println(curso);
+                System.out.println("");
             }
         }
         catch (SQLException e) {
