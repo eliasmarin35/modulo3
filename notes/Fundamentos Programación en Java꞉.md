@@ -3516,7 +3516,7 @@ public class LectorDeConfiguracion {
 
 **Salida del programa:**
 
-```
+```cmd
 Nombre de la aplicación: Mi Aplicación Genial
 Versión: 1.2.0
 Usuario de la BD: admin
@@ -4071,8 +4071,6 @@ En que casos se usa :
 
 Veamos como se estructura la clase `singleton` :
 
-(pegamos codigo de juanma)
-
 ```java
 package com.avante.pruebasingleton;
 
@@ -4125,6 +4123,7 @@ public class AlumnoSingleton {
 }
 ```
 
+El Main que lo utiliza : 
 
 ```java
 package com.avante.pruebasingleton;
