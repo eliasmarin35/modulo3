@@ -5,6 +5,7 @@
 package com.avante.academia_it_3.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,6 +46,20 @@ public class CursoRepository {
     }
     
     public void insert(Curso c) {
+        String sql = "INSERT INTO cursos (nombre,fecha_inicio,fecha_fin) VALUES (?,?,?);";
         
+        try (
+                Connection conn = Driver.getInstance().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1,c.getNombre());
+            stmt.setObject(2,c.getFecha_inicio());
+            stmt.setObject(3,c.getFecha_fin());
+            
+            stmt.execute();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("Error listando cursos.\n" + e.getMessage());
+        }
     }
 }
