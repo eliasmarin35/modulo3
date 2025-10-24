@@ -4786,3 +4786,4 @@ La gran ventaja es que **en HQL usas los nombres de tus Clases (`Curso`) y tus A
 2. **Independencia de la Base de Datos:** Como escribes HQL (o usas métodos estándar de JPA), puedes cambiar tu base de datos de MySQL a PostgreSQL y tu código Java sigue funcionando. Solo tienes que cambiar el "dialecto" en la configuración de Hibernate.
     
 3. **Caché (Caching) 🚀:** Esta es una de las características más potentes. Hibernate tiene una caché de primer nivel (por sesión) y una de segundo nivel (global). Si pides el `Curso` con ID=5, Hibernate lo busca en la BBDD. Si 10 líneas después _vuelves a pedir_ el `Curso` con ID=5 (en la misma sesión), **Hibernate no va a la BBDD**. Te lo devuelve súper rápido desde su memoria (caché).
+
