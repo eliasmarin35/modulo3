@@ -348,3 +348,245 @@ else
 ```
 
 El `else if` nos da el poder de crear "escaleras" lógicas para manejar múltiples escenarios de forma ordenada.
+
+# 5. Los Bucles en C# :
+
+## 5.1 El Bucle `while`
+
+El bucle `while` hace exactamente eso:
+
+1. **Comprueba la condición:** (¿Hay galletas?)
+    
+2. Si es `true` (¡Sí hay!), **ejecuta el bloque de código** (coge una galleta).
+    
+3. **Vuelve al paso 1** y comprueba la condición otra vez. (¿Quedan galletas?)
+    
+4. Repite esto hasta que la condición sea `false` (el tarro está vacío).
+    
+5. Cuando es `false`, el bucle se "salta" y el programa continúa.
+    
+
+### ¿Cómo se ve en C#?
+
+Necesitamos tres cosas:
+
+1. Una **variable de control** (el número de galletas).
+    
+2. El `while` con la **condición**.
+    
+3. **¡Actualizar la variable!** (comer la galleta) para que el bucle pueda terminar.
+    
+
+**Ejemplo Práctico (Un contador):**
+
+Vamos a contar del 1 al 5.
+
+```c#
+int contador = 1; // 1. Empezamos nuestro contador en 1
+
+// 2. Comprobamos la condición: "¿Es 'contador' (1) menor o igual a 5?" (Es True)
+while (contador <= 5) 
+{
+    // 3. Ejecutamos la acción
+    Console.WriteLine("El número actual es: " + contador);
+
+    // 4. ¡¡LA PARTE MÁS IMPORTANTE!!
+    // Actualizamos la variable para la *siguiente* vuelta.
+    // Si no hacemos esto, ¡el bucle nunca terminará!
+    contador = contador + 1; // El contador ahora valdrá 2, luego 3, 4, 5...
+}
+
+// 5. Cuando 'contador' llega a 6...
+// La condición (6 <= 5) es FALSE. El bucle se detiene.
+Console.WriteLine("¡Bucle terminado!");
+```
+
+**Salida de este código:**
+
+```
+El número actual es: 1
+El número actual es: 2
+El número actual es: 3
+El número actual es: 4
+El número actual es: 5
+¡Bucle terminado!
+```
+
+**¡Curiosidad y Advertencia! (El Bucle Infinito 🌀)**
+
+¿Qué pasaría si olvidamos la línea `contador = contador + 1;`?
+
+- El `contador` _siempre_ valdría $1$.
+    
+- La condición `(1 <= 5)` _siempre_ sería `true`.
+    
+- El programa se quedaría atascado para siempre imprimiendo "El número actual es: 1". ¡Es la forma más rápida de "colgar" tu propio programa! 😂 Siempre debes asegurarte de que tu condición pueda volverse `false` en algún momento.
+    
+
+>En resumen: `while` repite _mientras_ una condición sea `true`, pero _tú_ eres responsable de asegurarte de que esa condición eventualmente cambie.
+
+## 5.2 El Bucle "Contador" `for`
+
+El bucle `for` es la herramienta **perfecta** (y la más usada) para repetir algo un **número exacto de veces**.
+
+¿Por qué es mejor que el `while` para esto? Porque el `for` **agrupa las 3 partes clave** de un contador en una sola línea, haciéndolo súper limpio y difícil de olvidar (¡adiós, bucles infinitos accidentales!).
+
+Las 3 partes que el `for` pone juntas son:
+
+1. **La Inicialización:** (Ej. `int i = 1;`) Dónde empezamos a contar. ¡Ocurre **una sola vez** al inicio!
+    
+2. **La Condición:** (Ej. `i <= 5;`) La regla para seguir, se comprueba _antes_ de cada vuelta (igual que el `while`).
+    
+3. **El Incrementador:** (Ej. `i++`) Qué hacer _después_ de cada vuelta (normalmente, sumar 1).
+    
+
+**Curiosidad:** `i++` es la forma corta y súper común en C# (y muchos otros lenguajes) de decir `i = i + 1`. ¡Significan exactamente lo mismo!
+
+### ¿Cómo se ve en C#?
+
+**Sintaxis:**
+
+```c#
+for ( inicializacion ; condicion ; incrementador )
+{
+    // Código a repetir
+}
+```
+
+**Ejemplo Práctico (Contar del 1 al 5, estilo `for`):**
+
+
+```c#
+// 1. i empieza en 1
+// 2. Comprueba: ¿1 <= 5? (True)
+// 3. ¡Ejecuta el código! -> Imprime "El número es: 1"
+// 4. ¡Incrementa! -> i ahora vale 2
+//
+// 2. Comprueba: ¿2 <= 5? (True)
+// 3. ¡Ejecuta! -> Imprime "El número es: 2"
+// 4. ¡Incrementa! -> i ahora vale 3
+// ...así hasta que...
+// 2. Comprueba: ¿6 <= 5? (False)
+// 5. ¡Se detiene!
+for (int i = 1; i <= 5; i++)
+{
+    Console.WriteLine("El número es: " + i);
+}
+
+Console.WriteLine("¡Bucle for terminado!");
+```
+
+**Salida de este código:**
+
+```
+El número es: 1
+El número es: 2
+El número es: 3
+El número es: 4
+El número es: 5
+¡Bucle for terminado!
+```
+
+
+> `for` Es el bucle que usarás el 90% del tiempo cuando sepas _cuántas veces_ quieres repetir algo.
+
+## 5.3 Controlando el bucle `break` y `continue`
+
+Ya sabes cómo _iniciar_ y _repetir_ bucles. Ahora aprenderás a _interrumpirlos_ a voluntad.
+
+#### 1. La Salida de Emergencia: `break` 🛑
+
+La palabra clave `break` (romper) hace exactamente eso: **rompe el bucle y se sale de él inmediatamente**.
+
+No importa si la condición del `while` o `for` sigue siendo `true`. En cuanto el programa lee `break`, salta fuera del bucle y continúa con el resto del código.
+
+**Analogía: La Alarma de Incendios 🔥** Estás en un bucle `for` que cuenta del 1 al 10 (vas a trabajar 10 horas). Pero en la hora 3, suena la alarma de incendios (un `if` detecta una emergencia). Tú no te quedas a terminar las 7 horas que faltan. Usas `break`: ¡sales del edificio (del bucle) _inmediatamente_!
+
+**Ejemplo Práctico (Buscando un número):** Queremos contar hasta 20, pero parar _en cuanto_ encontremos el número 7.
+
+
+```c#
+for (int i = 1; i <= 20; i++)
+{
+    Console.WriteLine(i); // Imprime el número
+    
+    // Condición de emergencia
+    if (i == 7)
+    {
+        Console.WriteLine("¡Encontré el 7! Saliendo...");
+        break; // ¡Salida de emergencia!
+    }
+}
+
+Console.WriteLine("Fin del programa.");
+```
+
+**Salida de este código:**
+
+```
+1
+2
+3
+4
+5
+6
+7
+¡Encontré el 7! Saliendo...
+Fin del programa. 
+```
+
+(Nota: Nunca llegó a 8, 9, 10...20. `break` lo detuvo).
+
+---
+
+#### 2. El "Saltar" Vuelta: `continue` ⏭️
+
+La palabra clave `continue` (continuar) es diferente. No rompe el bucle, solo **se salta el resto de la vuelta (iteración) actual**.
+
+Le dice al bucle: "Ya he terminado con esta vuelta, no ejecutes nada más de lo que hay debajo de mí. ¡Salta directamente a la siguiente comprobación/incremento!".
+
+**Analogía: El Control de Calidad 🏭** Estás en un bucle `for` procesando 10 cajas en una cinta transportadora. En la caja 4, ves que está defectuosa (un `if` lo detecta). No quieres `break` (parar toda la fábrica). Usas `continue`: dejas esa caja 4 a un lado (te saltas el resto del proceso _para esa caja_) y pasas directamente a la caja 5.
+
+**Ejemplo Práctico (Saltando los números pares):** Queremos imprimir números del 1 al 5, pero _saltarnos_ los pares.
+
+
+```c#
+for (int i = 1; i <= 5; i++)
+{
+    // Comprobamos si el número es par
+    // (El % es el operador "módulo", da el resto de una división. 
+    // i % 2 == 0 significa "si 'i' dividido por 2 tiene resto 0", o sea, es par)
+    if (i % 2 == 0)
+    {
+        continue; // ¡Salta esta vuelta! Ve al siguiente 'i'
+    }
+
+    // Esta línea SÓLO se ejecuta si 'continue' no se activó
+    Console.WriteLine(i);
+}
+
+Console.WriteLine("Fin del programa.");
+```
+
+**Salida de este código:**
+
+```
+1
+3
+5
+Fin del programa.
+```
+
+(Cuando `i` valía 2 y 4, el `if` fue `true` y el `continue` hizo que el `Console.WriteLine` se saltara).
+
+---
+
+**En resumen:**
+
+- `break`: ¡Para todo! Sal del bucle por completo. 🛑
+    
+- `continue`: ¡Salta! Termina esta vuelta y pasa a la siguiente. ⏭️
+    
+
+¡Y con eso, eres un maestro del control de bucles!
+
