@@ -1,0 +1,20 @@
+
+            none:
+                no hace nada
+            validate:
+                hibernate comprueba que existen las tablas con la estructura,
+                pero no hace nada.
+            update:
+                actualiza el esquema de tablas para que este sincronizado los
+                mappings
+            create-only:
+                genera todos los create table necesarios (y los ejecuta)
+            create:
+                crea el esquema completo, borrando lo que hubiera
+            drop:
+                en vez de borrar las tablas una por una, directamente hace un
+                drop de la base de datos entera y la regenera
+            create-drop:
+                hace como el create, y cuando la aplicacion acaba, hace drop
+                de la base de datos entera.
+

@@ -6,10 +6,9 @@ package com.avante.academia_it_3;
 
 import com.avante.academia_it_3.model.Curso;
 import com.avante.academia_it_3.model.CursoRepository;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
+
 
 /**
  *
@@ -19,15 +18,26 @@ public class AcademiaApp {
     public static void main (String[] args) {
         CursoRepository repo = new CursoRepository();
         
-        Curso curso = Curso.builder()
-                .nombre("mi curso")
-                .fecha_inicio(LocalDate.of(2025, Month.MARCH, 25))
-                .fecha_fin(LocalDate.of(2025, Month.APRIL, 30))
-                .build();
-                
-        repo.insert(curso);
-        
+        // Listar
         repo.listAll().stream()
                 .forEach(System.out::println);
+        System.out.println("");
+        
+        // Datos para modificar el curso 4
+        Curso curso = new Curso();
+        curso.setNombre("Curso Actualizado Por segunda vez");
+        curso.setFecha_inicio(LocalDate.of(2023, Month.MARCH, 25));
+        curso.setFecha_fin(LocalDate.of(2023, Month.APRIL, 30));
+        
+        
+        // Modifico el curso 4
+        int numrows=repo.update(4, curso);
+        System.out.printf("Se han modificado %d filas.\n\n",numrows);
+        
+        
+        // Listar
+        repo.listAll().stream()
+                .forEach(System.out::println);
+        System.out.println("");
     }
 }

@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.management.RuntimeErrorException;
 
 /**
  *
@@ -59,7 +60,70 @@ public class CursoRepository {
             stmt.execute();
         }
         catch (SQLException e) {
-            throw new RuntimeException("Error listando cursos.\n" + e.getMessage());
+            throw new RuntimeException("Error insertando un curso.\n" + e.getMessage());
         }
+    }
+    
+    public Curso retrieve(int id) {
+        Curso curso = null;
+        
+        String sql="SELECT id, nombre, fecha_inicio, fecha_fin FROM cursos WHERE id=?;";
+        
+        try (
+            Connection conn = Driver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1,id);
+            ResultSet rs = stmt.executeQuery();
+        
+            while (rs.next()) {
+                curso = Curso.builder()
+                        .id(rs.getInt(1))
+                        .nombre(rs.getString(2))
+                        .fecha_inicio(rs.getObject(3,LocalDate.class))
+                        .fecha_fin(rs.getObject(4,LocalDate.class))
+                        .build();
+            }
+
+            rs.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("Error recuperando el curso.\n" + e.getMessage());
+        }
+        
+        return curso;
+    }
+    
+    public int update(int id, Curso curso) {
+        int numrows=0;
+        
+        String sql = """
+            UPDATE
+                cursos
+            SET
+                nombre=?,
+                fecha_inicio=?,
+                fecha_fin=?
+            WHERE
+                id=?
+            ;
+        """;
+        
+        try (
+                Connection conn = Driver.getInstance().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1,curso.getNombre());
+            stmt.setObject(2,curso.getFecha_inicio());
+            stmt.setObject(3,curso.getFecha_fin());
+            stmt.setInt(4, id);
+            
+            numrows = stmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("Error actualizando un curso.\n" + e.getMessage());
+        }
+        
+        return numrows;
     }
 }
