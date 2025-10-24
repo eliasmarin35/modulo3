@@ -4596,3 +4596,116 @@ public class Producto {
 - **Independencia (Desacoplamiento):** La lógica de negocio (el POJO) no depende del framework (la web, la base de datos).
     
 - **Facilidad de Prueba:** Puedes probar un POJO en una prueba unitaria simple, sin necesidad de levantar un servidor de aplicaciones o una base de datos.
+
+## Hibernate :
+
+Hibernate es un ORM :  **ORM** son las siglas de **Object-Relational Mapping** (en español, **Mapeo Objeto-Relacional**).
+
+Es una técnica de programación y un conjunto de herramientas que actúan como un **"traductor"** entre un lenguaje de programación orientado a objetos (como Java, el que estás usando) y una base de datos relacional (como MySQL, PostgreSQL, SQL Server, etc.).
+
+### El Problema que Resuelve (La "Brecha")
+
+En tu proyecto, tú piensas y escribes código usando **Objetos**. Tienes una clase `Curso`, una clase `Estudiante`, etc.
+
+
+```java
+// Así piensas en Java (Objetos)
+Curso miCurso = new Curso();
+miCurso.setNombre("Programación Avanzada");
+miCurso.setFecha_inicio(LocalDate.now());
+```
+
+Pero tu base de datos no entiende de "objetos". La base de datos piensa en **Tablas**, **Filas** y **Columnas**.
+
+
+```sql
+-- Así piensa la base de datos (Tablas)
+INSERT INTO cursos (nombre, fecha_inicio) 
+VALUES ('Programación Avanzada', '2025-10-24');
+```
+
+Sin un ORM, tú tendrías que escribir manualmente todo ese código SQL (como `INSERT`, `SELECT`, `UPDATE`) y luego, al recibir los datos, recorrer los resultados uno por uno para crear tus objetos `Curso` a mano. Esto es tedioso, repetitivo y muy propenso a errores (como la inyección SQL).
+
+### La Solución (El "Traductor")
+
+Un ORM se encarga de hacer esa traducción por ti, en ambas direcciones.
+
+1. **Mapeo:** Tú le dices al ORM cómo se "mapea" tu clase a tu tabla. Generalmente se hace con **anotaciones**.
+    
+    - La clase `Curso` se mapea a la tabla `cursos`.
+        
+    - El atributo `String nombre` se mapea a la columna `nombre` (de tipo `VARCHAR`).
+        
+    - El atributo `int id` se mapea a la columna `id` (la `PRIMARY KEY`).
+        
+2. **Operaciones (CRUD):** En lugar de escribir SQL, simplemente usas métodos del ORM.
+    
+
+**Ejemplo de cómo funciona un ORM (como JPA/Hibernate, que es común en Java):**
+
+#### 1. Para guardar un objeto (Java -> SQL)
+
+Tú escribes esto en tu código (fíjate que es muy parecido a lo que tienes en `CursoRepository`):
+
+
+```java
+// CÓDIGO JAVA (CON ORM)
+Curso nuevoCurso = new Curso();
+nuevoCurso.setNombre("Curso de Java");
+miRepositorioDeCursos.save(nuevoCurso); 
+```
+
+El ORM ve esto y **genera automáticamente** el siguiente SQL para enviarlo a la base de datos:
+
+```sql
+-- SQL GENERADO POR EL ORM
+INSERT INTO cursos (nombre) VALUES ('Curso de Java');
+```
+
+#### 2. Para consultar un objeto (SQL -> Java)
+
+Tú escribes esto en tu código:
+
+
+```java
+// CÓDIGO JAVA (CON ORM)
+Curso cursoEncontrado = miRepositorioDeCursos.findById(5);
+System.out.println(cursoEncontrado.getNombre());
+```
+
+El ORM **genera y ejecuta** este SQL:
+
+```sql
+-- SQL GENERADO POR EL ORM
+SELECT * FROM cursos WHERE id = 5;
+```
+
+...y lo más importante: cuando recibe la fila de la base de datos, **automáticamente la convierte en un objeto `Curso`** para que tú puedas usar `cursoEncontrado.getNombre()` directamente.
+
+### Ventajas de usar un ORM
+
+1. **Productividad:** Escribes mucho menos código. Te concentras en la lógica de tu negocio (objetos) y no en la sintaxis de SQL.
+    
+2. **Mantenibilidad:** Si cambias el nombre de una columna en la base de datos, solo tienes que actualizar el "mapeo" (la anotación) en un lugar de tu clase Java, en lugar de buscar y reemplazar 10 sentencias SQL distintas por todo tu proyecto.
+    
+3. **Seguridad:** Los ORM modernos manejan automáticamente la "parametrización" de consultas, lo que te protege de forma nativa contra ataques de **Inyección SQL**.
+    
+4. **Independencia de la Base de Datos:** En muchos casos, puedes cambiar tu base de datos (por ejemplo, de MySQL a PostgreSQL) y tu código Java seguirá funcionando casi sin cambios, ya que el ORM se encarga de generar el dialecto SQL correcto para cada una.
+    
+
+### Desventajas
+
+1. **Curva de aprendizaje:** Hay que aprender a configurar y usar la herramienta ORM.
+    
+2. **Rendimiento:** Para consultas extremadamente complejas u optimizadas, un SQL escrito a mano por un experto _puede_ ser más rápido que el SQL generado por el ORM.
+    
+
+### Ejemplos Populares de ORM
+
+- **Java:** **JPA** (Java Persistence API) es la especificación estándar. Las herramientas más famosas que la implementan son **Hibernate** (la más popular, probablemente la que usas con Spring Boot) y **EclipseLink**.
+    
+- **Python:** SQLAlchemy, Django ORM.
+    
+- **C#:** Entity Framework.
+    
+- **Node.js:** Sequelize, TypeORM, Prisma.
