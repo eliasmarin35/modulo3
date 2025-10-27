@@ -590,3 +590,1283 @@ Fin del programa.
 
 ¡Y con eso, eres un maestro del control de bucles!
 
+# 6. Métodos :
+
+## 6.1 ¿Qué es un método?
+
+Como dijimos, un **método** (o _función_) es simplemente una **receta de código** a la que le pones un nombre. Es un bloque de código que empaquetas para que realice _una tarea específica_.
+
+**La Analogía (El Café ☕):**
+
+Imagina que en tu cocina (tu programa) quieres hacer café. Los pasos son:
+
+1. Coger una taza.
+    
+2. Poner café molido.
+    
+3. Verter agua caliente.
+    
+4. Añadir azúcar.
+    
+
+Si _cada vez_ que quisieras un café tuvieras que escribir esos 4 pasos, tu programa principal sería un lío.
+
+En lugar de eso, tomas esos 4 pasos, los metes en una caja, y le pones una etiqueta: `PrepararCafe`.
+
+**¿Por qué es esto maravilloso?**
+
+1. **Organización:** Tu programa principal se vuelve súper limpio. En lugar de 4 líneas, solo tienes 1: `PrepararCafe();`.
+    
+2. **Reutilización (¡El Superpoder!):** Si quieres 5 cafés, ¿tienes que copiar los 4 pasos 5 veces (20 líneas de código)? ¡No! Simplemente _llamas_ a tu receta 5 veces:
+    
+    
+    ```c#
+    PrepararCafe();
+    PrepararCafe();
+    PrepararCafe();
+    PrepararCafe();
+    PrepararCafe();
+    // (¡O mejor aún, un bucle 'for' que lo llame 5 veces!)
+    ```
+    
+
+---
+
+### ¿Cómo se ve en C#?
+
+Hay dos partes: **Definir** la receta y **Llamar** a la receta.
+
+**1. La Definición (La Receta):** (Esto lo escribimos _fuera_ de `Main`, pero dentro de la clase del programa).
+
+
+```c#
+/*
+   "static": Por ahora, piénsalo como una etiqueta necesaria para que 'Main' pueda usarlo.
+   "void": Significa "vacío". Es una promesa de que este método HACE cosas, 
+           pero NO DEVUELVE ningún resultado (como un número o un texto).
+   "Saludar()": ¡El nombre que inventamos para nuestra receta!
+*/
+static void Saludar()
+{
+    // Este es el bloque de código que se ejecutará
+    Console.WriteLine("¡Hola! ¡Bienvenido a mi programa!");
+    Console.WriteLine("Espero que te guste.");
+}
+```
+
+**2. La Llamada (Usar la Receta):** (Esto lo escribimos _dentro_ de nuestro `Main`).
+
+
+```c#
+static void Main(string[] args)
+{
+    Console.WriteLine("El programa está empezando...");
+    
+    // ¡LA LLAMADA! Le decimos al programa: "¡Ejecuta la receta 'Saludar' AHORA!"
+    Saludar();
+
+    Console.WriteLine("----------------------------------");
+    Console.WriteLine("Vamos a saludar de nuevo...");
+
+    // ¡La reutilizamos!
+    Saludar();
+
+    Console.WriteLine("El programa ha terminado.");
+}
+```
+
+**¿Cuál será la salida de este código?**
+
+```
+El programa está empezando...
+¡Hola! ¡Bienvenido a mi programa!
+Espero que te guste.
+----------------------------------
+Vamos a saludar de nuevo...
+¡Hola! ¡Bienvenido a mi programa!
+Espero que te guste.
+El programa ha terminado.
+```
+
+¡Hemos empaquetado 2 líneas de código en un solo comando reutilizable!
+
+## 6.2 Parámetros y Retorno
+
+Este tema tiene dos partes geniales: cómo darle "ingredientes" a tu método y cómo hacer que te "devuelva" un resultado.
+
+### Dando Ingredientes (Parámetros 🎁)
+
+Nuestro método `Saludar()` de antes era un poco aburrido. Siempre decía lo mismo. ¿Y si quisiéramos que saludara a una persona _específica_?
+
+Para eso, le pasamos un **parámetro**. Piensa en el parámetro como un "ingrediente" que la receta necesita para funcionar.
+
+**1. La Definición (La Receta con "espacio" para el ingrediente):**
+
+Fíjate cómo ahora, dentro de los paréntesis `()`, "anunciamos" que esperamos un `string` (texto) y le ponemos un nombre temporal: `nombre`.
+
+
+```c#
+// "string nombre" es el PARÁMETRO. 
+// Es una variable que solo existe dentro de este método.
+static void SaludarPersona(string nombre)
+{
+    Console.WriteLine("¡Hola, " + nombre + "! ¡Bienvenido!");
+}
+```
+
+**2. La Llamada (Dándole el ingrediente):**
+
+Ahora, cuando llamamos al método, estamos _obligados_ a pasarle un `string` dentro de los paréntesis.
+
+
+```c#
+static void Main(string[] args)
+{
+    // Le pasamos "Ana" como ingrediente.
+    // "Ana" viaja y se copia dentro de la variable 'nombre' del método.
+    SaludarPersona("Ana");
+
+    // ¡La reutilizamos con un ingrediente diferente!
+    SaludarPersona("Carlos");
+}
+```
+
+**Salida de este código:**
+
+```
+¡Hola, Ana! ¡Bienvenido!
+¡Hola, Carlos! ¡Bienvenido!
+```
+
+¡Ahora tenemos una receta flexible!
+
+---
+
+### Recibiendo un Resultado (Valores de Retorno 📬)
+
+Hasta ahora, nuestros métodos han sido de tipo `void`. `void` significa "vacío"; es una promesa de que el método _hace_ cosas (como imprimir en pantalla), pero **no devuelve ningún valor**.
+
+Pero, ¿y si queremos un método que _calcule_ algo y nos dé el resultado? Como una calculadora.
+
+Para eso, **reemplazamos `void` por el tipo de dato que queremos devolver** (ej. `int` si devolverá un número, `string` si devolverá texto). Y luego, usamos la palabra clave `return` para "escupir" el resultado.
+
+**1. La Definición (La Calculadora):**
+
+Este método _promete_ devolver un `int`. Acepta dos "ingredientes" (`int num1`, `int num2`) y usa `return` para devolver la suma.
+
+
+```c#
+// Ya no es 'void', ¡ahora es 'int'!
+static int Sumar(int num1, int num2)
+{
+    int resultado = num1 + num2;
+    return resultado; // ¡Devuelve el valor y termina el método!
+}
+```
+
+**2. La Llamada (Atrapando el resultado):**
+
+Cuando llamamos a un método que devuelve algo, ¡tenemos que "atrapar" ese resultado en una variable!
+
+
+```c#
+static void Main(string[] args)
+{
+    // 1. Llamamos a Sumar(5, 3)
+    // 2. El método calcula 8 y hace "return 8"
+    // 3. El valor 8 "vuelve" y lo guardamos en la variable 'miSuma'
+    int miSuma = Sumar(5, 3);
+
+    Console.WriteLine("El resultado de la suma es: " + miSuma);
+
+    // ¡Podemos reutilizarlo!
+    int otraSuma = Sumar(100, 50);
+    Console.WriteLine("Otro resultado: " + otraSuma);
+}
+```
+
+**Salida de este código:**
+
+```cmd
+El resultado de la suma es: 8
+Otro resultado: 150
+```
+
+**En resumen:**
+
+- **Parámetros** (ej. `string nombre`): "Ingredientes" que le _das_ al método para que trabaje.
+    
+- **Valores de Retorno** (ej. `int` y `return`): El "resultado" que el método te _devuelve_ después de trabajar.
+    
+
+¡Con esto, tus métodos se vuelven increíblemente poderosos!
+
+# 6. Almacenamiento de grupos : Arrays (Arreglos):
+
+Un **array** (también llamado arreglo, vector o matriz) es la estructura de datos más básica para guardar una **colección de elementos del mismo tipo**.
+
+**Analogía: El Pastillero Semanal o una Cajonera**
+
+Piensa en un array como un **pastillero** de esos que tienen 7 días (Lunes, Martes...).
+
+- Es un _solo_ contenedor (el pastillero).
+    
+- Tiene varios "espacios" (7).
+    
+- Cada espacio guarda algo (la pastilla).
+    
+- ¡Importante! Todos los espacios son del _mismo tamaño_ y guardan _el mismo tipo_ de cosa.
+    
+
+O piensa en una **cajonera**:
+
+- La cajonera es el array (`string[] misAmigos`).
+    
+- Cada cajón individual es un **elemento**.
+    
+- Para saber qué hay en un cajón, necesitas su **número de cajón**.
+    
+
+#### La Regla de Oro: El Índice Cero (0-Indexed)
+
+Aquí viene la parte más importante (¡y que confunde a todo el mundo al principio!): En programación, casi siempre empezamos a contar desde **CERO (0)**.
+
+- El **primer** elemento está en la posición `0`.
+    
+- El **segundo** elemento está en la posición `1`.
+    
+- Si un array tiene 5 elementos, sus posiciones (índices) van del `0` al `4`.
+    
+
+---
+
+### ¿Cómo se ve en C#?
+
+Hay dos partes: "crear la cajonera" (declarar) y "usar los cajones" (acceder).
+
+**1. Declarar e Inicializar un Array**
+
+Puedes hacerlo de dos formas:
+
+C#
+
+```
+// Opción 1: Sabes el tamaño, pero no los valores (Crea 5 cajones vacíos)
+// Le decimos: "Quiero un array de 'int' llamado 'edades' con 5 espacios."
+int[] edades = new int[5];
+
+// Opción 2: Sabes los valores exactos al crearlo (Crea y llena los cajones)
+// Le decimos: "Quiero un array de 'string' llamado 'dias' con estos valores."
+// C# cuenta solo y sabe que tiene 7 espacios.
+string[] dias = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+```
+
+(Fíjate en los corchetes `[]` después del tipo de dato. Así se le dice a C# que es un array).
+
+**2. Acceder y Modificar Elementos**
+
+Usamos el nombre del array y los corchetes `[]` con el **número de índice** (la posición) que queremos ver o cambiar.
+
+
+```c#
+// Usando el array 'dias' que creamos arriba:
+string[] dias = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+
+// ACCEDER (Leer): ¿Qué día está en la posición 0?
+Console.WriteLine( dias[0] ); // Imprimirá "Lunes"
+
+// ACCEDER (Leer): ¿Qué día está en la posición 3?
+Console.WriteLine( dias[3] ); // Imprimirá "Jueves"
+
+// MODIFICAR (Escribir): ¡Cambiemos el Sábado!
+// El Sábado está en la posición 5 (recuerda: 0, 1, 2, 3, 4, 5)
+dias[5] = "SÁBADO DE FIESTA";
+Console.WriteLine( dias[5] ); // Ahora imprimirá "SÁBADO DE FIESTA"
+```
+
+**Curiosidad (¡Los Bucles y los Arrays!):** ¿Y si quieres imprimir _todos_ los días? ¡No escribes 7 `Console.WriteLine`! Usas un bucle `for`, que es el compañero perfecto de los arrays.
+
+```c#
+// Un array tiene una propiedad ".Length" que te dice cuántos elementos tiene.
+// dias.Length es 7
+for (int i = 0; i < dias.Length; i++)
+{
+    // i valdrá 0, luego 1, luego 2...
+    Console.WriteLine( dias[i] ); 
+}
+```
+
+---
+
+**En resumen:** Un array es un contenedor (una cajonera) con un **tamaño fijo** que guarda una lista de elementos del **mismo tipo**, y accedes a cada elemento usando su número de posición (índice), **empezando desde 0**.
+
+# 7. Programación Orientada a Objetos (POO):
+
+Hasta ahora, hemos trabajado con los tipos de datos que C# nos da: `int` (para números), `string` (para texto), `bool` (para verdadero/falso) y `int[]` (cajoneras de números).
+
+Pero, ¿qué pasa si quieres representar algo más complejo del mundo real? Como un **Coche**, un **Jugador**, o un **Producto**.
+
+Un coche no es solo un número o un texto. Un coche tiene _varias_ cosas a la vez:
+
+- Tiene un `string` (su color).
+    
+- Tiene un `int` (su año).
+    
+- Tiene un `bool` (¿está encendido?).
+    
+- Y también tiene _acciones_: puede `Arrancar()` o `Frenar()`.
+    
+
+La **Programación Orientada a Objetos (OOP)** es la forma de crear nuestros _propios tipos de datos_ (como `Coche`) que agrupan todos esos datos y acciones en un solo paquete.
+
+## 7.1 ¿Qué es un objeto?
+
+Para entender esto, necesitas conocer dos palabras clave que son el corazón de todo:
+
+1. **La Clase (El Plano 📐):** Una `class` es el **plano**, el **molde** o la **receta**. La clase _no_ es el objeto, sino la _descripción_ de cómo será ese objeto. El plano de un coche define que "tendrá 4 ruedas, 1 motor y un color", pero el plano en sí no te lleva a ninguna parte.
+    
+2. **El Objeto (El Coche Real 🚗):** Un `object` es la **instancia** real construida a partir de ese plano. Es el coche físico que está en tu garaje. Puedes usar un solo plano (una `class`) para construir _muchos_ objetos (muchos coches). Tu coche rojo y mi coche azul son dos objetos diferentes, pero ambos vienen de la misma clase (plano).
+    
+
+---
+
+### ¿Cómo se ve esto en C#?
+
+Dividimos el proceso en dos pasos:
+
+#### Paso 1: Definir el Plano (La `class`)
+
+Primero, _fuera_ de nuestro método `Main`, definimos el "plano" de un Coche. (No te preocupes por la palabra `public` por ahora, solo piensa que significa "se puede ver/usar desde fuera").
+
+
+```c#
+// PASO 1: EL PLANO (LA CLASE)
+// Esto es el "molde"
+class Coche
+{
+    // 1. Propiedades (Los Datos que tendrá)
+    public string color;
+    public int año;
+
+    // 2. Métodos (Las Acciones que podrá hacer)
+    public void Arrancar()
+    {
+        // Puede usar sus propias propiedades
+        Console.WriteLine("¡El coche " + color + " de año " + año + " hace Vrum-vrum!");
+    }
+}
+```
+
+¡Perfecto! Acabamos de crear un _nuevo tipo de dato_ en C# llamado `Coche`.
+
+#### Paso 2: Construir y Usar Objetos (Las Instancias)
+
+Ahora, _dentro_ de nuestro método `Main`, podemos usar ese plano para construir coches reales. La palabra clave `new` es la "fábrica" que toma el plano y construye el objeto.
+
+
+```c#
+static void Main(string[] args)
+{
+    // PASO 2: CONSTRUIR EL OBJETO (La Instancia)
+    // "Quiero un nuevo Coche de fábrica, y lo guardaré en la variable 'miMercedes'"
+    Coche miMercedes = new Coche();
+
+    // Ahora le damos sus datos únicos usando el operador "."
+    miMercedes.color = "Rojo";
+    miMercedes.año = 2023;
+
+    // ¡Y podemos usar sus acciones!
+    miMercedes.Arrancar(); // Salida: ¡El coche Rojo de año 2023 hace Vrum-vrum!
+
+    
+    // ¡La magia es que podemos crear más!
+    Coche tuFord = new Coche();
+    tuFord.color = "Azul";
+    tuFord.año = 2010;
+    
+    tuFord.Arrancar(); // Salida: ¡El coche Azul de año 2010 hace Vrum-vrum!
+}
+```
+
+>**En resumen:**
+>
+>- La **Clase** (`class Coche`) es el plano 📐.
+  >  
+>- El **Objeto** (`miMercedes` o `tuFord`) es el coche real 🚗 construido con ese plano, usando la palabra `new`.
+  >  
+
+Acabas de crear "cajas" personalizadas (`Coche`) que contienen sus propias "cajas" internas (`color`, `año`) y sus propias "recetas" (`Arrancar`).
+
+Sé que es un gran salto conceptual, ¡posiblemente el más grande! ¿Qué tal lo ves? ¿Se entiende la diferencia entre el "plano" (Clase) y la "cosa real" (Objeto)?
+
+# 8. Los Constructores :
+
+¿Recuerdas que para crear nuestro perro "Fido" hicimos esto?
+
+```c#
+Perro miMascota = new Perro(); // Paso 1: Crear
+miMascota.nombre = "Fido";     // Paso 2: Asignar nombre
+```
+
+Es un poco molesto tener que crearlo y _luego_ asignarle el nombre. ¿Y si olvidamos asignarle el nombre? Tendríamos un perro sin nombre.
+
+Aquí es donde entra el **Constructor**.
+
+Un **constructor** es un **método especial** dentro de una clase que se **ejecuta automáticamente** (y solo una vez) en el momento exacto en que usas la palabra clave `new`.
+
+**Su único trabajo es "construir" el objeto correctamente**, asegurándose de que tenga todos sus "ingredientes" (datos) básicos desde el primer segundo.
+
+**Analogía: La Cadena de Montaje de Coches 🚗** Cuando pides un coche nuevo (usas `new Coche()`), no te dan un chasis vacío y luego te dicen "ahora ponle las ruedas y el motor tú mismo". ¡No! La fábrica (`new`) usa una "cadena de montaje" (el **constructor**) que le _pone_ el motor, el color y las ruedas _antes_ de entregártelo.
+
+#### ¿Cómo se ve en C#?
+
+Un constructor es fácil de identificar por dos reglas:
+
+1. **Tiene el mismo nombre EXACTO que la clase**.
+    
+2. **NO tiene tipo de retorno** (¡ni siquiera `void`!).
+    
+
+Vamos a mejorar nuestro "plano" (`class`) del `Heroe` para que _requiera_ un nombre y vida al ser creado.
+
+
+```c#
+class Heroe
+{
+    // Propiedades (Datos)
+    public string nombre;
+    public int vida;
+
+    // --- ¡EL CONSTRUCTOR! ---
+    // Se ejecuta automáticamente cuando hacemos "new Heroe(...)"
+    // Toma "ingredientes" (parámetros) para inicializar el objeto.
+    public Heroe(string nombreInicial, int vidaInicial)
+    {
+        Console.WriteLine("¡Un nuevo héroe está siendo creado!");
+        
+        // Asigna los "ingredientes" a las propiedades del objeto
+        nombre = nombreInicial;
+        vida = vidaInicial;
+        // (Por ahora, no incluimos estaVivo, lo haremos luego)
+    }
+
+    // Métodos (Acciones)
+    public void Atacar()
+    {
+        Console.WriteLine(nombre + " lanza un ataque!");
+    }
+}
+```
+
+#### ¿Cómo se _usa_ ahora?
+
+¡Fíjate qué limpio queda! Ahora hacemos todo en **un solo paso**.
+
+```c#
+static void Main(string[] args)
+{
+    // ¡LA NUEVA FORMA!
+    // Le pasamos los "ingredientes" ("Link", 100)
+    // directamente a la "fábrica" (new Heroe)
+    Heroe miHeroe = new Heroe("Link", 100);
+
+    // ¡Ya no necesitamos las líneas de asignación!
+    // miHeroe.nombre = "Link";  <-- ¡Esto ya no es necesario!
+    // miHeroe.vida = 100;     <-- ¡Esto tampoco!
+
+    // El héroe ya está "listo" y con sus datos desde el inicio
+    Console.WriteLine("El nombre de mi héroe es: " + miHeroe.nombre);
+    miHeroe.Atacar();
+}
+```
+
+**Salida de este código:**
+
+```
+¡Un nuevo héroe está siendo creado!
+El nombre de mi héroe es: Link
+Link lanza un ataque!
+```
+
+>**En resumen:** El **Constructor** es el "método especial" que se llama con `new` y sirve para inicializar las propiedades del objeto, asegurando que nazca completo y en un estado válido.
+
+# 9. Encapsulación:
+
+Este es uno de los pilares de la Programación Orientada a Objetos. La palabra suena complicada, pero la idea es simple:
+
+**Encapsulación** significa **proteger** los datos importantes (propiedades) de una clase para que no sean modificados incorrectamente desde el exterior.
+
+**Analogía: El Panel de Control del Coche 🚗** Piensa en un coche. El motor, los cables, la inyección... son increíblemente complejos y _peligrosos_ de tocar directamente. El fabricante no te deja un manojo de cables sueltos en el salpicadero.
+
+En lugar de eso, te da un **panel de control seguro** (el volante, los pedales, la palanca de cambios). Estas son las herramientas públicas (`public`) que te permiten _interactuar_ con la maquinaria interna (`private`) de forma controlada.
+
+¡No puedes poner el coche en marcha atrás a 100 km/h! El panel de control (la encapsulación) te lo impide.
+
+#### El Problema: `public` es demasiado confiado
+
+Hasta ahora, hemos escrito: `public int vida;`
+
+Esto es como dejar los cables del motor al aire. Cualquiera (otro programador, o tú mismo por error) puede hacer esto desde `Main`: `miHeroe.vida = -500;` // ¡Ups! 😱 `miHeroe.vida = 9999999;` // ¡Ups! 😱
+
+#### La Solución: `private` (El Escudo 🛡️)
+
+Cambiamos la palabra `public` por `private`. `private` significa: "Esta variable **solo** puede ser vista o modificada desde _dentro_ de esta misma clase (dentro del `class Heroe { ... }`)".
+
+```c#
+class Heroe
+{
+    public string nombre;
+    private int vida; // ¡Protegido!
+    
+    // ... constructor ...
+}
+
+// --- En el Main ---
+miHeroe.nombre = "Link"; // OK (es public)
+miHeroe.vida = 100;      // ¡ERROR! 'vida' es inaccesible/privado.
+```
+
+¡Genial! Hemos protegido la vida. Pero... ahora tenemos un problema: ¿cómo le _damos_ vida o _leemos_ su vida? ¡Ni siquiera nosotros podemos!
+
+#### La Solución (Completa): Métodos de Acceso (Getters y Setters)
+
+Creamos métodos **públicos** (`public`) que actúan como "guardianes" o "porteros" de la variable **privada** (`private`).
+
+- **Getter (Obtener):** Un método público que _lee_ el valor privado y lo _devuelve_.
+    
+- **Setter (Establecer):** Un método público que _recibe_ un valor y, **con lógica de control**, decide si modificar o no la variable privada.
+    
+
+Vamos a implementar esto en nuestro `Heroe`:
+
+```c#
+class Heroe
+{
+    public string nombre;
+    private int vida; // 1. El dato está PROTEGIDO
+
+    public Heroe(string nombreInicial)
+    {
+        nombre = nombreInicial;
+        vida = 100; // ¡Le damos 100 de vida al nacer!
+    }
+
+    // --- 2. EL GETTER (El "Lector") ---
+    // Un método público que devuelve (lee) la vida.
+    public int GetVida()
+    {
+        return vida;
+    }
+
+    // --- 3. EL SETTER (El "Guardián") ---
+    // Un método público que recibe daño, pero CON LÓGICA
+    public void RecibirDaño(int daño)
+    {
+        if (daño < 0) // ¡CONTROL! No permitimos daño negativo (curación)
+        {
+            Console.WriteLine("Error: El daño no puede ser negativo.");
+            return; // No hagas nada más
+        }
+
+        // Si el daño es válido, lo aplicamos
+        vida = vida - daño;
+
+        // ¡MÁS CONTROL! No permitimos vida negativa
+        if (vida < 0)
+        {
+            vida = 0; // El mínimo es 0
+        }
+        
+        if (vida == 0)
+        {
+            Console.WriteLine(nombre + " ha sido derrotado.");
+        }
+    }
+}
+```
+
+#### ¿Cómo se _usa_ ahora?
+
+¡Fíjate qué seguro y limpio es ahora!
+
+
+```c#
+static void Main(string[] args)
+{
+    Heroe miHeroe = new Heroe("Link");
+
+    // ¿Cómo leemos la vida? ¡Usando el Getter!
+    // miHeroe.vida; <-- ERROR, es privado
+    Console.WriteLine("Vida actual: " + miHeroe.GetVida()); // OK, imprime 100
+
+    // ¿Cómo le hacemos daño? ¡Usando el Setter!
+    // miHeroe.vida = miHeroe.vida - 30; <-- ERROR
+    miHeroe.RecibirDaño(30);
+    Console.WriteLine("Vida actual: " + miHeroe.GetVida()); // Imprime 70
+
+    // ¿Qué pasa si intentamos hacer "trampa"?
+    miHeroe.RecibirDaño(-50); // El "Guardián" actúa
+    Console.WriteLine("Vida actual: " + miHeroe.GetVida()); // Sigue siendo 70
+    
+    // ¿Qué pasa si le damos demasiado daño?
+    miHeroe.RecibirDaño(500); // Recibe 500 de daño
+    Console.WriteLine("Vida actual: " + miHeroe.GetVida()); // Imprime 0 (no -430)
+}
+```
+
+
+>**En resumen:** La **Encapsulación** es ocultar los datos (`private`) y exponer métodos (`public`) para controlarlos. ¡Así evitas que tu `vida` sea `-50`!
+
+**Curiosidad (El atajo de C#):** C# tiene un atajo _súper_ común para esto llamado **Propiedades** (`get; set;`). Son una forma limpia de escribir Getters y Setters, pero la lógica que acabas de aprender (proteger lo privado, exponer lo público) es la misma.
+
+# 10. La Herencia :
+
+## 10.1 La herencia
+
+La **Herencia** es un mecanismo que te permite crear una nueva clase (la "clase hija") que **reutiliza, extiende y modifica** el comportamiento de una clase ya existente (la "clase padre").
+
+En C#, a la clase "padre" la llamamos **Clase Base** y a la clase "hija" la llamamos **Clase Derivada**.
+
+**Analogía: La Familia 👪**
+
+Piensa en esto literalmente como una familia:
+
+- **Clase Base (`Heroe`):** Es el "Padre". Define las características comunes de la familia (ej. todos tienen un `nombre`, todos tienen `vida`, todos pueden `RecibirDaño()`).
+    
+- **Clase Derivada (`Mago`):** Es el "Hijo".
+    
+    - **Hereda** automáticamente todo lo que tiene el padre (el `nombre` y la `vida`). ¡No tiene que volver a definirlos!
+        
+    - Puede tener sus _propias_ cosas únicas (ej. una propiedad `int mana`).
+        
+    - Puede tener sus _propias_ acciones (ej. un método `LanzarHechizo()`).
+        
+
+Un `Mago` **ES UN** `Heroe`, pero un `Heroe` _no_ es necesariamente un `Mago`. (Igual que "un Dálmata ES UN Perro", pero "un Perro no es necesariamente un Dálmata").
+
+### ¿Cómo se ve en C#?
+
+¡La sintaxis es increíblemente simple! Usamos un **dos puntos (`:`)** después del nombre de la clase hija, seguido del nombre de la clase padre.
+
+Se lee: `class Mago : Heroe` como "La clase Mago **hereda de** Heroe".
+
+#### Paso 1: La Clase Base (El Padre)
+
+Aquí está nuestro `Heroe` que ya conocemos. No cambia nada.
+
+```c#
+// --- LA CLASE BASE (PADRE) ---
+class Heroe
+{
+    public string nombre;
+    private int vida;
+
+    // El constructor del padre
+    public Heroe(string nombreInicial)
+    {
+        nombre = nombreInicial;
+        vida = 100;
+    }
+
+    // Métodos públicos que los hijos podrán heredar
+    public void RecibirDaño(int daño)
+    {
+        vida = vida - daño;
+        if (vida < 0) vida = 0;
+        Console.WriteLine(nombre + " tiene ahora " + vida + " de vida.");
+    }
+
+    public int GetVida()
+    {
+        return vida;
+    }
+}
+```
+
+#### Paso 2: La Clase Derivada (El Hijo)
+
+Aquí está la magia. Fíjate en los dos puntos (`:`) y lo _vacía_ que está esta clase.
+
+```c#
+// --- LA CLASE DERIVADA (HIJA) ---
+// Usamos ':' para heredar de Heroe
+class Mago : Heroe
+{
+    // ... Por ahora la dejamos vacía ...
+
+    // ¡Ups! Tenemos un pequeño error aquí...
+    // El constructor del hijo necesita "llamar" al constructor del padre.
+    // Lo vemos en el siguiente paso. Por ahora, imagina que esto funciona.
+}
+```
+
+¡Y ya está! Solo con esa línea (`: Heroe`), la clase `Mago` **acaba de recibir** (invisiblemente) la propiedad `nombre`, la propiedad `vida`, el método `RecibirDaño()` y el método `GetVida()`.
+
+**En resumen:** La herencia (con `:`) es la forma de decir "esta nueva clase es un tipo _especializado_ de esta otra clase y debe empezar con todo lo que esa clase padre ya tiene".
+
+El "padre" (`Heroe`) tiene un constructor que _exige_ un `nombreInicial`. C# no deja que el "hijo" (`Mago`) nazca si no se cumple el requisito del padre.
+
+El `Mago` también necesita su propio constructor (para recibir sus propios "ingredientes", como el `nombre` o el `mana`).
+
+Para conectar los dos, usamos la palabra clave **`: base(...)`**.
+
+`base` es la forma que tiene el "hijo" de referirse al "padre". Así, `: base(nombre)` significa: "Toma este `nombre` que acabo de recibir y **pásaselo al constructor de mi clase base (`Heroe`)**".
+
+### Así se corrige el "plano" del Mago:
+
+```c#
+// --- LA CLASE DERIVADA (HIJA) - CORREGIDA ---
+class Mago : Heroe // El Mago "es un" Heroe
+{
+    // 1. Propiedad ÚNICA del Mago
+    public int mana; 
+
+    // 2. EL CONSTRUCTOR DEL "HIJO"
+    // Recibe ingredientes para ÉL (manaInicial) y para su PADRE (nombreInicial)
+    public Mago(string nombreInicial, int manaInicial) 
+        : base(nombreInicial) // <-- ¡LA MAGIA!
+    {
+        // 3. Pasa el 'nombreInicial' al constructor del 'Heroe'
+        
+        // 4. Asigna sus propias propiedades
+        Console.WriteLine("¡Se está creando un Mago!");
+        mana = manaInicial;
+    }
+
+    // (Más tarde añadiremos el método LanzarHechizo())
+}
+```
+
+¡Y ya está! Ahora, cuando creemos un `new Mago("Gandalf", 150)`, el constructor del `Mago` se activará, llamará _inmediatamente_ al constructor del `Heroe` (pasándole "Gandalf") y luego asignará el `150` al `mana`.
+
+---
+
+Ahora que el plano está completo y funcional, pasemos a nuestro **Tema 2: Reutilizando Código**. ¡Vamos a ver la _magia_ de la herencia en acción!
+
+>En Java, para hacer exactamente lo mismo (llamar al constructor de la clase padre), usarías la palabra clave `super(...)` dentro de la primera línea del constructor del hijo.
+
+>En C#, la palabra equivalente es `: base(...)` y se pone _antes_ de que empiece el bloque `{}` del constructor del hijo.
+
+>El concepto es _exactamente_ el mismo (llamar al constructor "de arriba"), pero la sintaxis es un poquito diferente. ¡Genial que tengas esa base de Java! Te va a ayudar muchísimo, ya que el 90% de los conceptos de OOP son idénticos.
+
+## 10.2 La Reutilización del código
+
+Aquí es donde vemos el beneficio _inmediato_ de la herencia.
+
+Nuestro "plano" del `Mago` (la `class Mago`) está casi vacío. Solo le hemos añadido `mana` y su constructor. **No hemos escrito** un método `RecibirDaño()` ni `GetVida()` dentro de `class Mago`.
+
+Pero como `Mago` **hereda de** `Heroe` (con `: Heroe`), ¡un objeto `Mago` puede usar _todos los métodos públicos_ de `Heroe` como si fueran suyos!
+
+#### ¡Veámoslo en acción!
+
+Este sería nuestro método `Main`:
+
+```c#
+static void Main(string[] args)
+{
+    // 1. Creamos un Mago.
+    // Llama al constructor de Mago, que llama al constructor 'base' de Heroe.
+    Mago gandalf = new Mago("Gandalf", 150); // Tiene nombre y 150 de mana
+
+    // 2. Leemos su nombre (¡propiedad heredada de Heroe!)
+    Console.WriteLine("Se ha creado: " + gandalf.nombre);
+
+    // 3. Leemos su vida (¡método 'GetVida()' heredado de Heroe!)
+    // Recuerda que 'vida' es private, pero 'GetVida()' es public.
+    Console.WriteLine("Vida inicial: " + gandalf.GetVida()); // Imprimirá 100
+
+    // 4. ¡¡LA MAGIA!!
+    // Usamos un método que SÓLO existe en la clase 'Heroe',
+    // ¡pero 'gandalf' (un Mago) puede usarlo!
+    gandalf.RecibirDaño(30);
+
+    // 5. Comprobamos el resultado...
+    Console.WriteLine("Vida restante: " + gandalf.GetVida()); // Imprimirá 70
+}
+```
+
+**Salida de este código:**
+
+```cmd
+¡Un nuevo héroe está siendo creado!
+¡Se está creando un Mago!
+Se ha creado: Gandalf
+Vida inicial: 100
+Gandalf tiene ahora 70 de vida.
+Vida restante: 70
+```
+
+¡Fíjate! Hemos podido usar `.nombre`, `.GetVida()` y `.RecibirDaño()` en nuestro objeto `gandalf` (que es de tipo `Mago`) **ahorrándonos 100% del trabajo** de volver a escribir toda esa lógica de `vida` protegida.
+
+>**En resumen:** La herencia nos da una reutilización de código masiva. La clase "hija" (Derivada) obtiene gratis todas las funcionalidades (métodos/propiedades públicas) de la clase "padre" (Base).
+
+Pero la herencia no es solo para reutilizar. También es para **especializarse**.
+
+## 10.3 Especialización de clases
+
+Ya vimos que la herencia es genial para **reutilizar** (un `Mago` _es un_ `Heroe` y usa su `RecibirDaño()`).
+
+Pero el verdadero poder es la **especialización**: un `Mago` puede hacer cosas que un `Heroe` genérico no puede. Puede tener sus propias propiedades y sus propios métodos.
+
+Ya le dimos al `Mago` una propiedad única: `int mana`.
+
+Ahora, ¡démosle un método único!
+
+#### Añadiendo Métodos Específicos
+
+Vamos a añadir el método `LanzarHechizo()` **solo** a la clase `Mago`.
+
+```c#
+// --- LA CLASE DERIVADA (HIJA) ---
+class Mago : Heroe // El Mago "es un" Heroe
+{
+    // 1. Propiedad ÚNICA del Mago
+    public int mana; 
+
+    // 2. El Constructor del "hijo"
+    public Mago(string nombreInicial, int manaInicial) 
+        : base(nombreInicial) // Llama al constructor del Heroe
+    {
+        Console.WriteLine("¡Se está creando un Mago!");
+        mana = manaInicial;
+    }
+
+    // --- 3. ¡¡EL MÉTODO DE ESPECIALIZACIÓN!! ---
+    // Este método SÓLO existe en la clase Mago.
+    public void LanzarHechizo()
+    {
+        if (mana >= 20)
+        {
+            // ¡Un Mago puede usar su 'nombre' (heredado) y su 'mana' (propio)!
+            Console.WriteLine(nombre + " lanza una bola de fuego!");
+            mana = mana - 20; // Gasta mana
+        }
+        else
+        {
+            Console.WriteLine(nombre + " intenta lanzar un hechizo, ¡pero no tiene mana!");
+        }
+    }
+}
+```
+
+#### ¿Cómo se usa esto en `Main`?
+
+Fíjate en la diferencia:
+
+```c#
+static void Main(string[] args)
+{
+    // Creamos un Mago (que ES UN Heroe)
+    Mago gandalf = new Mago("Gandalf", 50);
+
+    // Creamos un Heroe genérico (que NO es un Mago)
+    Heroe conan = new Heroe("Conan");
+
+    // --- ACCIONES DEL MAGO ---
+    gandalf.RecibirDaño(10);     // ¡OK! Método heredado de Heroe.
+    gandalf.LanzarHechizo();   // ¡OK! Método propio de Mago.
+
+    // --- ACCIONES DEL HEROE ---
+    conan.RecibirDaño(10);      // ¡OK! Método propio de Heroe.
+    
+    // ¡¡ERROR DE COMPILACIÓN!!
+    // conan.LanzarHechizo();  
+    // Da error porque 'conan' es un Heroe, no un Mago.
+    // La clase 'Heroe' no tiene un método llamado 'LanzarHechizo()'.
+}
+```
+
+>**En resumen:**
+>
+>- La **Clase Base** (`Heroe`) define el comportamiento _común_.
+  >  
+>- La **Clase Derivada** (`Mago`) **hereda** ese comportamiento Y **añade** el suyo _propio_ (`mana`, `LanzarHechizo()`).
+    
+
+¡Y con esto has completado los tres pilares de la Programación Orientada a Objetos: Encapsulación, Herencia y Polimorfismo (aunque no lo hemos llamado así, la idea de que un `Mago` _es un_ `Heroe` es la base del polimorfismo)!
+
+¿Qué tal? ¿Se entiende cómo "especializamos" al `Mago` dándole habilidades que su "padre" `Heroe` no tiene?
+
+# 11. Coleccion `List<T>` en .NET:
+
+¡Dejamos atrás la OOP y volvemos a cómo manejamos _grupos_ de datos!
+
+## 11.1 `List <T>` Nuestra mochila magica
+
+Olvida la "cajonera" (`Array`) con un número fijo de cajones. Una **`List<T>`** (pronunciado "Lista de T") es como una **Mochila Mágica**.
+
+- Puedes **meter cosas** (`.Add()`) y la mochila **crece sola**.
+    
+- Puedes **sacar cosas** (`.Remove()`) y la mochila **se encoge sola**.
+    
+- Puedes **preguntarle cuántas cosas tiene** (`.Count`) en cualquier momento.
+    
+
+Es la colección de datos _flexible_ por defecto en .NET.
+
+### ¿Qué significa la `<T>`? (Genéricos)
+
+La `<T>` es un marcador de posición para el **tipo** de dato que quieres guardar. Se llama **Genéricos**.
+
+Cuando "creas" la mochila, le dices _exactamente_ qué tipo de cosas vas a guardar en ella, y solo te dejará guardar eso (recuerda que C# es "fuertemente tipado").
+
+- `List<string>`: Una mochila mágica que **solo** guarda texto (`string`).
+    
+- `List<int>`: Una mochila mágica que **solo** guarda números enteros (`int`).
+    
+- `List<Heroe>`: ¡Una mochila mágica que **solo** guarda tus objetos `Heroe`!
+    
+
+Para poder usar `List<T>`, tienes que añadir una línea al principio de tu archivo (¡solo una vez!) para "importar" la caja de herramientas de colecciones de .NET: `using System.Collections.Generic;`
+
+### ¿Cómo se crea?
+
+Usas la palabra `new`, igual que con los objetos:
+
+```c#
+// Primero importamos la "caja de herramientas"
+using System.Collections.Generic;
+
+// ...
+
+// Creamos una nueva mochila mágica vacía para guardar puntuaciones
+List<int> puntuaciones = new List<int>();
+
+// Creamos una lista de invitados, ¡y le añadimos 2 nombres al crearla!
+List<string> invitados = new List<string> { "Ana", "Luis" };
+```
+
+>**En resumen:** `List<T>` es el "Array 2.0". Es una colección flexible que crece y se encoge sola, y le dices el tipo de dato que guardará usando los `< >` (ej. `List<string>`).
+
+## 11.2 Los Comandos Clave (`.Add`, `.Count`, `.Remove`)
+
+Imaginemos que tenemos nuestra "mochila" de puntuaciones, recién creada y vacía:
+
+```c#
+List<int> puntuaciones = new List<int>();
+```
+
+### 1. Añadir: `.Add(item)`
+
+Este es el método que usas para **meter algo en la mochila**. El ítem siempre se añade al **final** de la lista.
+
+```c#
+// La mochila está vacía.
+puntuaciones.Add(100);
+// La mochila (lista) ahora contiene: [100]
+
+puntuaciones.Add(80);
+// La mochila (lista) ahora contiene: [100, 80]
+
+puntuaciones.Add(95);
+// La mochila (lista) ahora contiene: [100, 80, 95]
+```
+
+¡Fácil! La mochila ha crecido sola para guardar los 3 números.
+
+### 2. Contar: `.Count` (¡Propiedad!)
+
+Este es súper importante. **Ojo:** ¡No es un método con `()`! Es una **propiedad** (como `.Length` en los arrays) que te dice _cuántos ítems_ hay _ahora mismo_ en la mochila.
+
+```c#
+// Siguiendo el ejemplo anterior...
+Console.WriteLine(puntuaciones.Count); 
+
+// Salida en consola: 3
+```
+
+### 3. Eliminar: `.Remove(item)`
+
+Este método te permite **sacar algo de la mochila**. Lo busca por su _valor_ y saca la _primera_ aparición que encuentra.
+
+```c#
+// La mochila contiene: [100, 80, 95]
+puntuaciones.Remove(80); // ¡Busca el número 80 y sácalo!
+
+// La mochila (lista) ahora contiene: [100, 95]
+// La mochila se encogió sola.
+
+Console.WriteLine(puntuaciones.Count); 
+// Salida en consola: 2
+```
+
+
+>**En resumen:**
+>
+>- `.Add(valor)`: Mete un valor al final.
+  >  
+>- `.Count`: Te dice cuántos hay.
+  >  
+>- `.Remove(valor)`: Saca el valor (el primero que encuentre).
+    
+
+¡Con estos tres comandos ya puedes manejar la mayoría de las situaciones con listas!
+
+## 11.3 Recorriendo la Lista (`foreach`)
+
+Ya sabemos cómo _manipular_ la lista. Ahora, ¿cómo la _leemos_?
+
+Si quisiéramos imprimir todos nuestros invitados, con lo que sabíamos _antes_, haríamos esto:
+
+```c#
+// LA FORMA "VIEJA" (con un bucle 'for')
+// ¡Funciona, pero es un poco "ruidosa" y propensa a errores!
+for (int i = 0; i < invitados.Count; i++)
+{
+    // Tenemos que manejar el índice 'i' y usar corchetes []
+    Console.WriteLine(invitados[i]); 
+}
+```
+
+(Sí, ¡las `List<T>` también se pueden acceder con `[i]` como los arrays! Pero casi nunca lo necesitarás).
+
+Esta forma (con `for`) es manual. Tienes que inicializar `i`, comprobar `i < .Count` e incrementar `i++`. Es fácil cometer un error.
+
+C# nos da una herramienta mucho mejor: el bucle **`foreach`** ("por cada").
+
+**Analogía: El "Repartidor" 📦**
+
+Un bucle `foreach` es como un repartidor de paquetes. Tú no le dices: "Ve al camión, coge el paquete 0. Luego ve, coge el paquete 1...". Tú solo le dices: "**Por cada** paquete en ese camión, tráemelo y déjalo en la puerta".
+
+El `foreach` hace eso:
+
+- Se encarga _él solo_ de ir a la colección.
+    
+- Saca el primer ítem y te lo da en una variable temporal.
+    
+- Ejecutas tu código con ese ítem.
+    
+- Luego _él solo_ va a por el siguiente, y el siguiente...
+    
+- ...hasta que no quedan más.
+    
+
+**No tienes que manejar índices (`i`), ni contadores (`.Count`), ni nada.** ¡Es a prueba de errores!
+
+### ¿Cómo se ve en C#?
+
+**Sintaxis:**
+
+```c#
+foreach (TipoDelItem variableTemporal in miColeccion)
+{
+    // Usa la 'variableTemporal' aquí
+}
+```
+
+### Ejemplo Práctico (La Lista de Invitados)
+
+Vamos a imprimir nuestra lista final de "Ana", "Lucía" y "Carlos".
+
+```c#
+List<string> invitados = new List<string> { "Ana", "Lucía", "Carlos" };
+
+Console.WriteLine("--- Lista Final de Invitados ---");
+
+// ¡LA FORMA MODERNA!
+// Se lee: "Por cada 'nombre' (string) en la lista 'invitados'..."
+foreach (string nombre in invitados)
+{
+    // En la 1ª vuelta, 'nombre' será "Ana"
+    // En la 2ª vuelta, 'nombre' será "Lucía"
+    // En la 3ª vuelta, 'nombre' será "Carlos"
+    Console.WriteLine(nombre);
+}
+```
+
+**Salida de este código:**
+
+```cmd
+--- Lista Final de Invitados ---
+Ana
+Lucía
+Carlos
+```
+
+¡Mira qué limpio! Sin `i`, sin `[ ]`, sin `.Count`. Solo la intención: "Por cada nombre, imprímelo".
+
+>**En resumen:** El `foreach` es tu herramienta preferida para **leer** (recorrer) cualquier colección (`List<T>`, `Arrays`, etc.) de principio a fin.
+
+¡Y con esto, has dominado `List<T>`, la colección más importante de .NET!
+
+# 12. LINQ
+
+Pero, ¿Qué pasa si nuestra lista de héroes (`List<Heroe>`) tiene 1.000 héroes dentro? ¿Cómo encontramos _solo_ a los que tienen la vida por debajo de 50? ¿O cómo encontramos al héroe llamado "Gandalf"?
+
+## 12.1 ¿Qué es LINQ? (El "Google" 🔎 de tus Listas)
+
+**LINQ** son las siglas de **Language-Integrated Query** (Consulta Integrada en el Lenguaje).
+
+Dicho de forma sencilla: LINQ es una **caja de herramientas** que te permite hacer **preguntas complejas** a tus colecciones (`List<T>`, `Arrays`, etc.) de forma muy simple y legible.
+
+Es como tener un motor de búsqueda de Google integrado en C# para tus propios datos.
+
+En lugar de escribir bucles `foreach` con `if` adentro para _encontrar_ cosas (lo cual es lento y verboso), LINQ te permite _describir_ lo que quieres, en una sola línea.
+
+**Ejemplo de "antes" (Sin LINQ):** "Quiero una lista de todos los héroes con vida menor a 50."
+
+```c#
+List<Heroe> heroesDebiles = new List<Heroe>();
+foreach (Heroe heroe in todosLosHeroes)
+{
+    if (heroe.GetVida() < 50)
+    {
+        heroesDebiles.Add(heroe);
+    }
+}
+```
+
+¡Esto son 5 líneas de código!
+
+**Ejemplo de "ahora" (Con LINQ):**
+
+```c#
+var heroesDebiles = todosLosHeroes.Where(heroe => heroe.GetVida() < 50);
+```
+
+¡Una sola línea! 🚀
+
+---
+
+### La Única Regla: `using System.Linq;`
+
+LINQ no viene "activado" por defecto. Es una caja de herramientas tan grande que debes "importarla" al principio de tu archivo (junto a los otros `using`).
+
+Para usar `.Where()`, `.FirstOrDefault()`, etc., **debes** añadir esta línea en la parte superior de tu archivo `.cs`:
+
+```c#
+using System.Linq;
+```
+
+Si olvidas esto, C# no reconocerá los comandos de LINQ y te dará un error.
+
+>**En resumen:** LINQ es un conjunto de métodos (como `.Where()`) que te da superpoderes para buscar, filtrar y ordenar colecciones, y solo necesitas recordar `using System.Linq;` para usarlos.
+
+## 12.2 Filtrado de listas `.Where()`
+
+El método `.Where()` es el caballo de batalla de LINQ. Es el **filtro**.
+
+Toma una colección completa (como tu `List<Heroe>`) y te devuelve una _nueva_ colección (invisible por ahora) que **solo** contiene los elementos que pasaron tu "prueba".
+
+**La "Expresión Lambda" (La "Prueba" ➡️)**
+
+¿Cómo le dices a `.Where()` _cuál_ es la prueba? Usando algo que en C# se llama **expresión lambda** (¡que es idéntica a las lambdas de Java!).
+
+Es esa sintaxis de flecha: `=>`
+
+`heroe => heroe.GetVida() < 50`
+
+- **`heroe`** (a la izquierda): Es un nombre de variable temporal. Es como decir: "Por cada ítem en la lista, llámalo `heroe` por un momento".
+    
+- **`=>`** (la flecha): Separa la variable del...
+    
+- **`heroe.GetVida() < 50`** (a la derecha): La **condición** o "prueba". Debe ser algo que devuelva `true` o `false`.
+    
+
+Todo junto, `miLista.Where(heroe => heroe.GetVida() < 50)` se lee: "En `miLista`, _filtra_ (Where) y dame solo los ítems donde (=>) la `vida` de ese `heroe` sea menor que 50."
+
+### ¿Cómo se usa en C#?
+
+Vamos a usar una lista simple de números primero.
+
+```c#
+// No olvides 'using System.Linq;' al inicio del archivo
+
+List<int> numeros = new List<int> { 10, 4, 25, 3, 8, 50 };
+
+// 1. LA CONSULTA (El Filtro)
+// Usamos 'var' por comodidad. 'var' deja que C# adivine el tipo.
+// "num" es la variable temporal (¡como en un foreach!)
+// La prueba es: num > 10
+var numerosGrandes = numeros.Where(num => num > 10);
+// 'numerosGrandes' ahora contiene [25, 50]
+
+// 2. USAMOS LOS RESULTADOS
+// ¡Podemos usar un 'foreach' en el resultado de LINQ!
+Console.WriteLine("Los números mayores que 10 son:");
+foreach (int n in numerosGrandes)
+{
+    Console.WriteLine(n);
+}
+```
+
+**Salida de este código:**
+
+```cmd
+Los números mayores que 10 son:
+25
+50
+```
+
+>**En resumen:** `.Where(variable => condicion)` es tu filtro. Recibe una lambda y devuelve una nueva colección solo con los ítems que dieron `true` en esa condición.
+
+# 12.3 Buscando Un Elemento (`.FirstOrDefault()`) 🎯
+
+Ya sabemos cómo "filtrar" una lista (`.Where()`) para obtener _todos_ los que cumplen una condición (ej. todos los productos baratos).
+
+Pero, ¿Qué pasa si solo quieres **uno**? Por ejemplo, "Buscar el producto cuyo nombre sea 'Jamón'". Sabes que solo debería haber uno (¡o solo te importa el primero!).
+
+Para esto, usamos **`.FirstOrDefault()`**.
+
+Este método hace dos cosas, como su nombre indica:
+
+1. **First (Primero):** Busca en la lista, ítem por ítem, y en cuanto encuentra el _primero_ que cumple tu condición `=>`, te lo devuelve y **para de buscar**.
+    
+2. **Default (Por Defecto):** Si recorre _toda_ la lista y **no encuentra ninguno** que cumpla la condición, no da un error. Simplemente te devuelve el valor "por defecto" de ese tipo.
+    
+    - Para Objetos (como `Producto` o `Heroe`): Devuelve `null`.
+        
+    - Para `int`: Devuelve `0`.
+        
+    - Para `bool`: Devuelve `false`.
+        
+
+¡Esto de `null` es súper importante, porque evita que tu programa se rompa si no encuentra algo!
+
+### ¿Cómo se usa en C#?
+
+Usa la misma sintaxis "lambda" (`=>`) que usaste con `.Where()`.
+
+```c#
+// No olvides 'using System.Linq;' al inicio del archivo
+
+List<Producto> productos = new List<Producto> 
+{
+    new Producto { Nombre = "Leche", Precio = 60 },
+    new Producto { Nombre = "Pan", Precio = 40 },
+    new Producto { Nombre = "Jamón", Precio = 120 },
+    new Producto { Nombre = "Queso", Precio = 90 }
+};
+
+// --- Ejemplo 1: Encontrando "Jamón" ---
+var productoEncontrado = productos.FirstOrDefault(p => p.Nombre == "Jamón");
+
+if (productoEncontrado != null) // ¡Siempre bueno comprobar!
+{
+    // 'productoEncontrado' NO es una lista, 
+    // es el objeto Producto "Jamón"
+    Console.WriteLine("Encontrado: " + productoEncontrado.Nombre + ", Precio: " + productoEncontrado.Precio);
+}
+
+// --- Ejemplo 2: Buscando "Pizza" (que no existe) ---
+var pizza = productos.FirstOrDefault(p => p.Nombre == "Pizza");
+
+if (pizza == null) // ¡Entrará aquí!
+{
+    Console.WriteLine("No se encontró el producto 'Pizza'.");
+}
+```
+
+**Salida de este código:**
+
+```cmd
+Encontrado: Jamón, Precio: 120
+No se encontró el producto 'Pizza'.
+```
+
+
+>**En resumen:**
+>
+>- **`.Where(p => ...)`**: Es un **filtro**. Te devuelve una **colección** (potencialmente muchos ítems).
+  >  
+>- **`.FirstOrDefault(p => ...)`**: Es un **buscador**. Te devuelve **un solo ítem** (o `null` si no lo encuentra).
