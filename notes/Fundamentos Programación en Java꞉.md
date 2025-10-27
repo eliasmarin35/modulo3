@@ -4767,7 +4767,7 @@ Se ve así:
 
 Fragmento de código
 
-```
+```sql
 -- SQL (Cómo piensa la BBDD)
 SELECT * FROM cursos c WHERE c.fecha_inicio > '2025-10-25' AND c.nombre LIKE '%Java%';
 
