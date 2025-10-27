@@ -10,13 +10,17 @@
         <property name="hibernate.connection.username">app_pruebaconjdbc</property>
         <property name="hibernate.connection.password">12345</property>
         
+        <!-- para controlar el autocommit en la BD, por defecto es falso y es mejor dejarlo asi -->
+        <property name="hibernate.connection.autocommit">false</property>
+        
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
         
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         
-        <mapping class="com.avante.model.Cliente" />
+        <!-- MAPEOS EN CODIGO -->
+        <mapping class="com.avante.model.Cliente" ></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -20,11 +20,14 @@ import lombok.NoArgsConstructor;
  *
  * @author jprof
  */
+
+// LOMBOK anotaciones
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 
+// HIBERNATE anotaciones
 @Entity
 @Table(name="cliente")
 public class Cliente implements Serializable {
