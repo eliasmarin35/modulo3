@@ -1,0 +1,5 @@
+modelo\HibernateUtil.class
+com\avante\academiaapp2\AcademiaApp2.class
+modelo\Curso.class
+modelo\Curso$CursoBuilder.class
+modelo\CursosRepository.class
