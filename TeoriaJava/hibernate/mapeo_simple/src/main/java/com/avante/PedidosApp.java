@@ -6,6 +6,9 @@ package com.avante;
 import com.avante.model.Cliente;
 import com.avante.model.ClienteRepository;
 import com.avante.model.HibernateUtil;
+import com.avante.model.Pedido;
+import java.time.LocalDate;
+import java.time.Month;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -22,18 +25,23 @@ public class PedidosApp {
     private static final Logger logger = LoggerFactory.getLogger(PedidosApp.class);
   
 
-    public static void main(String[] args) {
-        // Cliente que se va insertar
-        Cliente cliente = Cliente.builder()
-                .nombre("Federico")
-                .email("fede@hotmail.com")
-                .telefono("231234567")
+    public static void main(String[] args) {       
+        ClienteRepository repo = new ClienteRepository();
+        
+        Cliente c = Cliente.builder()
+                .nombre("Luis")
+                .email("luis@gmail.com")
                 .build();
         
-        ClienteRepository repo = new ClienteRepository();
-        repo.insert(cliente);
+        Pedido p = Pedido.builder()
+                .fecha_pedido(LocalDate.of(2025, Month.MARCH, 20))
+                .cliente(c)
+                .build();
         
-        // Se cierra la factoria de sesiones
+     //   c.getPedidos().add(p);
+        
+        repo.insert(c);
+ 
         HibernateUtil.getInstance().shutdown();
     }
 }
