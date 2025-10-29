@@ -38,7 +38,7 @@ public class PedidosApp {
                 .cliente(c)
                 .build();
         
-     //   c.getPedidos().add(p);
+        c.getPedidos().add(p);
         
         repo.insert(c);
  
