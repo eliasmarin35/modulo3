@@ -107,7 +107,9 @@ public class CursosRepository {
                 Session sess = HibernateUtil.getInstance().openSession();
                 
         ){
+            //CONSULTA CON HQL independiente de si usas postgre o no, MEJOR!
             lista = sess.createQuery("From Curso", Curso.class).list();
+            //CONSULTA EN SQL DE POSTGRES menos recomendado!
             //lista = sess.createNativeQuery("SELECT * FROM cursos", Curso.class).list();
         }
         catch(Exception e){
@@ -116,4 +118,20 @@ public class CursosRepository {
         }
         return lista;
     }
+    //Metodo para obtener por email un Alumno PONGO CURSO MIENTRAS GENERO MAPEO
+    public List<Curso> ListEmail(String s){
+        List<Curso> lista = new ArrayList<>();
+        
+        try (
+                Session sess = HibernateUtil.getInstance().openSession();
+        ){
+            lista = sess.createQuery("From Curso c where c.e", Curso.class).list();
+        } catch (Exception e) {
+            logger.error("Error al listar cursos.");
+            throw e;
+        }
+           
+        return lista;
+    }
 }
+

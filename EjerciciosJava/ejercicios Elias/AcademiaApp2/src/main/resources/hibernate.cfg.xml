@@ -22,5 +22,6 @@
         
         <!-- MAPEOS EN CODIGO -->
         <mapping class="modelo.Curso"></mapping>
+        <mapping class="modelo.Curso"></mapping>
     </session-factory>
 </hibernate-configuration>
