@@ -4787,3 +4787,99 @@ La gran ventaja es que **en HQL usas los nombres de tus Clases (`Curso`) y tus A
     
 3. **Caché (Caching) 🚀:** Esta es una de las características más potentes. Hibernate tiene una caché de primer nivel (por sesión) y una de segundo nivel (global). Si pides el `Curso` con ID=5, Hibernate lo busca en la BBDD. Si 10 líneas después _vuelves a pedir_ el `Curso` con ID=5 (en la misma sesión), **Hibernate no va a la BBDD**. Te lo devuelve súper rápido desde su memoria (caché).
 
+## Desarrollo Web Java :
+
+**Apuntes de Arquitectura Web (Cliente-Servidor)**
+
+**1. El Cliente (MZ CASA)**
+
+- **Herramientas:** `httpie`, `Postman` (usados para enviar peticiones HTTP).
+    
+- **Representación:** Un ordenador portátil.
+    
+- **Acción:** Envía una `REQUEST` (Petición) a través de Internet.
+    
+
+**2. Componentes de una `REQUEST`:**
+
+- `VERB`: Tipo de acción (GET, POST, PUT, DELETE, etc.).
+    
+- `HOST`: Dirección del servidor.
+    
+- `RECURSO`: La parte específica dentro del host que se solicita (ej. `/users`, `/products/1`). A veces incluye `PATH` (ruta) y `QUERY PARAMS` (parámetros de consulta).
+    
+- `HEADERS`: Metadatos sobre la petición (tipo de contenido aceptado, autenticación, etc.).
+    
+- `COOKIES`: Pequeños datos enviados por el servidor y devueltos por el cliente para mantener el estado.
+    
+- `CONTENIDO / PAYLOAD`: El cuerpo de la petición.
+    
+    - `PARAMETROS FORMULARIO`: Datos enviados desde un formulario HTML.
+        
+    - `BINARIOS`: Archivos (imágenes, documentos).
+        
+    - `JSON`: Formato de datos estructurados, muy común en APIs.
+        
+
+**3. La Conexión (`INTERNET`)**
+
+- Una línea discontinua roja que separa el cliente del servidor, representando la red.
+    
+
+**4. El Servidor (INTERNET - Lado Derecho)**
+
+- **Componentes:**
+    
+    - `WEB`: Servidor web (ej. Apache, Nginx) que recibe las peticiones.
+        
+    - `APP`: Aplicación o lógica de negocio que procesa la petición y genera una respuesta.
+        
+    - `BD` (Base de Datos): Almacena y gestiona los datos que la aplicación necesita.
+        
+- **Flujo:**
+    
+    1. El servidor web recibe la `REQUEST`.
+        
+    2. La pasa a la `APP` para que la procese.
+        
+    3. La `APP` interactúa con la `BD` si necesita guardar o recuperar datos.
+        
+    4. La `APP` genera una `RESPONSE` (Respuesta) y se la devuelve al cliente a través del servidor web y de Internet.
+
+> Los datos de peticiones y respuestas normalmente se recibirá un archivos JSON.
+
+### API REST
+
+Una **API REST** (Transferencia de Estado Representacional) es una **interfaz de programación de aplicaciones** que utiliza los **protocolos web estándar** (principalmente HTTP) para permitir la comunicación y el intercambio de datos entre diferentes sistemas de software a través de Internet.
+
+Sigue un conjunto de reglas arquitectónicas que la hacen flexible y escalable, gestionando **recursos** (datos) mediante métodos HTTP comunes como:
+
+- **`GET`** (para obtener datos)
+    
+- **`POST`** (para crear datos)
+    
+- **`PUT`** / **`PATCH`** (para actualizar datos)
+    
+- **`DELETE`** (para borrar datos)
+
+### Springboot :
+
+**Spring Boot** es un **framework** basado en el ecosistema **Spring** para Java, diseñado para **simplificar** radicalmente la creación de aplicaciones Spring.
+
+Su objetivo principal es permitirte crear aplicaciones **autónomas** (que se ejecutan solas) y listas para **producción** con la **mínima configuración** posible. 🚀
+
+---
+
+### Características clave
+
+- **Autoconfiguración:** Configura automáticamente gran parte de la aplicación basándose en las librerías (dependencias) que añades al proyecto.
+    
+- **Servidores embebidos:** Incluye servidores web (como Tomcat o Jetty) integrados. Esto te permite ejecutar tu aplicación como un simple archivo `.jar`, sin necesidad de desplegarla en un servidor web externo.
+    
+- **"Opinionated" (Opiniones):** Proporciona configuraciones sensatas por defecto ("opiniones"), reduciendo la necesidad de tomar decisiones y escribir código de configuración repetitivo.
+    
+
+Es la herramienta más popular en el mundo Java para construir **microservicios** y **aplicaciones web** de forma rápida y eficiente.
+
+>Recuerda que tenemos una web para autogenerar proyectos Springboot y sus dependencias https://start.spring.io/
+
