@@ -1,4 +1,4 @@
-package com.avante.springbootjma01.model;
+package com.avante.webapijson.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

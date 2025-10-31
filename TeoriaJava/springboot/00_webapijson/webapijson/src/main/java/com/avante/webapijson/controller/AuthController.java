@@ -1,4 +1,4 @@
-package com.avante.springbootjma01.controller;
+package com.avante.webapijson.controller;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.avante.springbootjma01.model.AuthService;
+import com.avante.webapijson.model.AuthService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.Email;

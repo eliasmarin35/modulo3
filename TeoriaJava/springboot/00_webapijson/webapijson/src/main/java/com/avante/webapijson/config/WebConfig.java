@@ -1,11 +1,11 @@
-package com.avante.springbootjma01.config;
+package com.avante.webapijson.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.avante.springbootjma01.model.AuthService;
+import com.avante.webapijson.model.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
