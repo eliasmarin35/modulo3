@@ -75,7 +75,7 @@ logging:
     # name: logs/springbootjma01.log
 
     # ruta relativa o absoluta a una carpeta con "path"
-    path: logs/springbootjma01
+    path: logs/usersrest
 
   logback:
     # *** logging.logback.rollingpoliciy ->
@@ -91,7 +91,7 @@ logging:
 
       # patrón de nombrado de ficheros
       #    ver las variables en pattern
-      file-name-pattern: logs/springbootjma01/sbj01-%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: logs/usersrest/usersrest-%d{yyyy-MM-dd}.%i.log
 
 
   # *** logging.pattern -> formato del log 
