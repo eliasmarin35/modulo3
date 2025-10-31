@@ -57,7 +57,7 @@ logging:
 
     # ahora podemos poner paquetes y especificar su nivel mínimo de logging
     # mi código
-    com.avante.springbootjma01: DEBUG
+    com.avante.contenidoestatico: DEBUG
 
     # nivel para Spring MVC
     org.springframework.web: INFO
