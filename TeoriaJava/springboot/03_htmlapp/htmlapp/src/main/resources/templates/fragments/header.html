@@ -1,0 +1,57 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+FRAGMENTO: HEADER (BARRA SUPERIOR DE LA APLICACIÓN)
+============================================================ -->
+<!--
+Define la barra superior que aparece en todas las páginas principales.
+Muestra:
+ - El nombre de la aplicación ("HtmlApp")
+ - El nombre del usuario logado (si hay sesión activa)
+ - La hora actual del servidor
+ - Un indicador visual [ADMIN] si el usuario es administrador
+
+Se incluye desde el layout principal:
+    <header th:replace="~{fragments/header :: header}"></header>
+-->
+
+<header th:fragment="header" class="topbar">
+	<!-- Sección izquierda -->
+	<div class="topbar-left">
+		<span class="app-name">HtmlApp</span>
+	</div>
+
+	<!-- Sección derecha (solo visible si hay sesión activa) -->
+	<div class="topbar-right" th:if="${session.user != null}">
+		<!-- Nombre del usuario logado -->
+		<span class="user" th:text="${session.user.fullName}">Usuario</span>
+
+		<!-- Etiqueta [ADMIN] -->
+		<span class="role-tag" th:if="${session.user.admin}">[ADMIN]</span>
+
+		<!-- Separador -->
+		<span class="sep">|</span>
+
+		<!-- Fecha y hora del servidor -->
+		<time th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm')}">
+			2025-11-03 06:00
+		</time>
+	</div>
+</header>
+
+<!-- ============================================================
+NOTAS DE DISEÑO Y FUNCIONAMIENTO
+============================================================ -->
+<!--
+1. Altura controlada por la variable global:
+     --topbar-height (definida en core/variables.css)
+   Asegura alineación con el sidebar y el contenido principal.
+
+2. `.role-tag` utiliza el color `--color-warning` del tema actual,
+   definido en las variables globales (ya no inline).
+
+3. `.topbar` está declarada con `position: fixed` y `z-index: 100`
+   en layout.css, por lo que siempre queda visible y fuera del flujo
+   de scroll del contenido principal.
+
+4. `.sep` es un separador visual, estilizado en base.css.
+-->

@@ -1,0 +1,48 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content, scripts)">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título dinámico con valor por defecto -->
+  <title th:text="${title} ?: 'HtmlApp'">HtmlApp</title>
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+  <!-- ============================================================
+  CABECERA SUPERIOR (solo si hay usuario logado)
+  ============================================================ -->
+  <header th:if="${session.user != null}"
+          th:replace="~{fragments/header :: header}">
+  </header>
+
+  <!-- ============================================================
+  MENÚ LATERAL (solo si hay sesión activa)
+  ============================================================ -->
+  <aside th:if="${session.user != null}"
+         th:replace="~{fragments/sidebar :: sidebar}">
+  </aside>
+
+  <!-- ============================================================
+  CONTENIDO PRINCIPAL DE LA PÁGINA HIJA
+  ============================================================ -->
+  <main th:replace="${content}"></main>
+
+  <!-- ============================================================
+  PIE DE PÁGINA
+  ============================================================ -->
+  <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+  <!-- ============================================================
+  BLOQUE OPCIONAL DE SCRIPTS ESPECÍFICOS
+  ============================================================ -->
+  <div th:if="${scripts != null}" th:replace="${scripts}"></div>
+</body>
+</html>

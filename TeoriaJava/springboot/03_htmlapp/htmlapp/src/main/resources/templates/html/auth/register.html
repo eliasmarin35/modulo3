@@ -1,0 +1,62 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+FORMULARIO DE REGISTRO DE USUARIO
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Registro de usuario',
+	content=~{::main},
+	scripts=~{}
+)}">
+
+<!--
+Esta plantilla sirve tanto para el registro público
+como para el alta de nuevos usuarios por parte de un administrador.
+
+El controlador AuthController se encarga de permitir el acceso
+siempre que el usuario no esté logado o tenga privilegios de admin.
+-->
+<main>
+	<section class="info-box">
+		<h1 th:text="${session.user != null and session.user.admin} ?
+			'Dar de alta nuevo usuario' : 'Crear cuenta nueva'">
+			Registro
+		</h1>
+
+		<form th:action="@{/register}" method="post" th:object="${userForm}" class="form-auth">
+			
+			<div class="form-group">
+				<label for="fullName">Nombre completo:</label>
+				<input type="text" id="fullName" name="fullName" th:value="*{fullName}" />
+			</div>
+
+			<div class="form-group">
+				<label for="email">Correo electrónico:</label>
+				<input type="email" id="email" name="email" th:value="*{email}" required />
+			</div>
+
+			<div class="form-group">
+				<label for="passwordPlain">Contraseña:</label>
+				<input type="password" id="passwordPlain" name="passwordPlain" required />
+			</div>
+
+			<div class="form-group">
+				<label for="passwordConfirm">Confirmar contraseña:</label>
+				<input type="password" id="passwordConfirm" name="passwordConfirm" required />
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn btn-success"
+				        th:text="${session.user != null and session.user.admin} ?
+				            'Crear usuario' : 'Registrarse'">
+					Registrarse
+				</button>
+				<a th:href="@{/}" class="btn">Cancelar</a>
+			</div>
+
+			<p th:if="${errorMessage}" th:text="${errorMessage}" class="error-message">
+				Error en el registro.
+			</p>
+		</form>
+	</section>
+</main>
+</html>

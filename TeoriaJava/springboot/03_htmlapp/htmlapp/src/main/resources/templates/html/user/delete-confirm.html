@@ -1,0 +1,23 @@
+<!-- ============================================================
+CONFIRMAR ELIMINACIÓN DE USUARIO
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Eliminar usuario',
+	content=~{::main},
+	scripts=~{}
+)}">
+<main>
+	<section class="info-box">
+		<h1>Confirmar eliminación</h1>
+		<p>
+			¿Seguro que deseas eliminar al usuario
+			<strong th:text="${user.fullName}">Nombre</strong>?
+		</p>
+
+		<form th:action="@{/user/delete/{id}(id=${user.id})}" method="post">
+			<button type="submit" class="btn btn-danger">Eliminar definitivamente</button>
+			<a th:href="@{/user/details/{id}(id=${user.id})}" class="btn">Cancelar</a>
+		</form>
+	</section>
+</main>
+</html>

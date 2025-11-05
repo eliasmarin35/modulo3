@@ -1,0 +1,72 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+PÁGINA PRINCIPAL (SIN EFECTO PARALLAX)
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Página principal',
+	content=~{::main},
+	scripts=~{}
+)}">
+
+<!--
+Vista principal accesible solo para usuarios autenticados.
+Versión sin efecto parallax, con estructura simple y fondo estático.
+-->
+<main>
+	<section class="info-box">
+		<h1>Bienvenido, <span th:text="${session.user.fullName}">Usuario</span></h1>
+
+		<p>
+			Estás conectado como
+			<span th:text="${session.user.admin ? 'administrador' : 'usuario'}">usuario</span>.
+		</p>
+
+		<p>
+			Esta es la página principal de HtmlApp.  
+			Explora las secciones del menú lateral para acceder a tus datos o gestionar usuarios.
+		</p>
+
+		<!-- Contenido adicional para mostrar desplazamiento normal -->
+		<div class="content-block">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in magna at 
+				leo malesuada consequat. Nulla vel vulputate purus. Cras vel lectus at 
+				mauris tincidunt dapibus sit amet ac neque.
+			</p>
+			<p>
+				Aliquam non mi et lectus consequat suscipit. Proin fringilla, nunc in 
+				porttitor bibendum, risus nisi egestas metus, nec tempor sapien dolor sit 
+				amet est. Sed facilisis convallis ex non gravida.
+			</p>
+			<p>
+				Curabitur at leo sit amet eros laoreet finibus. Duis commodo erat ac augue 
+				ultrices vestibulum. Donec faucibus porttitor augue ut tincidunt.
+			</p>
+			<p>
+				Aenean dignissim eros id felis fermentum, at facilisis lorem ullamcorper. 
+				Pellentesque tincidunt ante ut tincidunt porttitor. Vestibulum ante ipsum 
+				primis in faucibus orci luctus et ultrices posuere cubilia curae.
+			</p>
+			<p>
+				Suspendisse potenti. Nam et nisi sapien. Donec sed elementum mi. Etiam 
+				finibus efficitur est, non luctus lacus fringilla id.
+			</p>
+			<p>
+				Phasellus sed justo at mi volutpat posuere. Integer vitae suscipit justo, 
+				ut suscipit nisl. Cras sodales orci non libero tincidunt, in varius nunc 
+				pellentesque. Integer in eros id mi eleifend dictum.
+			</p>
+		</div>
+	</section>
+</main>
+</html>
+
+<!-- ============================================================
+NOTAS DE DISEÑO Y FUNCIONAMIENTO
+============================================================ -->
+<!--
+1. Se ha eliminado el contenedor `.parallax-container` y las capas `.rellax`.
+2. Ya no se requiere la librería Rellax.js ni el fragmento de scripts.
+3. El contenido se muestra con desplazamiento normal, sin efectos dinámicos.
+4. Ideal para un entorno más sobrio o con mejor rendimiento.
+-->

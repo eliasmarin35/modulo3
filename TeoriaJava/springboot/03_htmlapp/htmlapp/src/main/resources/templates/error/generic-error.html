@@ -1,0 +1,11 @@
+<!-- ============================================================
+ERROR 500 – FALLO INTERNO DEL SERVIDOR
+============================================================ -->
+<!--
+Error genérico para excepciones no controladas o inesperadas.
+-->
+<html th:replace="~{fragments/layout-error :: layoutError(
+	errorCode=${errorCode} ?: 500,
+	errorMessage=${errorMessage} ?: 'Ha ocurrido un error interno en el servidor.'
+)}">
+</html>

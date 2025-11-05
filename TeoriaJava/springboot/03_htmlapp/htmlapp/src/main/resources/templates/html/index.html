@@ -1,0 +1,60 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+PÁGINA INICIAL (LOGIN / REGISTRO / LOGOUT MESSAGE)
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Bienvenido a HtmlApp',
+	content=~{::main},
+	scripts=~{}
+)}">
+
+<!--
+Esta vista actúa como la puerta de entrada de la aplicación.
+
+Su comportamiento depende del estado de la sesión:
+ - Si no hay usuario logado → muestra enlaces a login y registro.
+ - Si la URL contiene ?logout → muestra un mensaje de cierre de sesión.
+ - Si hay sesión activa → el controlador redirige automáticamente a /main.
+
+La vista se mantiene simple para mostrar la diferencia entre
+estado público y autenticado, y enseñar el uso condicional
+de variables de sesión con Thymeleaf.
+-->
+<main>
+	<section class="info-box">
+		<h1>Bienvenido a HtmlApp</h1>
+
+		<!-- Mensaje si el usuario acaba de cerrar sesión -->
+		<p th:if="${param.logout}"
+		   class="logout-message"
+		   style="color: var(--color-success); font-weight: 500;">
+			Has cerrado sesión correctamente.
+		</p>
+
+		<!-- Opciones disponibles cuando no hay usuario logado -->
+		<div th:if="${session.user == null}">
+			<p>Accede con tu cuenta o crea una nueva.</p>
+			<a th:href="@{/login}" class="btn btn-success">Iniciar sesión</a>
+			<a th:href="@{/register}" class="btn">Registrarse</a>
+		</div>
+
+		<!-- Si el usuario ya está autenticado (no debería mostrarse normalmente) -->
+		<div th:if="${session.user != null}">
+			<p>Ya has iniciado sesión como
+				<strong th:text="${session.user.fullName}">Usuario</strong>.
+			</p>
+			<a th:href="@{/main}" class="btn btn-success">Ir a la página principal</a>
+		</div>
+	</section>
+</main>
+</html>
+
+<!-- ============================================================
+NOTAS DE DISEÑO Y FUNCIONAMIENTO
+============================================================ -->
+<!--
+1. Esta página se muestra solo si no hay usuario logado.
+2. Usa la variable especial `param.logout` para mostrar un mensaje tras cerrar sesión.
+3. Los botones de navegación redirigen a las rutas gestionadas por AuthController.
+4. El layout común añade el header, footer y estilos globales.
+-->

@@ -1,0 +1,12 @@
+<!-- ============================================================
+ERROR DE OPERACIÓN / NEGOCIO
+============================================================ -->
+<!--
+Se usa para mostrar fallos en operaciones funcionales o de validación.
+Ejemplo: error al guardar datos, email duplicado, permisos insuficientes...
+-->
+<html th:replace="~{fragments/layout-error :: layoutError(
+	errorCode=${errorCode} ?: 500,
+	errorMessage=${errorMessage} ?: 'No se pudo completar la operación solicitada.'
+)}">
+</html>

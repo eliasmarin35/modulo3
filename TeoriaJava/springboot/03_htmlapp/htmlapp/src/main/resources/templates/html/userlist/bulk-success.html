@@ -1,0 +1,21 @@
+<!-- ============================================================
+RESULTADO DE OPERACIÓN MASIVA (ADMIN)
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Operación completada',
+	content=~{::main},
+	scripts=~{}
+)}">
+<main>
+	<section class="info-box">
+		<h1>Operación completada</h1>
+		<p th:text="'La acción ' + ${action} + ' se ha realizado correctamente sobre los usuarios seleccionados.'">
+			Operación realizada con éxito.
+		</p>
+
+		<div class="actions">
+			<a th:href="@{/userlist/list}" class="btn btn-success">Volver al listado</a>
+		</div>
+	</section>
+</main>
+</html>

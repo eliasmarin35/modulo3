@@ -1,0 +1,32 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layoutError(errorCode, errorMessage)">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:text="'Error ' + ${errorCode}">Error</title>
+
+  <!-- CSS unificado -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body class="error-page">
+  <main>
+    <section class="error-box">
+      <h1 th:text="'Error ' + ${errorCode}">Error 500</h1>
+      <p th:text="${errorMessage}">Ha ocurrido un error inesperado.</p>
+
+      <div class="error-actions">
+        <a th:href="@{/}" class="btn btn-success">Volver al inicio</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 HtmlApp — Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>

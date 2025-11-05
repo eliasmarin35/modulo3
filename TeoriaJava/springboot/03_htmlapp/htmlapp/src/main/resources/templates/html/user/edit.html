@@ -1,0 +1,27 @@
+<!-- ============================================================
+EDICIÓN DE DATOS DEL USUARIO
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Editar usuario',
+	content=~{::main},
+	scripts=~{}
+)}">
+<main>
+	<section class="info-box">
+		<h1>Editar usuario</h1>
+
+		<form th:action="@{/user/edit/{id}(id=${user.id})}" method="post">
+			<label>Email:</label>
+			<input type="email" name="email" th:value="${user.email}" required />
+
+			<label>Nombre completo:</label>
+			<input type="text" name="fullName" th:value="${user.fullName}" />
+
+			<div class="form-actions">
+				<button type="submit" class="btn btn-success">Guardar cambios</button>
+				<a th:href="@{/user/details/{id}(id=${user.id})}" class="btn btn-danger">Cancelar</a>
+			</div>
+		</form>
+	</section>
+</main>
+</html>

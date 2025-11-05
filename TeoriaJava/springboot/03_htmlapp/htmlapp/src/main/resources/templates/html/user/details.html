@@ -1,0 +1,54 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+DETALLES DE USUARIO
+============================================================ -->
+<html th:replace="~{fragments/layout :: layout(
+	title='Detalles del usuario',
+	content=~{::main},
+	scripts=~{}
+)}">
+<main>
+	<section class="info-box">
+		<h1 th:text="'Detalles de ' + ${user.fullName}">Detalles del usuario</h1>
+
+		<p><strong>Email:</strong> <span th:text="${user.email}">correo@ejemplo.com</span></p>
+		<p><strong>Nombre completo:</strong> <span th:text="${user.fullName}">Nombre Apellido</span></p>
+
+		<!-- Visible solo si el usuario logado es admin -->
+		<p th:if="${session.user.admin}">
+			<strong>Administrador:</strong>
+			<span th:text="${user.admin} ? 'Sí' : 'No'">No</span>
+		</p>
+
+		<!-- Botones principales -->
+		<div class="actions">
+			<!-- Editar y cambiar contraseña: visibles para admin o el propio usuario -->
+			<a th:if="${session.user.admin or session.user.id == user.id}"
+			   th:href="@{/user/edit/{id}(id=${user.id})}" class="btn">Editar</a>
+
+			<a th:if="${session.user.admin or session.user.id == user.id}"
+			   th:href="@{/user/change-password/{id}(id=${user.id})}" class="btn btn-success">
+				Cambiar contraseña
+			</a>
+
+			<!-- Solo admin puede eliminar -->
+			<a th:if="${session.user.admin}"
+			   th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-danger">
+				Eliminar usuario
+			</a>
+
+			<!-- Privilegios admin -->
+			<div th:if="${session.user.admin and session.user.id != user.id}">
+				<a th:if="${!user.admin}"
+				   th:href="@{/user/set-admin/{id}?isAdmin=true(id=${user.id})}" class="btn btn-success">
+					Hacer administrador
+				</a>
+				<a th:if="${user.admin}"
+				   th:href="@{/user/set-admin/{id}?isAdmin=false(id=${user.id})}" class="btn btn-danger">
+					Quitar privilegios
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+</html>

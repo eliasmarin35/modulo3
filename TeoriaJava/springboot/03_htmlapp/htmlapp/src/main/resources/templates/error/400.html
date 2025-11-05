@@ -1,0 +1,12 @@
+<!-- ============================================================
+ERROR 400 – SOLICITUD INCORRECTA
+============================================================ -->
+<!--
+Se muestra cuando la petición del usuario contiene parámetros o datos no válidos.
+Si el controlador no proporciona errorCode/errorMessage, se usan los valores por defecto.
+-->
+<html th:replace="~{fragments/layout-error :: layoutError(
+	errorCode=${errorCode} ?: 400,
+	errorMessage=${errorMessage} ?: 'La solicitud no es válida o está incompleta.'
+)}">
+</html>

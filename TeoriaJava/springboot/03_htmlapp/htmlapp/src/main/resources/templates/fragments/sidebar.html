@@ -1,0 +1,65 @@
+<!-- vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab textwidth=80 : -->
+<!-- ============================================================
+FRAGMENTO: SIDEBAR (MENÚ LATERAL DE NAVEGACIÓN)
+============================================================ -->
+<!--
+Define el menú lateral fijo de la aplicación, visible solo cuando
+el usuario está logado. Su posición y comportamiento se ajustan
+mediante las variables globales `--sidebar-width` y `--topbar-height`.
+-->
+
+<aside th:fragment="sidebar"
+       class="sidebar"
+       th:if="${session.user != null}">
+	<nav>
+		<ul class="menu-list">
+			<!-- Opciones generales -->
+			<li><a th:href="@{/main}">🏠 Inicio</a></li>
+			<li><a th:href="@{/user/details/{id}(id=${session.user.id})}">👤 Mi perfil</a></li>
+			<li><a th:href="@{/user/change-password/{id}(id=${session.user.id})}">🔑 Cambiar contraseña</a></li>
+
+			<!-- Opciones solo visibles para administradores -->
+			<li th:if="${session.user.admin}">
+				<a th:href="@{/userlist/list}">🧑‍💼 Administrar usuarios</a>
+			</li>
+			<li th:if="${session.user.admin}">
+				<a th:href="@{/register}">➕ Dar de alta usuario</a>
+			</li>
+			<li th:if="${session.user.admin}">
+				<a th:href="@{/downloads/users.sql}" download>⬇️ Descargar usuarios (SQL)</a>
+			</li>
+
+			<!-- Opción común -->
+			<li><a th:href="@{/logout}" class="logout">🚪 Cerrar sesión</a></li>
+		</ul>
+	</nav>
+</aside>
+
+<!-- ============================================================
+NOTAS DE DISEÑO Y FUNCIONAMIENTO
+============================================================ -->
+<!--
+1. COHERENCIA CON EL LAYOUT
+----------------------------
+ - El sidebar usa las mismas variables estructurales que `layout.css`:
+     width: var(--sidebar-width);
+     top: var(--topbar-height);
+
+ - Se posiciona de forma fija y deja espacio al `main` mediante `margin-left`.
+
+2. ICONOS
+---------
+ - Los emojis sirven como iconos accesibles sin depender de librerías externas.
+   Si más adelante se usa una fuente de iconos (ej. Lucide o FontAwesome),
+   pueden sustituirse fácilmente.
+
+3. ACCESIBILIDAD Y SEMÁNTICA
+-----------------------------
+ - Estructura basada en `<nav>` + `<ul>` + `<li>` para lectura por screen readers.
+ - Los enlaces activos pueden destacarse con `.active`.
+
+4. OBJETIVO PEDAGÓGICO
+------------------------
+ - Enseña cómo aplicar visibilidad condicional con Thymeleaf.
+ - Demuestra cómo usar variables globales para coordinar layout y navegación.
+-->
