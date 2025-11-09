@@ -1870,3 +1870,232 @@ No se encontró el producto 'Pizza'.
 >- **`.Where(p => ...)`**: Es un **filtro**. Te devuelve una **colección** (potencialmente muchos ítems).
   >  
 >- **`.FirstOrDefault(p => ...)`**: Es un **buscador**. Te devuelve **un solo ítem** (o `null` si no lo encuentra).
+
+# Introducción : Creación de App Web con Blazor :
+
+## 1. ¿Qué es Blazor y cómo funciona?
+
+Imagina que quieres construir una página web interactiva, como una tienda online o una red social. Tradicionalmente, para toda la parte "interactiva" (qué pasa cuando haces clic en un botón, cómo se actualizan los datos, etc.), el rey indiscutible era **JavaScript**.
+
+**Blazor** es la forma que tiene Microsoft de decir: "¡Oye! ¿Y si pudieras hacer todo eso, pero usando **C#** y **.NET**?".
+
+Así que, en esencia, Blazor te permite construir el "front-end" (la parte que ve el usuario en el navegador) usando el mismo lenguaje que quizás ya usas para el "back-end" (la lógica del servidor).
+
+---
+
+### ¿Cómo funciona? Los dos "sabores" de Blazor
+
+Aquí es donde se pone interesante. Blazor no es una sola cosa, tiene dos modelos principales de alojamiento, es decir, dos formas de "correr" tu aplicación:
+
+#### 🥑 Blazor Server
+
+- **La analogía:** Piensa en esto como si estuvieras jugando a un videojuego en _streaming_ (como Google Stadia o Xbox Cloud Gaming). El juego corre en un servidor potente y tú solo ves el resultado en tu pantalla.
+    
+- **Cómo funciona:** Tu aplicación (todo tu código C#) vive y se ejecuta **en el servidor**.
+    
+- El navegador del usuario solo recibe el resultado (el HTML).
+    
+- Cuando el usuario hace clic en un botón, esa señal viaja al servidor. El servidor procesa el clic, ve qué cambió en la pantalla, y envía _solo la pequeña actualización_ de vuelta al navegador.
+    
+- Utiliza una tecnología llamada **SignalR** para esa comunicación súper rápida.
+    
+- **Pros:** La carga inicial es muy rápida (el navegador descarga poca cosa) y es ideal si la lógica de tu app debe permanecer segura en el servidor.
+    
+- **Contras:** Necesita una conexión a Internet constante y activa.
+    
+
+#### 🥝 Blazor WebAssembly (Wasm)
+
+- **La analogía:** Piensa en esto como si _descargaras el juego completo_ en tu consola. Ocupa más al principio, pero una vez lo tienes, corre en tu máquina.
+    
+- **Cómo funciona:** Tu aplicación C# y una versión compacta del _runtime_ (el motor) de .NET se descargan **completamente al navegador** del usuario.
+    
+- ¡Tu código C# se ejecuta _directamente dentro_ del navegador!
+    
+- Esto es posible gracias a **WebAssembly** (de ahí el nombre "Wasm"), un estándar web que permite ejecutar código (como C#, C++, Rust...) a velocidades muy rápidas en el navegador.
+    
+- **Pros:** Una vez cargada, la aplicación es muy rápida (no hay viajes al servidor para la lógica de la UI) e ¡incluso puede funcionar sin conexión a Internet!
+    
+- **Contras:** La descarga inicial es más grande, por lo que la primera carga puede ser más lenta.
+    
+
+En resumen: **Blazor Server** ejecuta el código en el servidor y "transmite" la interfaz, mientras que **Blazor WebAssembly** ejecuta el código directamente en el navegador del usuario.
+
+¡Perfecto! Entramos en el corazón de Blazor.
+
+## 2. Componentes de Blazor
+
+Todo en Blazor es un **componente**. Piensa en ellos como **piezas de LEGO** 🧱.
+
+- Puedes tener piezas pequeñas (un botón, una caja de texto).
+    
+- Puedes juntar esas piezas pequeñas para hacer piezas medianas (un formulario de inicio de sesión).
+    
+- Puedes juntar esas piezas medianas para hacer piezas grandes (la página de perfil de usuario).
+    
+- Y finalmente, juntas todas esas piezas grandes para construir tu aplicación completa (tu castillo de LEGO).
+    
+
+Un componente de Blazor es un archivo (con extensión `.razor`) que contiene dos cosas, mezcladas de forma muy inteligente:
+
+1. **El HTML (la vista):** Lo que ve el usuario.
+    
+2. **El C# (la lógica):** Lo que "da vida" a esa vista (qué pasa al hacer clic, qué datos mostrar, etc.).
+    
+
+La "magia" que los une es la sintaxis **Razor** (de ahí el nombre `.razor`), que se identifica con el símbolo **`@`**.
+
+---
+
+### Anatomía de un Componente
+
+Mira este ejemplo súper básico. Imagina que creamos un archivo llamado `Saludo.razor`:
+
+Razor CSHTML
+
+```
+<h3>¡Hola, @Nombre!</h3>
+<p>¡Bienvenido a tu primer componente!</p>
+
+@code {
+    // Aquí va toda la lógica de C#
+    private string Nombre = "Estudiante de Blazor";
+}
+```
+
+Vamos a diseccionarlo:
+
+- `<h3>¡Hola, @Nombre!</h3>`: Esto es mayormente HTML, pero fíjate en `@Nombre`. El `@` le dice a Blazor: "Oye, no escribas literalmente '@Nombre', busca una variable de C# llamada `Nombre` y pon su valor aquí".
+    
+- `@code { ... }`: Este bloque, siempre al final, es donde vive tu C#.
+    
+- `private string Nombre = ...`: Esta es la variable de C# que usamos arriba.
+    
+
+Cuando Blazor ejecute esto, el resultado en el navegador será:
+
+> ### ¡Hola, Estudiante de Blazor!
+> 
+> ¡Bienvenido a tu primer componente!
+
+Lo mejor de esto es que si cambias el valor de la variable `Nombre` (por ejemplo, con un botón), ¡Blazor **actualizará automáticamente** el `<h3>`! No tienes que decirle "Oye, ve y cambia el H3", Blazor lo sabe solo.
+
+---
+
+En resumen: **Los componentes son piezas reutilizables de UI (HTML + C#) que se pueden anidar unas dentro de otras.**
+
+## 3. Eventos y Enlace de Datos (Data Binding)
+
+Ya sabemos _mostrar_ datos (C# $\to$ HTML). Ahora veremos cómo _reaccionar_ a lo que hace el usuario (clics, escribir en un campo, etc.).
+
+---
+
+### Parte A: Eventos (¡Haciendo clic!)
+
+Cuando un usuario hace algo (como un clic), eso es un **evento**. Blazor nos permite "escuchar" esos eventos de forma muy sencilla.
+
+La sintaxis es `@on[evento]`. El más común es `@onclick`.
+
+Veamos un ejemplo clásico: un contador.
+
+Razor CSHTML
+
+```
+<h4>¡Contador de clics!</h4>
+
+<p>Veces que has hecho clic: @conteoActual</p>
+
+<button @onclick="IncrementarConteo">
+    ¡Haz clic!
+</button>
+
+@code {
+    private int conteoActual = 0;
+
+    private void IncrementarConteo()
+    {
+        // Esta función se llama CADA VEZ que se hace clic
+        conteoActual = conteoActual + 1;
+        // O más corto: conteoActual++;
+    }
+}
+```
+
+**¿Qué está pasando aquí?**
+
+1. Tenemos una variable `conteoActual` que empieza en 0.
+    
+2. El párrafo `<p>` muestra el valor de `@conteoActual`.
+    
+3. El botón `<button>` tiene la directiva `@onclick="IncrementarConteo"`.
+    
+4. Esto significa: "Cuando alguien haga clic en este botón, ejecuta el método de C# llamado `IncrementarConteo`".
+    
+5. El método `IncrementarConteo` simplemente suma 1 a la variable.
+    
+6. **¡Magia!** En cuanto `conteoActual` cambia, Blazor lo detecta y actualiza automáticamente el párrafo `<p>`. ¡No tienes que decirle que lo haga!
+    
+
+---
+
+### Parte B: Enlace de Datos (Data Binding)
+
+Esto es como un "pegamento" súper fuerte entre tu HTML y tu C#.
+
+Ya hemos visto el enlace de un solo sentido:
+
+<h3>@Nombre</h3>
+
+Aquí, el valor de la variable Nombre va al H3. Pero si el H3 cambiara (que no puede), no cambiaría la variable.
+
+Lo que nos falta es el enlace de doble sentido (Two-Way Data Binding).
+
+Esto se usa principalmente con campos de formulario (como un <input>).
+
+- Queremos que el valor de la variable C# aparezca en el `<input>`.
+    
+- Y también queremos que, si el usuario _escribe_ algo en el `<input>`, la variable de C# se actualice _automáticamente_.
+    
+
+Esto se logra con la directiva `@bind`.
+
+Mira este ejemplo:
+
+Razor CSHTML
+
+```
+<h3>¡Hola, @nombre!</h3>
+
+<p>Escribe tu nombre:</p>
+<input @bind="nombre" />
+
+@code {
+    private string nombre = "Visitante";
+}
+```
+
+**¿Qué está pasando aquí?**
+
+1. El `<h3>` muestra el valor de `nombre` (que empieza siendo "Visitante").
+    
+2. El `<input>` está _enlazado_ a la misma variable `nombre` usando `@bind="nombre"`.
+    
+3. Si ejecutas esto, verás: "¡Hola, Visitante!" y una caja de texto que dice "Visitante".
+    
+4. Si borras el texto de la caja y escribes "Ana", en el _mismo instante_ en que escribes, ¡el `<h3>` cambiará a "¡Hola, Ana!"!
+    
+5. La variable `nombre` y el `<input>` están sincronizados en ambas direcciones.
+    
+
+---
+
+**En resumen:**
+
+- **`@onclick`** (y otros `@on...`) $\to$ Ejecuta un método de C# cuando el usuario hace algo.
+    
+- **`@bind`** $\to$ Mantiene una variable de C# y un campo de formulario (como un `<input>`) perfectamente sincronizados.
+    
+
+Estos dos conceptos son el 90% de lo que harás en Blazor para crear interactividad.
+
+¿Qué te parece? ¿Se entiende la diferencia entre `@onclick` (para una acción) y `@bind` (para sincronizar un valor)?

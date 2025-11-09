@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fundamentos Programación en Java꞉.md",
+                "file": "FUNDAMENTOS DE .NET.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Fundamentos Programación en Java꞉"
+              "title": "FUNDAMENTOS DE .NET"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 238.5,
-    "collapsed": true
+    "width": 238.5
   },
   "right": {
     "id": "da1bc9e139fdc12d",
@@ -172,8 +171,8 @@
   },
   "active": "f25bc780dd8d46a5",
   "lastOpenFiles": [
-    "FUNDAMENTOS DE .NET.md",
     "Fundamentos Programación en Java꞉.md",
+    "FUNDAMENTOS DE .NET.md",
     "DEFINICIÓN Y MANIPULACIÓN DE DATOS (1).md",
     "Untitled.base",
     "Untitled",
