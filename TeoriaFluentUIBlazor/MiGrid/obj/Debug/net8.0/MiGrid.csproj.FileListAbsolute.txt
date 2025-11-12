@@ -1,0 +1,7 @@
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.csproj.AssemblyReference.cache
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.GeneratedMSBuildEditorConfig.editorconfig
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.AssemblyInfoInputs.cache
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.AssemblyInfo.cs
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.csproj.CoreCompileInputs.cache
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.MvcApplicationPartsAssemblyInfo.cache
+C:\modulo3\TeoriaFluentUIBlazor\MiGrid\obj\Debug\net8.0\MiGrid.sourcelink.json

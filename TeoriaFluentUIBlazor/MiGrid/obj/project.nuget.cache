@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "gbsN1NV2X68=",
+  "success": true,
+  "projectFilePath": "C:\\modulo3\\TeoriaFluentUIBlazor\\MiGrid\\MiGrid.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Curso Desarrollo\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.0\\microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512",
+    "C:\\Users\\Curso Desarrollo\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.13.1\\microsoft.fluentui.aspnetcore.components.4.13.1.nupkg.sha512",
+    "C:\\Users\\Curso Desarrollo\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components.icons\\4.13.1\\microsoft.fluentui.aspnetcore.components.icons.4.13.1.nupkg.sha512"
+  ],
+  "logs": []
+}

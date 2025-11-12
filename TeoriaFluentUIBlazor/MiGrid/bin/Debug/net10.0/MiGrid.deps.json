@@ -1,0 +1,76 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MiGrid/1.0.0": {
+        "dependencies": {
+          "Microsoft.FluentUI.AspNetCore.Components": "4.13.1",
+          "Microsoft.FluentUI.AspNetCore.Components.Icons": "4.13.1"
+        },
+        "runtime": {
+          "MiGrid.dll": {}
+        }
+      },
+      "Microsoft.FluentUI.AspNetCore.Components/4.13.1": {
+        "runtime": {
+          "lib/net10.0/Microsoft.FluentUI.AspNetCore.Components.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          }
+        }
+      },
+      "Microsoft.FluentUI.AspNetCore.Components.Icons/4.13.1": {
+        "dependencies": {
+          "Microsoft.FluentUI.AspNetCore.Components": "4.13.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Color.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          },
+          "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          },
+          "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Light.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          },
+          "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          },
+          "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.dll": {
+            "assemblyVersion": "4.13.1.25302",
+            "fileVersion": "4.13.1.25302"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MiGrid/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.FluentUI.AspNetCore.Components/4.13.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-l5msbVu8lXl4920Dt0h2Mhm3f4icvkLcl0iUHAOZ7kN59Kb4yn9ASu0nqrDCHvx0Vb3m5jXtpwLC46cLxa9Udw==",
+      "path": "microsoft.fluentui.aspnetcore.components/4.13.1",
+      "hashPath": "microsoft.fluentui.aspnetcore.components.4.13.1.nupkg.sha512"
+    },
+    "Microsoft.FluentUI.AspNetCore.Components.Icons/4.13.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RZTImsAp7o3oVB8a74F5MYBF8BapK1jnDLZrQjcvzuQccSW/npp4UchcdYyglPlRFRxqMMMzCNMbjMJwuN6dkQ==",
+      "path": "microsoft.fluentui.aspnetcore.components.icons/4.13.1",
+      "hashPath": "microsoft.fluentui.aspnetcore.components.icons.4.13.1.nupkg.sha512"
+    }
+  }
+}
